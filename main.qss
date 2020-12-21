@@ -1,0 +1,7 @@
+QPushButton {color:rgb(255, 255, 255);background-color: rgb(48, 0, 72);}
+QPushButton:hover {color:rgb(255, 255, 0);background-color:rgb(110, 0, 165);}
+QPushButton:Disabled  {color:rgb(121, 121, 121);background-color:rgb(208, 208, 208);border-style: outset;}
+QTextBrowser {border-style: outset;border-width: 2px;border-color:rgb(48, 0, 72);background-color: rgb(245, 245, 245);border-radius: 5px;}
+QTextBrowser:Disabled {border-style: outset;border-width: 2px;border-color:rgb(193, 193, 193);background-color:rgb(238, 238, 238);border-radius: 5px;}
+QLineEdit {border-style: outset;border-width: 2px;border-color:rgb(48, 0, 72);background-color: rgb(255, 255, 255);}
+QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193, 193, 193);background-color:rgb(238, 238, 238);}

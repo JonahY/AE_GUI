@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pac-logo.jpg</file>
+        <file>open.png</file>
+        <file>save.png</file>
+        <file>vallen-logo.png</file>
+        <file>logo.png</file>
+        <file>MSE.gif</file>
+        <file>XJTU.gif</file>
+        <file>logo.ico</file>
+    </qresource>
+</RCC>

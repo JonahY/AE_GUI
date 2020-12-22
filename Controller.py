@@ -427,6 +427,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             if self.input:
                 self.tar = self.input.split('/')[-1] + '.txt'
                 self.file_list = os.listdir(self.input)
+                print(self.tar, self.input)
                 if not len(self.file_list):
                     self.statusbar.showMessage('This file is empty!')
                     return

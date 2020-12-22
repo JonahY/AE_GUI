@@ -87,8 +87,8 @@ class AuthWindow(QtWidgets.QDialog, Ui_Dialog):
             files = self.get_license_files()
             if files:
                 for file in files:
-                    os.remove(os.getcwd() + '/lic/' + file)
-            license_file_path_new = os.getcwd() + '/lic/'+filename
+                    os.remove(app_path() + '/lic/' + file)
+            license_file_path_new = app_path() + '/lic/'+filename
             with open(license_file_path_new, 'w') as f:
                 f.write(x)
                 f.close()
@@ -96,12 +96,12 @@ class AuthWindow(QtWidgets.QDialog, Ui_Dialog):
         pass
 
     def get_license_files(self):
-        path = os.getcwd() + '/lic'
+        path = app_path() + '/lic'
         files = os.listdir(path)
         return files
 
     def Read_license(self):
-        path = os.getcwd() + '/lic'
+        path = app_path() + '/lic'
         files = self.get_license_files()
         if files:
             filename = files[0]

@@ -8,6 +8,16 @@ from AEScoder import PrpCrypt
 from datetime import datetime
 
 
+def app_path():
+    """Returns the base application path."""
+    if hasattr(sys, 'frozen'):
+        # Handles PyInstaller
+        return os.path.dirname(sys.executable) # 使用pyinstaller打包后的exe目录
+    return os.path.dirname(__file__) # 没打包前的py目录
+
+PROJECT_PATH = app_path()
+
+
 class AuthorizeWindow(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self):
         super(AuthorizeWindow, self).__init__()
@@ -78,12 +88,12 @@ class AuthorizeWindow(QtWidgets.QDialog, Ui_Dialog):
                 self.psw = False
 
     def get_longest(self):
-        path = os.getcwd() + '/lic'
+        path = PROJECT_PATH + '/lic'
         files = os.listdir(path)
         if files:
             filename = files[0]
             self.license_file.setText(filename)
-            with open(os.getcwd() + '/lic/' + filename, 'r', encoding='utf-8') as f:
+            with open(PROJECT_PATH + '/lic/' + filename, 'r', encoding='utf-8') as f:
                 lic_msg = f.read()
                 f.close()
             lic_msg = bytes(lic_msg, encoding="utf8")
@@ -100,11 +110,11 @@ class AuthorizeWindow(QtWidgets.QDialog, Ui_Dialog):
                 self.psw = False
 
     def Update(self):
-        path = os.getcwd() + '/lic'
+        path = PROJECT_PATH + '/lic'
         files = os.listdir(path)
         for file in files:
-            os.remove(os.getcwd() + '/lic/' + file)
-        with open(os.getcwd() + '/lic/' + self.filename, 'w') as f:
+            os.remove(PROJECT_PATH + '/lic/' + file)
+        with open(PROJECT_PATH + '/lic/' + self.filename, 'w') as f:
             f.write(self.input)
             f.close()
         self.close()

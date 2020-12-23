@@ -18,7 +18,7 @@
     <normaloff>../test/dsp.gif</normaloff>../test/dsp.gif</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">#license_file {border-style:outset;border-width:2px;border-color: rgb(48, 0, 72);color: rgb(48, 0, 72);font: 10pt &quot;Verdana&quot;;;}
+   <string notr="true">#license_file {border-style:outset;border-width:2px;border-color: rgb(48, 0, 72);color: rgb(48, 0, 72);font: 10pt &quot;Verdana&quot;;}
 #mac {background-color: transparent;border:none;border-style:outset;color: rgb(48, 0, 72);font: 75 10pt &quot;Verdana&quot;;}
 #activate_status {background-color: transparent;border:none;border-style:outset;color: rgb(255, 0, 0);font: 75 10pt &quot;Verdana&quot;;}
 #information {background-color: transparent;border:none;border-style:outset;color: rgb(48, 0, 72);font: 75 10pt &quot;Verdana&quot;;}</string>

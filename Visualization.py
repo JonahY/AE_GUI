@@ -12,6 +12,7 @@ from get_mac_addr import get_mac_address
 from check_license import CheckLicense
 from AEScoder import PrpCrypt
 from Controller import MainForm
+from multiprocessing import freeze_support
 
 
 def app_path():
@@ -25,12 +26,13 @@ PROJECT_PATH = app_path()
 
 
 class AuthWindow(QtWidgets.QDialog, Ui_Dialog):
-    def __init__(self):
+    def __init__(self, win_main):
         super(AuthWindow, self).__init__()
         self.setupUi(self)
         self.setWindowFlags(Qt.Qt.WindowMinimizeButtonHint | Qt.Qt.WindowCloseButtonHint)
         self.setFixedSize(self.width(), self.height())
 
+        self.win_main = win_main
         self.active_time = ''
         self.psw = ''
 
@@ -126,15 +128,16 @@ class AuthWindow(QtWidgets.QDialog, Ui_Dialog):
             self.show_license.setEnabled(True)
 
     def OPEN(self):
-        win_main.show()
         self.close()
+        self.win_main.show()
 
 
 if __name__ == "__main__":
+    freeze_support()
     app = QtWidgets.QApplication(sys.argv)
-    win = AuthWindow()
     win_auth = AuthorizeWindow()
     win_about = AboutWindow()
     win_main = MainForm(win_auth, win_about)
+    win = AuthWindow(win_main)
     win.show()
     sys.exit(app.exec_())

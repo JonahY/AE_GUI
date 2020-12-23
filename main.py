@@ -638,7 +638,6 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         font.setWeight(75)
         self.INPUT_2.setFont(font)
-        self.INPUT_2.setStyleSheet(");")
         self.INPUT_2.setFrameShadow(QtWidgets.QFrame.Plain)
         self.INPUT_2.setLineWidth(1)
         self.INPUT_2.setAlignment(QtCore.Qt.AlignCenter)

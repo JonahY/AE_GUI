@@ -15,6 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 from matplotlib.pylab import mpl
+from multiprocessing import freeze_support
 
 
 warnings.filterwarnings("ignore")
@@ -67,7 +68,7 @@ class Convert_pac_data(Qt.QThread):
     def __init__(self, tar, file_list, data_path, threshold, magnification, processor, load_wave, load_features, counts):
         super(Convert_pac_data, self).__init__()
         self.tar = tar
-        self.processor = processor
+        self.processor = 4
         self.file_list = file_list
         self.threshold = threshold
         self.magnification = magnification
@@ -77,7 +78,10 @@ class Convert_pac_data(Qt.QThread):
         self.counts = counts
 
     def run(self):
-        os.remove(self.tar)
+        try:
+            os.remove(self.tar)
+        except FileNotFoundError:
+            pass
         self.file_list = os.listdir(self.data_path)
         each_core = int(math.ceil(len(self.file_list) / float(self.processor)))
         result, data_tra, tmp_all = [], [], []
@@ -781,56 +785,56 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.ccdf_end_fit.setEnabled(False)
             self.statusbar.clearMessage()
             self.statusbar.showMessage('Loading data...')
-            if self.Overwrite.isChecked():
-                if self.mode.currentText() == 'Convert only':
-                    self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                   self.magnification.value(), self.processor, False, False, self.counts.value())
-                    self.thread._signal.connect(self.convert_pac_data)
-                    self.thread.start()
-                elif self.mode.currentText() == 'Convert with waveforms loading':
-                    self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                   self.magnification.value(), self.processor, True, False, self.counts.value())
-                    self.thread._signal.connect(self.convert_pac_data)
-                    self.thread.start()
-                elif self.mode.currentText() == 'Convert with features loading':
-                    self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                   self.magnification.value(), self.processor, False, True, self.counts.value())
-                    self.thread._signal.connect(self.convert_pac_data)
-                    self.thread.start()
-                elif self.mode.currentText() == 'Convert with both loading':
-                    self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                   self.magnification.value(), self.processor, True, True, self.counts.value())
-                    self.thread._signal.connect(self.convert_pac_data)
-                    self.thread.start()
-                elif self.mode.currentText() == 'Load both':
-                    self.thread = Read_pac_data_features(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                         self.magnification.value(), self.processor)
-                    self.thread._signal.connect(self.read_pac_data_features)
-                    self.thread.start()
-                elif self.mode.currentText() == 'Load waveforms only':
-                    self.thread = Read_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                self.magnification.value(), self.processor)
-                    self.thread._signal.connect(self.return_read_pac_data)
-                    self.thread.start()
-                elif self.mode.currentText() == 'Load features only':
-                    self.thread = Read_pac_features(self.tar)
-                    self.thread._signal.connect(self.return_read_pac_features)
-                    self.thread.start()
-            else:
-                if self.mode.currentText() == 'Load both':
-                    self.thread = Read_pac_data_features(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                         self.magnification.value(), self.processor)
-                    self.thread._signal.connect(self.read_pac_data_features)
-                    self.thread.start()
-                elif self.mode.currentText() == 'Load waveforms only':
-                    self.thread = Read_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                self.magnification.value(), self.processor)
-                    self.thread._signal.connect(self.return_read_pac_data)
-                    self.thread.start()
-                elif self.mode.currentText() == 'Load features only':
-                    self.thread = Read_pac_features(self.tar)
-                    self.thread._signal.connect(self.return_read_pac_features)
-                    self.thread.start()
+            # if self.Overwrite.isChecked():
+            if self.mode.currentText() == 'Convert only':
+                self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
+                                               self.magnification.value(), self.processor, False, False, self.counts.value())
+                self.thread._signal.connect(self.convert_pac_data)
+                self.thread.start()
+            elif self.mode.currentText() == 'Convert with waveforms loading':
+                self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
+                                               self.magnification.value(), self.processor, True, False, self.counts.value())
+                self.thread._signal.connect(self.convert_pac_data)
+                self.thread.start()
+            elif self.mode.currentText() == 'Convert with features loading':
+                self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
+                                               self.magnification.value(), self.processor, False, True, self.counts.value())
+                self.thread._signal.connect(self.convert_pac_data)
+                self.thread.start()
+            elif self.mode.currentText() == 'Convert with both loading':
+                self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
+                                               self.magnification.value(), self.processor, True, True, self.counts.value())
+                self.thread._signal.connect(self.convert_pac_data)
+                self.thread.start()
+            elif self.mode.currentText() == 'Load both':
+                self.thread = Read_pac_data_features(self.tar, self.file_list, self.input, self.threshold.value(),
+                                                     self.magnification.value(), self.processor)
+                self.thread._signal.connect(self.read_pac_data_features)
+                self.thread.start()
+            elif self.mode.currentText() == 'Load waveforms only':
+                self.thread = Read_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
+                                            self.magnification.value(), self.processor)
+                self.thread._signal.connect(self.return_read_pac_data)
+                self.thread.start()
+            elif self.mode.currentText() == 'Load features only':
+                self.thread = Read_pac_features(self.tar)
+                self.thread._signal.connect(self.return_read_pac_features)
+                self.thread.start()
+            # else:
+            #     if self.mode.currentText() == 'Load both':
+            #         self.thread = Read_pac_data_features(self.tar, self.file_list, self.input, self.threshold.value(),
+            #                                              self.magnification.value(), self.processor)
+            #         self.thread._signal.connect(self.read_pac_data_features)
+            #         self.thread.start()
+            #     elif self.mode.currentText() == 'Load waveforms only':
+            #         self.thread = Read_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
+            #                                     self.magnification.value(), self.processor)
+            #         self.thread._signal.connect(self.return_read_pac_data)
+            #         self.thread.start()
+            #     elif self.mode.currentText() == 'Load features only':
+            #         self.thread = Read_pac_features(self.tar)
+            #         self.thread._signal.connect(self.return_read_pac_features)
+            #         self.thread.start()
 
     def random_select(self, btn):
         for channel, chan in zip(['Chan 1', 'Chan 2', 'Chan 3', 'Chan 4'], [self.chan_1, self.chan_2, self.chan_3, self.chan_4]):
@@ -905,6 +909,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.show_figurenote.setReadOnly(False)
             self.statusbar.showMessage('Finish converting and loading both!')
         else:
+            self.show_figurenote.setEnabled(False)
             self.statusbar.showMessage('Finish converting!')
         self.btn_base(True)
         del result
@@ -1174,13 +1179,11 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
+    freeze_support()
     app = QtWidgets.QApplication(sys.argv)
     win_auth = AuthorizeWindow()
     win_about = AboutWindow()
-    win = MainForm(AuthorizeWindow, AboutWindow)
-    # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-    # with open('main.qss', 'r') as f:
-    #     style = f.read()
-    # win.setStyleSheet(style)
-    win.show()
+    win_main = MainForm(win_auth, win_about)
+    # win = AuthWindow(win_main)
+    win_main.show()
     sys.exit(app.exec_())

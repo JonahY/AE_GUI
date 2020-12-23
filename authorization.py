@@ -15,9 +15,9 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(483, 310)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/dsp.gif"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
-        Dialog.setStyleSheet("#license_file {border-style:outset;border-width:2px;border-color: rgb(48, 0, 72);color: rgb(48, 0, 72);font: 10pt \"Verdana\";;}\n"
+        Dialog.setStyleSheet("#license_file {border-style:outset;border-width:2px;border-color: rgb(48, 0, 72);color: rgb(48, 0, 72);font: 10pt \"Verdana\";}\n"
 "#mac {background-color: transparent;border:none;border-style:outset;color: rgb(48, 0, 72);font: 75 10pt \"Verdana\";}\n"
 "#activate_status {background-color: transparent;border:none;border-style:outset;color: rgb(255, 0, 0);font: 75 10pt \"Verdana\";}\n"
 "#information {background-color: transparent;border:none;border-style:outset;color: rgb(48, 0, 72);font: 75 10pt \"Verdana\";}")

@@ -9,12 +9,14 @@
 from get_mac_addr import get_mac_address, hash_msg
 from datetime import datetime
 
+
 class CheckLicense():
     """
     Check user's license.
     """
     def __init__(self):
         pass
+
     def check_psw(self, psw):
         """
         check encoded password in user's license.
@@ -27,6 +29,7 @@ class CheckLicense():
             return True
         else:
             return False
+
     def check_date(self, lic_date):
         """
         check datetime in user's license.
@@ -42,6 +45,7 @@ class CheckLicense():
             return False
         else:
             return True
+
     def check_update(self, longest, lic_date):
         """
         check datetime in user's license.
@@ -56,6 +60,7 @@ class CheckLicense():
             return False
         else:
             return True
+
     def get_authorization_days(self):
         """
         active datetime by user in first time.

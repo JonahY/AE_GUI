@@ -14,6 +14,7 @@ from about_info import AboutWindow
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
+import traceback
 from matplotlib.pylab import mpl
 from multiprocessing import freeze_support
 
@@ -63,11 +64,11 @@ class GlobalV():
         return self.tra_4
 
 
-class Convert_pac_data(Qt.QThread):
+class ConvertPacData(Qt.QThread):
     _signal = QtCore.pyqtSignal(list)
 
     def __init__(self, tar, file_list, data_path, threshold, magnification, processor, load_wave, load_features, counts):
-        super(Convert_pac_data, self).__init__()
+        super(ConvertPacData, self).__init__()
         self.tar = tar
         self.processor = 4
         self.file_list = file_list
@@ -134,11 +135,11 @@ class Convert_pac_data(Qt.QThread):
                            sorted(obj.get_4(), key=lambda x: x[-1]), self.load_wave, self.load_features])
 
 
-class Read_pac_data(Qt.QThread):
+class ReadPacData(Qt.QThread):
     _signal = QtCore.pyqtSignal(list)
 
     def __init__(self, tar, file_list, data_path, threshold, magnification, processor):
-        super(Read_pac_data, self).__init__()
+        super(ReadPacData, self).__init__()
         self.tar = tar
         self.processor = processor
         self.file_list = file_list
@@ -190,11 +191,11 @@ class Read_pac_data(Qt.QThread):
         self._signal.emit(data_tra)
 
 
-class Read_pac_features(Qt.QThread):
+class ReadPacFeatures(Qt.QThread):
     _signal = QtCore.pyqtSignal(list)
 
     def __init__(self, tar):
-        super(Read_pac_features, self).__init__()
+        super(ReadPacFeatures, self).__init__()
         self.tar = tar
 
     def run(self):
@@ -219,11 +220,11 @@ class Read_pac_features(Qt.QThread):
         self._signal.emit([pri, chan_1, chan_2, chan_3, chan_4])
 
 
-class Read_pac_data_features(Qt.QThread):
+class ReadPacDataFeatures(Qt.QThread):
     _signal = QtCore.pyqtSignal(list)
 
     def __init__(self, tar, file_list, data_path, threshold, magnification, processor):
-        super(Read_pac_data_features, self).__init__()
+        super(ReadPacDataFeatures, self).__init__()
         self.tar = tar
         self.processor = processor
         self.file_list = file_list
@@ -314,20 +315,20 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setWindowFlags(Qt.Qt.WindowMinimizeButtonHint | Qt.Qt.WindowCloseButtonHint)
         self.setFixedSize(self.width(), self.height())
 
-        self.init_open_save()
-        self.init_help()
-        self.init_device()
-        self.init_channel()
-        self.init_load()
-        self.init_plot()
-        self.init_track()
-        self.init_pac()
-        self.init_filter()
+        self.__init_open_save()
+        self.__init_help()
+        self.__init_device()
+        self.__init_channel()
+        self.__init_load()
+        self.__init_plot()
+        self.__init_track()
+        self.__init_pac()
+        self.__init_filter()
 
         sys.stdout = EmittingStr(textWritten=self.outputWritten)
         sys.stderr = EmittingStr(textWritten=self.outputWritten)
 
-    def init_open_save(self):
+    def __init_open_save(self):
         # Open & Save
         self.actionload.triggered.connect(self.openMsg)
         self.actionOpen.triggered.connect(self.openMsg)
@@ -338,17 +339,17 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
     def quit(self):
         self.close()
 
-    def init_help(self):
+    def __init_help(self):
         self.check_for_license.triggered.connect(self.show_auth)
         self.about.triggered.connect(self.show_info)
 
-    def init_device(self):
+    def __init_device(self):
         # Select device
         self.feature_idx = [4, 6, 7, 1, -2]
         self.VALLEN.toggled.connect(lambda: self.check_device(self.VALLEN))
         self.PAC.toggled.connect(lambda: self.check_device(self.PAC))
 
-    def init_channel(self):
+    def __init_channel(self):
         # Select channel
         self.chan1.toggled.connect(lambda: self.check_chan(self.chan1))
         self.chan2.toggled.connect(lambda: self.check_chan(self.chan2))
@@ -359,28 +360,30 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.chan3_2.toggled.connect(lambda: self.check_chan(self.chan3_2))
         self.chan4_2.toggled.connect(lambda: self.check_chan(self.chan4_2))
 
-    def init_load(self):
+    def __init_load(self):
         # Load data from files
         self.import_data.clicked.connect(lambda: self.load_data(self.import_data))
         self.import_data_2.clicked.connect(lambda: self.load_data(self.import_data_2))
 
-    def init_plot(self):
+    def __init_plot(self):
         # Plot waveform with specific TRAI
         self.random_trai.clicked.connect(lambda: self.random_select(self.chan))
         self.plot_waveform.clicked.connect(lambda: self.show_wave(self.show_trai))
         self.plot_feature.clicked.connect(self.show_feature)
 
-    def init_track(self):
+    def __init_track(self):
         self.show_stretcher_data.clicked.connect(self.open_stretcher)
         self.pdf_fit.currentTextChanged.connect(lambda: self.check_fit(self.pdf_fit, self.pdf_start_fit, self.pdf_end_fit))
         self.ccdf_fit.currentTextChanged.connect(lambda: self.check_fit(self.ccdf_fit, self.ccdf_start_fit, self.ccdf_end_fit))
 
-    def init_pac(self):
-        self.Overwrite.clicked.connect(self.check_overwrite)
-        self.mode.currentTextChanged.connect(self.check_mode)
+    def __init_pac(self):
+        self.threshold.valueChanged.connect(self.check_mode)
+        self.magnification.valueChanged.connect(self.check_mode)
         self.counts.valueChanged.connect(self.check_mode)
+        self.mode.currentTextChanged.connect(self.check_mode)
+        self.Overwrite.clicked.connect(self.check_overwrite)
 
-    def init_filter(self):
+    def __init_filter(self):
         self.filter.clicked.connect(lambda: self.check_parameter(self.filter))
         self.set_default.clicked.connect(lambda: self.check_parameter(self.set_default))
 
@@ -404,23 +407,24 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.threshold.setEnabled(False)
                 self.Magnification.setEnabled(False)
                 self.magnification.setEnabled(False)
-                self.import_data.setEnabled(False)
             else:
                 self.feature_idx = [5, 8, 9, 1, -1]
                 self.mode.clear()
                 self.mode.addItems(['Convert only', 'Convert with waveforms loading', 'Convert with features loading',
                                     'Convert with both loading'])
-                self.import_data.setEnabled(False)
                 self.Threshold.setEnabled(True)
                 self.threshold.setEnabled(True)
                 self.Magnification.setEnabled(True)
                 self.magnification.setEnabled(True)
 
+            self.import_data.setEnabled(False)
+            self.import_data_2.setEnabled(False)
+
     def openMsg(self):
         if self.device == 'VALLEN':
             files = QtWidgets.QFileDialog.getOpenFileNames(self, "Open",
-                                                 "E:/data/vallen/Ni-tension test-electrolysis-1-0.01-AE-20201031/",
-                                                 "VALLEN Files (*.pridb & *.tradb)")[0]
+                                                           "F:/VALLEN/Ni-tension test-electrolysis-1-0.01-AE-20201031",
+                                                           "VALLEN Files (*.pridb & *.tradb)")[0]
             self.input = files
             if len(self.input) == 2 and all(['pridb' in self.input[0] or 'pridb' in self.input[1], 'tradb' in self.input[0] or 'tradb' in self.input[1]]):
                 self.show_input.setText(self.input[0].split('/')[-1][:-6])
@@ -435,7 +439,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 self.statusbar.showMessage('Please select correct files!')
         else:
-            file = QtWidgets.QFileDialog.getExistingDirectory(self, "Open", "D:/data/")
+            file = QtWidgets.QFileDialog.getExistingDirectory(self, "Open", "F:/PAC/316L-1.5-z8-0.01-AE-3 sensor-Vallen&PAC-20210302")
             self.input = file
             if self.input:
                 self.tar = self.input.split('/')[-1] + '.txt'
@@ -447,6 +451,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.show_input.setEnabled(True)
                 self.show_input.setText(self.input)
                 self.import_data.setEnabled(True)
+                self.import_data_2.setEnabled(True)
                 self.textBrowser.setEnabled(True)
                 self.Overwrite.setChecked(False)
                 if self.tar in os.listdir(self.input):
@@ -469,7 +474,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.statusbar.showMessage('Please select correct file!')
 
     def open_stretcher(self):
-        file = QtWidgets.QFileDialog.getOpenFileName(self, "Open", "E:/data/vallen/Ni-tension test-electrolysis-1-0.01-AE-20201031/Ni-tension test-electrolysis-1-0.01-20201031.is_tens_RawData", "csv Files (*.csv)")[0]
+        file = QtWidgets.QFileDialog.getOpenFileName(self, "Open", "F:/VALLEN/Ni-tension test-electrolysis-1-0.01-AE-20201031/Ni-tension test-electrolysis-1-0.01-20201031.is_tens_RawData", "csv Files (*.csv)")[0]
         self.stretcher = file
         if file:
             self.smooth.setEnabled(True)
@@ -514,57 +519,63 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def check_mode(self):
         self.import_data.setEnabled(True)
+        self.import_data_2.setEnabled(True)
 
     def check_parameter(self, btn):
-        self.btn_plot(False)
-        for name, chan in zip(['Chan 1', 'Chan 2', 'Chan 3', 'Chan 4'], [self.chan_1, self.chan_2, self.chan_3, self.chan_4]):
-            if self.chan == name:
-                valid_pri = chan
-        if btn.text() == 'Filter':
-            self.upper_time = self.max_time.value()
-            self.upper_cnts = self.max_cnts.value()
-            self.upper_eny = self.max_energy.value()
-            self.upper_amp = self.max_amplitude.value()
-            self.upper_dur = self.max_duration.value()
-            if self.max_time.value() == 0:
-                self.upper_time = float('inf')
-            if self.max_cnts.value() == 0:
-                self.upper_cnts = float('inf')
-            if self.max_energy.value() == 0:
-                self.upper_eny = float('inf')
-            if self.max_amplitude.value() == 0:
-                self.upper_amp = float('inf')
-            if self.max_duration.value() == 0:
-                self.upper_dur = float('inf')
-            self.filter_pri = valid_pri[np.where((valid_pri[:, self.feature_idx[-2]] >= self.min_time.value()) &
-                                                 (valid_pri[:, self.feature_idx[-2]] < self.upper_time) &
-                                                 (valid_pri[:, self.feature_idx[-1]] >= self.min_cnts.value()) &
-                                                 (valid_pri[:, self.feature_idx[-1]] < self.upper_cnts) &
-                                                 (valid_pri[:, self.feature_idx[-1]] >= self.min_energy.value()) &
-                                                 (valid_pri[:, self.feature_idx[-1]] < self.upper_eny) &
-                                                 (valid_pri[:, self.feature_idx[-1]] >= self.min_amplitude.value()) &
-                                                 (valid_pri[:, self.feature_idx[-1]] < self.upper_amp) &
-                                                 (valid_pri[:, self.feature_idx[-1]] >= self.min_duration.value()) &
-                                                 (valid_pri[:, self.feature_idx[-1]] < self.upper_dur))[0]]
-            self.statusbar.showMessage('Filtering Done! Valid waves: %d' % self.filter_pri.shape[0])
-        else:
-            self.min_time.setValue(0)
-            self.min_cnts.setValue(2)
-            self.min_energy.setValue(0)
-            self.min_amplitude.setValue(0)
-            self.min_duration.setValue(0)
-            self.max_time.setValue(0)
-            self.max_cnts.setValue(0)
-            self.max_energy.setValue(0)
-            self.max_amplitude.setValue(0)
-            self.max_duration.setValue(0)
-            self.filter_pri = valid_pri
-            self.statusbar.showMessage('Filtering Reset! Valid waves: %d' % self.filter_pri.shape[0])
-        del chan, valid_pri
-        if self.filter_pri.shape[0]:
-            self.btn_plot(True)
-        else:
-            self.statusbar.showMessage('Warning: There is no valid wave! Please rectify your filter parameters.')
+        try:
+            self.btn_plot(False)
+            for name, chan in zip(['Chan 1', 'Chan 2', 'Chan 3', 'Chan 4'], [self.chan_1, self.chan_2, self.chan_3, self.chan_4]):
+                if self.chan == name:
+                    valid_pri = chan
+            if btn.text() == 'Filter':
+                self.upper_time = self.max_time.value()
+                self.upper_cnts = self.max_cnts.value()
+                self.upper_eny = self.max_energy.value()
+                self.upper_amp = self.max_amplitude.value()
+                self.upper_dur = self.max_duration.value()
+                if self.max_time.value() == 0:
+                    self.upper_time = float('inf')
+                if self.max_cnts.value() == 0:
+                    self.upper_cnts = float('inf')
+                if self.max_energy.value() == 0:
+                    self.upper_eny = float('inf')
+                if self.max_amplitude.value() == 0:
+                    self.upper_amp = float('inf')
+                if self.max_duration.value() == 0:
+                    self.upper_dur = float('inf')
+                self.filter_pri = valid_pri[np.where((valid_pri[:, self.feature_idx[-2]] >= self.min_time.value()) &
+                                                     (valid_pri[:, self.feature_idx[-2]] < self.upper_time) &
+                                                     (valid_pri[:, self.feature_idx[-1]] >= self.min_cnts.value()) &
+                                                     (valid_pri[:, self.feature_idx[-1]] < self.upper_cnts) &
+                                                     (valid_pri[:, self.feature_idx[-1]] >= self.min_energy.value()) &
+                                                     (valid_pri[:, self.feature_idx[-1]] < self.upper_eny) &
+                                                     (valid_pri[:, self.feature_idx[-1]] >= self.min_amplitude.value()) &
+                                                     (valid_pri[:, self.feature_idx[-1]] < self.upper_amp) &
+                                                     (valid_pri[:, self.feature_idx[-1]] >= self.min_duration.value()) &
+                                                     (valid_pri[:, self.feature_idx[-1]] < self.upper_dur))[0]]
+                self.statusbar.showMessage('Filtering Done! Valid waves: %d' % self.filter_pri.shape[0])
+            else:
+                self.min_time.setValue(0)
+                self.min_cnts.setValue(2)
+                self.min_energy.setValue(0)
+                self.min_amplitude.setValue(0)
+                self.min_duration.setValue(0)
+                self.max_time.setValue(0)
+                self.max_cnts.setValue(0)
+                self.max_energy.setValue(0)
+                self.max_amplitude.setValue(0)
+                self.max_duration.setValue(0)
+                self.filter_pri = valid_pri
+                self.statusbar.showMessage('Filtering Reset! Valid waves: %d' % self.filter_pri.shape[0])
+            del chan, valid_pri
+            if self.filter_pri.shape[0]:
+                self.btn_plot(True)
+            else:
+                self.statusbar.showMessage('Warning: There is no valid wave! Please rectify your filter parameters.')
+        except (Exception, BaseException) as e:
+            exstr = traceback.format_exc()
+            print("=" * 24 + " Error Information " + "=" * 24)
+            print(exstr)
 
     def btn_base(self, status):
         self.actionload.setEnabled(status)
@@ -853,37 +864,37 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.statusbar.showMessage('Loading data...')
             # if self.Overwrite.isChecked():
             if self.mode.currentText() == 'Convert only':
-                self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                               self.magnification.value(), self.processor, False, False, self.counts.value())
+                self.thread = ConvertPacData(self.tar, self.file_list, self.input, self.threshold.value(),
+                                             self.magnification.value(), self.processor, False, False, self.counts.value())
                 self.thread._signal.connect(self.convert_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Convert with waveforms loading':
-                self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                               self.magnification.value(), self.processor, True, False, self.counts.value())
+                self.thread = ConvertPacData(self.tar, self.file_list, self.input, self.threshold.value(),
+                                             self.magnification.value(), self.processor, True, False, self.counts.value())
                 self.thread._signal.connect(self.convert_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Convert with features loading':
-                self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                               self.magnification.value(), self.processor, False, True, self.counts.value())
+                self.thread = ConvertPacData(self.tar, self.file_list, self.input, self.threshold.value(),
+                                             self.magnification.value(), self.processor, False, True, self.counts.value())
                 self.thread._signal.connect(self.convert_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Convert with both loading':
-                self.thread = Convert_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                               self.magnification.value(), self.processor, True, True, self.counts.value())
+                self.thread = ConvertPacData(self.tar, self.file_list, self.input, self.threshold.value(),
+                                             self.magnification.value(), self.processor, True, True, self.counts.value())
                 self.thread._signal.connect(self.convert_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Load both':
-                self.thread = Read_pac_data_features(self.tar, self.file_list, self.input, self.threshold.value(),
-                                                     self.magnification.value(), self.processor)
+                self.thread = ReadPacDataFeatures(self.tar, self.file_list, self.input, self.threshold.value(),
+                                                  self.magnification.value(), self.processor)
                 self.thread._signal.connect(self.read_pac_data_features)
                 self.thread.start()
             elif self.mode.currentText() == 'Load waveforms only':
-                self.thread = Read_pac_data(self.tar, self.file_list, self.input, self.threshold.value(),
-                                            self.magnification.value(), self.processor)
+                self.thread = ReadPacData(self.tar, self.file_list, self.input, self.threshold.value(),
+                                          self.magnification.value(), self.processor)
                 self.thread._signal.connect(self.return_read_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Load features only':
-                self.thread = Read_pac_features(self.tar)
+                self.thread = ReadPacFeatures(self.tar)
                 self.thread._signal.connect(self.return_read_pac_features)
                 self.thread.start()
             # else:
@@ -1035,190 +1046,193 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             del data_tra
 
     def show_feature(self):
-        self.status = self.show_figurenote.text()
-        features = Features(self.color_1, self.color_2, self.filter_pri[:, 1], self.status, self.output)
-        # Plot features' correlation
-        if self.E_A.isChecked():
-            plotWindow = features.plot_correlation(self.filter_pri[:, self.feature_idx[0]],
-                                                   self.filter_pri[:, self.feature_idx[2]], self.xlabelz[0],
-                                                   self.xlabelz[2], self.correlation_select_color.currentText())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.E_D.isChecked():
-            plotWindow = features.plot_correlation(self.filter_pri[:, self.feature_idx[1]],
-                                                   self.filter_pri[:, self.feature_idx[2]], self.xlabelz[1],
-                                                   self.xlabelz[2], self.correlation_select_color.currentText())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.A_D.isChecked():
-            plotWindow = features.plot_correlation(self.filter_pri[:, self.feature_idx[1]],
-                                                   self.filter_pri[:, self.feature_idx[0]], self.xlabelz[1],
-                                                   self.xlabelz[0], self.correlation_select_color.currentText())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        # Plot PDF of features
-        if self.PDF_E.isChecked():
-            pdf_end_fit = self.pdf_end_fit.value()
-            if self.pdf_end_fit.value() == -100:
-                pdf_end_fit = None
-            plotWindow = features.cal_PDF(sorted(self.filter_pri[:, self.feature_idx[2]]), [], [],
-                                          self.xlabelz[2], 'PDF (E)', [[self.pdf_start_fit.value(), pdf_end_fit], [], []],
-                                          [self.pdf_interv_num.value(), [], []], self.pdf_select_color.currentText().lower(),
-                                          self.pdf_fit.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-            QtWidgets.QApplication.processEvents()
-        if self.PDF_A.isChecked():
-            pdf_end_fit = self.pdf_end_fit.value()
-            if self.pdf_end_fit.value() == -100:
-                pdf_end_fit = None
-            plotWindow = features.cal_PDF(sorted(self.filter_pri[:, self.feature_idx[0]]), [], [],
-                                          self.xlabelz[0], 'PDF (A)', [[self.pdf_start_fit.value(), pdf_end_fit], [], []],
-                                          [self.pdf_interv_num.value(), [], []],
-                                          self.pdf_select_color.currentText().lower(),
-                                          self.pdf_fit.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PDF_D.isChecked():
-            pdf_end_fit = self.pdf_end_fit.value()
-            if self.pdf_end_fit.value() == -100:
-                pdf_end_fit = None
-            plotWindow = features.cal_PDF(sorted(self.filter_pri[:, self.feature_idx[1]]), [], [],
-                                          self.xlabelz[1], 'PDF (D)', [[self.pdf_start_fit.value(), pdf_end_fit], [], []],
-                                          [self.pdf_interv_num.value(), [], []],
-                                          self.pdf_select_color.currentText().lower(),
-                                          self.pdf_fit.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        # Plot CCDF of features
-        if self.CCDF_E.isChecked():
-            ccdf_end_fit = self.ccdf_end_fit.value()
-            if self.ccdf_end_fit.value() == 0:
-                ccdf_end_fit = float('inf')
-            plotWindow = features.cal_CCDF(sorted(self.filter_pri[:, self.feature_idx[2]]), [], [], self.xlabelz[2],
-                                           'CCDF (E)', [[self.ccdf_start_fit.value(), ccdf_end_fit], [], []],
-                                           self.ccdf_select_color.currentText().lower(),
-                                           self.ccdf_fit.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.CCDF_A.isChecked():
-            ccdf_end_fit = self.ccdf_end_fit.value()
-            if self.ccdf_end_fit.value() == 0:
-                ccdf_end_fit = float('inf')
-            plotWindow = features.cal_CCDF(sorted(self.filter_pri[:, self.feature_idx[0]]), [], [], self.xlabelz[0],
-                                           'CCDF (A)', [[self.ccdf_start_fit.value(), ccdf_end_fit], [], []],
-                                           self.ccdf_select_color.currentText().lower(),
-                                           self.ccdf_fit.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.CCDF_D.isChecked():
-            ccdf_end_fit = self.ccdf_end_fit.value()
-            if self.ccdf_end_fit.value() == 0:
-                ccdf_end_fit = float('inf')
-            plotWindow = features.cal_CCDF(sorted(self.filter_pri[:, self.feature_idx[1]]), [], [], self.xlabelz[1],
-                                           'CCDF (D)', [[self.ccdf_start_fit.value(), ccdf_end_fit], [], []],
-                                           self.ccdf_select_color.currentText().lower(),
-                                           self.ccdf_fit.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        # Plot ML of features
-        if self.ML_E.isChecked():
-            plotWindow = features.cal_ML(sorted(self.filter_pri[:, self.feature_idx[2]]), [], [], self.xlabelz[2],
-                                         'ML (E)', self.ml_select_color.currentText().lower())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.ML_A.isChecked():
-            plotWindow = features.cal_ML(sorted(self.filter_pri[:, self.feature_idx[0]]), [], [], self.xlabelz[0],
-                                         'ML (A)', self.ml_select_color.currentText().lower())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.ML_D.isChecked():
-            plotWindow = features.cal_ML(sorted(self.filter_pri[:, self.feature_idx[1]]), [], [], self.xlabelz[1],
-                                         'ML (D)', self.ml_select_color.currentText().lower())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        # Plot contour of features
-        if self.contour_D_E.isChecked():
-            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[2]], self.filter_pri[:, self.feature_idx[1]],
-                                              '$20 \log_{10} E(aJ)$', '$20 \log_{10} D(\mu s)$',
-                                              [self.contour_x_min.value(), self.contour_x_max.value()],
-                                              [self.contour_y_min.value(), self.contour_y_max.value()],
-                                              self.contour_x_bin.value(), self.contour_y_bin.value(),
-                                              self.contour_method.currentText(),
-                                              self.contour_padding.currentText() == str(True),
-                                              self.contour_colorbar.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.contour_E_A.isChecked():
-            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[0]], self.filter_pri[:, self.feature_idx[2]],
-                                              '$20 \log_{10} A(\mu V)$', '$20 \log_{10} E(aJ)$',
-                                              [self.contour_x_min.value(), self.contour_x_max.value()],
-                                              [self.contour_y_min.value(), self.contour_y_max.value()],
-                                              self.contour_x_bin.value(), self.contour_y_bin.value(),
-                                              self.contour_method.currentText(),
-                                              self.contour_padding.currentText() == str(True),
-                                              self.contour_colorbar.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.contour_D_A.isChecked():
-            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[0]], self.filter_pri[:, self.feature_idx[1]],
-                                              '$20 \log_{10} A(\mu V)$', '$20 \log_{10} D(\mu s)$',
-                                              [self.contour_x_min.value(), self.contour_x_max.value()],
-                                              [self.contour_y_min.value(), self.contour_y_max.value()],
-                                              self.contour_x_bin.value(), self.contour_y_bin.value(),
-                                              self.contour_method.currentText(),
-                                              self.contour_padding.currentText() == str(True),
-                                              self.contour_colorbar.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        # Plot some laws of features
-        if self.bathlaw.isChecked():
-            plotWindow = features.cal_BathLaw(self.filter_pri[:, self.feature_idx[2]], [], [], 'Mainshock Energy (aJ)',
-                                              r'$\mathbf{\Delta}$M', self.bathlaw_interv_num.value(),
-                                              self.bathlaw_color.currentText().lower())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.waitingtime.isChecked():
-            plotWindow = features.cal_WaitingTime(self.filter_pri[:, self.feature_idx[-2]], [], [], r'$\mathbf{\Delta}$t (s)',
-                                                  r'P($\mathbf{\Delta}$t)', self.waitingtime_interv_num.value(),
-                                                  self.waitingtime_color.currentText().lower())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.omorilaw.isChecked():
-            plotWindow = features.cal_OmoriLaw(self.filter_pri[:, self.feature_idx[2]], [], [], r'$\mathbf{t-t_{MS}\;(s)}$',
-                                               r'$\mathbf{r_{AS}(t-t_{MS})\;(s^{-1})}$',
-                                               self.omorilaw_interv_num.value())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        # Plot time domain curves
-        if self.E_T.isChecked():
-            plotWindow = features.plot_feature_time(self.filter_pri[:, self.feature_idx[2]], self.xlabelz[2],
-                                                    self.show_ending_time.value(), self.feature_color.currentText(),
-                                                    self.stress_color.currentText(), self.bar_width.value(),
-                                                    self.stretcher, self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.A_T.isChecked():
-            plotWindow = features.plot_feature_time(self.filter_pri[:, self.feature_idx[0]], self.xlabelz[0],
-                                                    self.show_ending_time.value(), self.feature_color.currentText(),
-                                                    self.stress_color.currentText(), self.bar_width.value(),
-                                                    self.stretcher, self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.D_T.isChecked():
-            plotWindow = features.plot_feature_time(self.filter_pri[:, self.feature_idx[1]], self.xlabelz[1],
-                                                    self.show_ending_time.value(), self.feature_color.currentText(),
-                                                    self.stress_color.currentText(), self.bar_width.value(),
-                                                    self.stretcher, self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.C_T.isChecked():
-            plotWindow = features.plot_feature_time(self.filter_pri[:, self.feature_idx[-1]], self.xlabelz[3],
-                                                    self.show_ending_time.value(), self.feature_color.currentText(),
-                                                    self.stress_color.currentText(), self.bar_width.value(),
-                                                    self.stretcher, self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
+        try:
+            self.status = self.show_figurenote.text()
+            features = Features(self.color_1, self.color_2, self.filter_pri[:, 1], self.status, self.output)
+            # Plot features' correlation
+            if self.E_A.isChecked():
+                plotWindow = features.plot_correlation(self.filter_pri[:, self.feature_idx[0]],
+                                                       self.filter_pri[:, self.feature_idx[2]], self.xlabelz[0],
+                                                       self.xlabelz[2], self.correlation_select_color.currentText())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.E_D.isChecked():
+                plotWindow = features.plot_correlation(self.filter_pri[:, self.feature_idx[1]],
+                                                       self.filter_pri[:, self.feature_idx[2]], self.xlabelz[1],
+                                                       self.xlabelz[2], self.correlation_select_color.currentText())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.A_D.isChecked():
+                plotWindow = features.plot_correlation(self.filter_pri[:, self.feature_idx[1]],
+                                                       self.filter_pri[:, self.feature_idx[0]], self.xlabelz[1],
+                                                       self.xlabelz[0], self.correlation_select_color.currentText())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            # Plot PDF of features
+            if self.PDF_E.isChecked():
+                pdf_end_fit = self.pdf_end_fit.value()
+                if self.pdf_end_fit.value() == -100:
+                    pdf_end_fit = None
+                plotWindow = features.cal_PDF(sorted(self.filter_pri[:, self.feature_idx[2]]), self.xlabelz[2], 'PDF (E)',
+                                              [self.pdf_start_fit.value(), pdf_end_fit], self.pdf_interv_num.value(),
+                                              self.pdf_select_color.currentText().lower(),
+                                              self.pdf_fit.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+                QtWidgets.QApplication.processEvents()
+            if self.PDF_A.isChecked():
+                pdf_end_fit = self.pdf_end_fit.value()
+                if self.pdf_end_fit.value() == -100:
+                    pdf_end_fit = None
+                plotWindow = features.cal_PDF(sorted(self.filter_pri[:, self.feature_idx[0]]), self.xlabelz[0], 'PDF (A)',
+                                              [self.pdf_start_fit.value(), pdf_end_fit], self.pdf_interv_num.value(),
+                                              self.pdf_select_color.currentText().lower(),
+                                              self.pdf_fit.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PDF_D.isChecked():
+                pdf_end_fit = self.pdf_end_fit.value()
+                if self.pdf_end_fit.value() == -100:
+                    pdf_end_fit = None
+                plotWindow = features.cal_PDF(sorted(self.filter_pri[:, self.feature_idx[1]]), self.xlabelz[1], 'PDF (D)',
+                                              [self.pdf_start_fit.value(), pdf_end_fit], self.pdf_interv_num.value(),
+                                              self.pdf_select_color.currentText().lower(),
+                                              self.pdf_fit.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            # Plot CCDF of features
+            if self.CCDF_E.isChecked():
+                ccdf_end_fit = self.ccdf_end_fit.value()
+                if self.ccdf_end_fit.value() == 0:
+                    ccdf_end_fit = float('inf')
+                plotWindow = features.cal_CCDF(sorted(self.filter_pri[:, self.feature_idx[2]]), self.xlabelz[2], 'CCDF (E)',
+                                               [self.ccdf_start_fit.value(), ccdf_end_fit],
+                                               self.ccdf_select_color.currentText().lower(),
+                                               self.ccdf_fit.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.CCDF_A.isChecked():
+                ccdf_end_fit = self.ccdf_end_fit.value()
+                if self.ccdf_end_fit.value() == 0:
+                    ccdf_end_fit = float('inf')
+                plotWindow = features.cal_CCDF(sorted(self.filter_pri[:, self.feature_idx[0]]), self.xlabelz[0], 'CCDF (A)',
+                                               [self.ccdf_start_fit.value(), ccdf_end_fit],
+                                               self.ccdf_select_color.currentText().lower(),
+                                               self.ccdf_fit.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.CCDF_D.isChecked():
+                ccdf_end_fit = self.ccdf_end_fit.value()
+                if self.ccdf_end_fit.value() == 0:
+                    ccdf_end_fit = float('inf')
+                plotWindow = features.cal_CCDF(sorted(self.filter_pri[:, self.feature_idx[1]]), self.xlabelz[1], 'CCDF (D)',
+                                               [self.ccdf_start_fit.value(), ccdf_end_fit],
+                                               self.ccdf_select_color.currentText().lower(),
+                                               self.ccdf_fit.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            # Plot ML of features
+            if self.ML_E.isChecked():
+                plotWindow = features.cal_ML(sorted(self.filter_pri[:, self.feature_idx[2]]), self.xlabelz[2], 'ML (E)',
+                                             self.ml_select_color.currentText().lower())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.ML_A.isChecked():
+                plotWindow = features.cal_ML(sorted(self.filter_pri[:, self.feature_idx[0]]), self.xlabelz[0], 'ML (A)',
+                                             self.ml_select_color.currentText().lower())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.ML_D.isChecked():
+                plotWindow = features.cal_ML(sorted(self.filter_pri[:, self.feature_idx[1]]), self.xlabelz[1], 'ML (D)',
+                                             self.ml_select_color.currentText().lower())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            # Plot contour of features
+            if self.contour_D_E.isChecked():
+                plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[2]], self.filter_pri[:, self.feature_idx[1]],
+                                                  '$20 \log_{10} E(aJ)$', '$20 \log_{10} D(\mu s)$',
+                                                  [self.contour_x_min.value(), self.contour_x_max.value()],
+                                                  [self.contour_y_min.value(), self.contour_y_max.value()],
+                                                  self.contour_x_bin.value(), self.contour_y_bin.value(),
+                                                  self.contour_method.currentText(),
+                                                  self.contour_padding.currentText() == str(True),
+                                                  self.contour_colorbar.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.contour_E_A.isChecked():
+                plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[0]], self.filter_pri[:, self.feature_idx[2]],
+                                                  '$20 \log_{10} A(\mu V)$', '$20 \log_{10} E(aJ)$',
+                                                  [self.contour_x_min.value(), self.contour_x_max.value()],
+                                                  [self.contour_y_min.value(), self.contour_y_max.value()],
+                                                  self.contour_x_bin.value(), self.contour_y_bin.value(),
+                                                  self.contour_method.currentText(),
+                                                  self.contour_padding.currentText() == str(True),
+                                                  self.contour_colorbar.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.contour_D_A.isChecked():
+                plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[0]], self.filter_pri[:, self.feature_idx[1]],
+                                                  '$20 \log_{10} A(\mu V)$', '$20 \log_{10} D(\mu s)$',
+                                                  [self.contour_x_min.value(), self.contour_x_max.value()],
+                                                  [self.contour_y_min.value(), self.contour_y_max.value()],
+                                                  self.contour_x_bin.value(), self.contour_y_bin.value(),
+                                                  self.contour_method.currentText(),
+                                                  self.contour_padding.currentText() == str(True),
+                                                  self.contour_colorbar.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            # Plot some laws of features
+            if self.bathlaw.isChecked():
+                plotWindow = features.cal_BathLaw(self.filter_pri[:, self.feature_idx[2]], 'Mainshock Energy (aJ)',
+                                                  r'$\mathbf{\Delta}$M', self.bathlaw_interv_num.value(),
+                                                  self.bathlaw_color.currentText().lower())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.waitingtime.isChecked():
+                plotWindow = features.cal_WaitingTime(self.filter_pri[:, self.feature_idx[-2]], r'$\mathbf{\Delta}$t (s)',
+                                                      r'P($\mathbf{\Delta}$t)', self.waitingtime_interv_num.value(),
+                                                      self.waitingtime_color.currentText().lower())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.omorilaw.isChecked():
+                plotWindow = features.cal_OmoriLaw(self.filter_pri[:, self.feature_idx[2]], r'$\mathbf{t-t_{MS}\;(s)}$',
+                                                   r'$\mathbf{r_{AS}(t-t_{MS})\;(s^{-1})}$',
+                                                   self.omorilaw_interv_num.value())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            # Plot time domain curves
+            if self.E_T.isChecked():
+                plotWindow = features.plot_feature_time(self.filter_pri[:, self.feature_idx[2]], self.xlabelz[2],
+                                                        self.show_ending_time.value(), self.feature_color.currentText(),
+                                                        self.stress_color.currentText(), self.bar_width.value(),
+                                                        self.stretcher, self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.A_T.isChecked():
+                plotWindow = features.plot_feature_time(self.filter_pri[:, self.feature_idx[0]], self.xlabelz[0],
+                                                        self.show_ending_time.value(), self.feature_color.currentText(),
+                                                        self.stress_color.currentText(), self.bar_width.value(),
+                                                        self.stretcher, self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.D_T.isChecked():
+                plotWindow = features.plot_feature_time(self.filter_pri[:, self.feature_idx[1]], self.xlabelz[1],
+                                                        self.show_ending_time.value(), self.feature_color.currentText(),
+                                                        self.stress_color.currentText(), self.bar_width.value(),
+                                                        self.stretcher, self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.C_T.isChecked():
+                plotWindow = features.plot_feature_time(self.filter_pri[:, self.feature_idx[-1]], self.xlabelz[3],
+                                                        self.show_ending_time.value(), self.feature_color.currentText(),
+                                                        self.stress_color.currentText(), self.bar_width.value(),
+                                                        self.stretcher, self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+        except (Exception, BaseException) as e:
+            exstr = traceback.format_exc()
+            print("=" * 24 + " Error Information " + "=" * 24)
+            print(exstr)
 
     def show_auth(self):
         self.auth_win.setWindowModality(Qt.Qt.ApplicationModal)

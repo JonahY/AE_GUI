@@ -100,7 +100,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
      <bool>false</bool>
     </property>
     <property name="movable">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -174,7 +174,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <property name="font">
           <font>
            <family>Sitka Banner</family>
-           <pointsize>10</pointsize>
+           <pointsize>11</pointsize>
            <weight>75</weight>
            <italic>false</italic>
            <bold>true</bold>
@@ -277,7 +277,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <property name="font">
           <font>
            <family>Sitka Banner</family>
-           <pointsize>10</pointsize>
+           <pointsize>11</pointsize>
            <weight>75</weight>
            <italic>false</italic>
            <bold>true</bold>
@@ -327,7 +327,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <property name="font">
           <font>
            <family>Sitka Banner</family>
-           <pointsize>10</pointsize>
+           <pointsize>11</pointsize>
            <weight>75</weight>
            <italic>false</italic>
            <bold>true</bold>
@@ -402,7 +402,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <property name="font">
           <font>
            <family>Sitka Banner</family>
-           <pointsize>10</pointsize>
+           <pointsize>11</pointsize>
            <weight>75</weight>
            <italic>false</italic>
            <bold>true</bold>
@@ -497,7 +497,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
       </property>
       <property name="font">
        <font>
-        <family>Times New Roman</family>
+        <family>Sitka Banner</family>
         <pointsize>10</pointsize>
         <weight>75</weight>
         <italic>true</italic>
@@ -519,9 +519,9 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>140</y>
+        <y>130</y>
         <width>531</width>
-        <height>101</height>
+        <height>110</height>
        </rect>
       </property>
       <property name="font">
@@ -545,7 +545,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <x>10</x>
          <y>20</y>
          <width>511</width>
-         <height>67</height>
+         <height>81</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
@@ -553,8 +553,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <widget class="QLabel" name="time">
           <property name="font">
            <font>
-            <family>Times New Roman</family>
-            <pointsize>10</pointsize>
+            <family>Sitka Banner</family>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <italic>false</italic>
             <bold>true</bold>
@@ -578,8 +578,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <widget class="QLabel" name="counts_label">
           <property name="font">
            <font>
-            <family>Times New Roman</family>
-            <pointsize>10</pointsize>
+            <family>Sitka Banner</family>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <italic>false</italic>
             <bold>true</bold>
@@ -603,8 +603,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <widget class="QLabel" name="x">
           <property name="font">
            <font>
-            <family>Times New Roman</family>
-            <pointsize>10</pointsize>
+            <family>Sitka Banner</family>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <italic>false</italic>
             <bold>true</bold>
@@ -628,8 +628,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <widget class="QLabel" name="xx">
           <property name="font">
            <font>
-            <family>Times New Roman</family>
-            <pointsize>10</pointsize>
+            <family>Sitka Banner</family>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <italic>false</italic>
             <bold>true</bold>
@@ -653,8 +653,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <widget class="QLabel" name="xxx">
           <property name="font">
            <font>
-            <family>Times New Roman</family>
-            <pointsize>10</pointsize>
+            <family>Sitka Banner</family>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <italic>false</italic>
             <bold>true</bold>
@@ -678,8 +678,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <widget class="QLabel" name="lower">
           <property name="font">
            <font>
-            <family>Times New Roman</family>
-            <pointsize>10</pointsize>
+            <family>Sitka Banner</family>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <italic>false</italic>
             <bold>true</bold>
@@ -804,8 +804,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <widget class="QLabel" name="upper">
           <property name="font">
            <font>
-            <family>Times New Roman</family>
-            <pointsize>10</pointsize>
+            <family>Sitka Banner</family>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <italic>false</italic>
             <bold>true</bold>
@@ -1012,7 +1012,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
         <x>10</x>
         <y>10</y>
         <width>531</width>
-        <height>119</height>
+        <height>121</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_feature_1">
@@ -1068,7 +1068,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <property name="font">
           <font>
            <family>Sitka Banner</family>
-           <pointsize>10</pointsize>
+           <pointsize>11</pointsize>
            <weight>75</weight>
            <italic>false</italic>
            <bold>true</bold>
@@ -1162,7 +1162,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <property name="font">
           <font>
            <family>Sitka Banner</family>
-           <pointsize>10</pointsize>
+           <pointsize>11</pointsize>
            <weight>75</weight>
            <italic>false</italic>
            <bold>true</bold>
@@ -1237,7 +1237,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <property name="font">
           <font>
            <family>Sitka Banner</family>
-           <pointsize>10</pointsize>
+           <pointsize>11</pointsize>
            <weight>75</weight>
            <italic>false</italic>
            <bold>true</bold>
@@ -1302,7 +1302,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
           <x>10</x>
           <y>10</y>
           <width>501</width>
-          <height>161</height>
+          <height>170</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout">
@@ -1313,7 +1313,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1332,7 +1332,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1351,7 +1351,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1370,7 +1370,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1389,7 +1389,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1408,7 +1408,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1427,7 +1427,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1446,7 +1446,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1465,7 +1465,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1484,7 +1484,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1503,7 +1503,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1522,7 +1522,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1541,7 +1541,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1560,7 +1560,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1579,7 +1579,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1598,7 +1598,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1617,7 +1617,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1636,7 +1636,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1655,7 +1655,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1674,7 +1674,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1693,7 +1693,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1712,7 +1712,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </property>
            <property name="font">
             <font>
-             <family>Times New Roman</family>
+             <family>Sitka Banner</family>
              <pointsize>10</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -1727,23 +1727,624 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
         </layout>
        </widget>
       </widget>
-      <widget class="QWidget" name="parameter_1">
+      <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Fitting</string>
+        <string>PAC</string>
        </attribute>
-       <widget class="QGroupBox" name="CCDF">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>260</x>
-          <y>50</y>
-          <width>211</width>
-          <height>131</height>
+          <x>10</x>
+          <y>10</y>
+          <width>501</width>
+          <height>112</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_17">
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="PAC_E_A">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Energy-Amplitude</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QCheckBox" name="PAC_E_D">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Energy-Duration</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="PAC_A_D">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Amplitude-Duration</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="PAC_AbsE_A">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>AbsEnergy-Amplitude</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="PAC_AbsE_D">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>AbsEnergy-Duration</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="PAC_E_T">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Energy-Time</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="PAC_AbsE_T">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>AbsEnergy-Time</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="PAC_D_T">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Duration-Time</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QCheckBox" name="PAC_C_T">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Counts-Time</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="PAC_A_T">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sitka Banner</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Amplitude-Time</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="parameter_1">
+       <attribute name="title">
+        <string>Fitting Ⅰ</string>
+       </attribute>
+       <widget class="QGroupBox" name="PDF">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>341</width>
+          <height>101</height>
          </rect>
         </property>
         <property name="font">
          <font>
           <family>Times New Roman</family>
-          <pointsize>10</pointsize>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>true</italic>
+          <bold>true</bold>
+          <underline>false</underline>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <property name="title">
+         <string>PDF</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>321</width>
+           <height>79</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <property name="horizontalSpacing">
+             <number>6</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="bin_method_1">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Bin method</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="pdf_bin_method">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Log</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Linear</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="pdf_color">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Color</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="pdf_select_color">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Black</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Red</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Blue</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Purple</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Pink</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Violet</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Green</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Yellow</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gray</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="fit_lim_3">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+                <underline>false</underline>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="pdf_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <property name="horizontalSpacing">
+             <number>6</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="pdf_interval_num">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Interval number</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="pdf_interv_num">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="value">
+               <number>5</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="index_end_fit_2">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Index to start fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="pdf_start_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="index_start_fit_2">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Index to end fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="pdf_end_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="wrapping">
+               <bool>true</bool>
+              </property>
+              <property name="specialValueText">
+               <string>None</string>
+              </property>
+              <property name="minimum">
+               <number>-100</number>
+              </property>
+              <property name="maximum">
+               <number>-1</number>
+              </property>
+              <property name="value">
+               <number>-100</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="CCDF">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>341</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
           <weight>75</weight>
           <italic>true</italic>
           <bold>true</bold>
@@ -1757,562 +2358,261 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
           <rect>
            <x>10</x>
            <y>20</y>
-           <width>191</width>
-           <height>104</height>
+           <width>321</width>
+           <height>54</height>
           </rect>
          </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="ccdf_color">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Clolor</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="ccdf_select_color">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Red</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Blue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Purple</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Green</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Yellow</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="fit_lim_2">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Fitting</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="ccdf_fit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>False</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>True</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="index_end_fit">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Value to start fitting</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QSpinBox" name="ccdf_start_fit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="maximum">
-             <number>100000</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="index_start_fit">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Value to end fitting</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QSpinBox" name="ccdf_end_fit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="wrapping">
-             <bool>true</bool>
-            </property>
-            <property name="specialValueText">
-             <string>None</string>
-            </property>
-            <property name="minimum">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_8">
+            <property name="verticalSpacing">
              <number>0</number>
             </property>
-            <property name="maximum">
-             <number>100000</number>
-            </property>
-            <property name="value">
+            <item row="0" column="0">
+             <widget class="QLabel" name="ccdf_color">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Color</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="ccdf_select_color">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Black</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Red</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Blue</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Purple</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Pink</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Violet</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Green</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Yellow</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gray</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="fit_lim_2">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="ccdf_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_9">
+            <property name="verticalSpacing">
              <number>0</number>
             </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-       <widget class="QGroupBox" name="PDF">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>0</y>
-          <width>201</width>
-          <height>181</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="title">
-         <string>PDF</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>11</x>
-           <y>21</y>
-           <width>179</width>
-           <height>131</height>
-          </rect>
-         </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="pdf_color">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Clolor</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="pdf_select_color">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>Black</string>
-             </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="index_end_fit">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Value to start fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
             </item>
-            <item>
-             <property name="text">
-              <string>Red</string>
-             </property>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="ccdf_start_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>100000</number>
+              </property>
+             </widget>
             </item>
-            <item>
-             <property name="text">
-              <string>Blue</string>
-             </property>
+            <item row="1" column="0">
+             <widget class="QLabel" name="index_start_fit">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Value to end fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
             </item>
-            <item>
-             <property name="text">
-              <string>Purple</string>
-             </property>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="ccdf_end_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="wrapping">
+               <bool>true</bool>
+              </property>
+              <property name="specialValueText">
+               <string>None</string>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>100000</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+             </widget>
             </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Green</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Yellow</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="pdf_interval_num">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Interval number</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="pdf_interv_num">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="value">
-             <number>5</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="fit_lim_3">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Fitting</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="pdf_fit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>False</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>True</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="index_end_fit_2">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Index to start fitting</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QSpinBox" name="pdf_start_fit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="index_start_fit_2">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Index to end fitting</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QSpinBox" name="pdf_end_fit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="wrapping">
-             <bool>true</bool>
-            </property>
-            <property name="specialValueText">
-             <string>None</string>
-            </property>
-            <property name="minimum">
-             <number>-100</number>
-            </property>
-            <property name="maximum">
-             <number>-1</number>
-            </property>
-            <property name="value">
-             <number>-100</number>
-            </property>
-           </widget>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -2320,16 +2620,16 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
        <widget class="QGroupBox" name="groupBox">
         <property name="geometry">
          <rect>
-          <x>260</x>
+          <x>365</x>
           <y>0</y>
-          <width>121</width>
-          <height>51</height>
+          <width>141</width>
+          <height>80</height>
          </rect>
         </property>
         <property name="font">
          <font>
           <family>Times New Roman</family>
-          <pointsize>10</pointsize>
+          <pointsize>11</pointsize>
           <weight>75</weight>
           <italic>true</italic>
           <bold>true</bold>
@@ -2338,16 +2638,50 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
         <property name="title">
          <string>ML</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
         <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>20</y>
-           <width>106</width>
-           <height>23</height>
+           <width>123</width>
+           <height>52</height>
           </rect>
          </property>
-         <layout class="QFormLayout" name="formLayout_3">
+         <layout class="QGridLayout" name="gridLayout_10">
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="ml_color">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>1</number>
+            </property>
+            <property name="text">
+             <string>Color</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="ml_select_color">
             <property name="enabled">
@@ -2409,8 +2743,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
             </item>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="ml_color">
+          <item row="1" column="0">
+           <widget class="QLabel" name="ml_ecolor">
             <property name="font">
              <font>
               <family>Times New Roman</family>
@@ -2427,11 +2761,72 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
              <number>1</number>
             </property>
             <property name="text">
-             <string>Clolor</string>
+             <string>Error bar</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="ml_select_ecolor">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <item>
+             <property name="text">
+              <string>Gray</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Black</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Red</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Blue</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Purple</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Pink</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Violet</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Green</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Yellow</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
@@ -2440,16 +2835,16 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
        <widget class="QGroupBox" name="groupBox_2">
         <property name="geometry">
          <rect>
-          <x>390</x>
-          <y>0</y>
-          <width>121</width>
+          <x>365</x>
+          <y>100</y>
+          <width>141</width>
           <height>51</height>
          </rect>
         </property>
         <property name="font">
          <font>
           <family>Times New Roman</family>
-          <pointsize>10</pointsize>
+          <pointsize>11</pointsize>
           <weight>75</weight>
           <italic>true</italic>
           <bold>true</bold>
@@ -2459,18 +2854,43 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          <string>Correlation</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
-        <widget class="QWidget" name="layoutWidget_6">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>20</y>
-           <width>106</width>
-           <height>23</height>
+           <width>121</width>
+           <height>27</height>
           </rect>
          </property>
-         <layout class="QFormLayout" name="formLayout_4">
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <widget class="QLabel" name="correlation_color">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>1</number>
+            </property>
+            <property name="text">
+             <string>Color</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="correlation_select_color">
             <property name="enabled">
@@ -2532,8 +2952,682 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
             </item>
            </widget>
           </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Fitting Ⅱ</string>
+       </attribute>
+       <widget class="QGroupBox" name="Omorilaw">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>341</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>true</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="title">
+         <string>Omori's Law</string>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>321</width>
+           <height>54</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_13">
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="bin_method_3">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Bin method</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="omorilaw_bin_method">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Log</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Linear</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="color_4">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Color</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="omorilaw_color">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Default</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_14">
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="fit_lim_5">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" colspan="2">
+             <widget class="QComboBox" name="omorilaw_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QLabel" name="omorilaw_interval">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Interval number</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QSpinBox" name="omorilaw_interv_num">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="value">
+               <number>5</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="Waitingtime">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>341</width>
+          <height>101</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>true</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="title">
+         <string>Waiting Time</string>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>321</width>
+           <height>79</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="bin_method_2">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Bin method</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="waitingtime_bin_method">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Log</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Linear</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="color_3">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Color</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="waitingtime_color">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Black</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Red</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Blue</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Purple</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Pink</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Violet</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Green</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Yellow</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gray</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="fit_lim_4">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="waitingtime_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_12">
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="waitingtime_interval">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Interval number</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="waitingtime_interv_num">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="value">
+               <number>5</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="index_end_fit_3">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Index to start fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="waitingtime_start_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="index_start_fit_3">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Index to end fitting</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="waitingtime_end_fit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="wrapping">
+               <bool>true</bool>
+              </property>
+              <property name="specialValueText">
+               <string>None</string>
+              </property>
+              <property name="minimum">
+               <number>-100</number>
+              </property>
+              <property name="maximum">
+               <number>-1</number>
+              </property>
+              <property name="value">
+               <number>-100</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="Bathlaw">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>365</x>
+          <y>0</y>
+          <width>151</width>
+          <height>101</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>true</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="title">
+         <string>Bath Law</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>134</width>
+           <height>75</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_15">
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
-           <widget class="QLabel" name="correlation_color">
+           <widget class="QLabel" name="bin_method_4">
             <property name="font">
              <font>
               <family>Times New Roman</family>
@@ -2550,511 +3644,40 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
              <number>1</number>
             </property>
             <property name="text">
-             <string>Clolor</string>
+             <string>Bin method</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="parameter_2">
-       <attribute name="title">
-        <string>Contour</string>
-       </attribute>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>10</y>
-          <width>421</width>
-          <height>152</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="4" column="0">
-          <widget class="QLabel" name="contour_x_bin_num">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>Number of bin in X-axis</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QComboBox" name="contour_padding">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <item>
-            <property name="text">
-             <string>False</string>
+          <item row="0" column="1" colspan="2">
+           <widget class="QComboBox" name="bathlaw_bin_method">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>True</string>
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
             </property>
-           </item>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QLabel" name="contour_x_end_2">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>Y-axis maximum</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="method">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>Method</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="colorbar">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>Color bar</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="3">
-          <widget class="QSpinBox" name="contour_y_bin">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="maximum">
-            <number>1000</number>
-           </property>
-           <property name="value">
-            <number>50</number>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="contour_x_end">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>X-axis maximum</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="contour_method">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <item>
-            <property name="text">
-             <string>Linear bin</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Log bin</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="contour_x_start">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>X-axis minimum</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="padding">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>Padding</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QComboBox" name="contour_colorbar">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <item>
-            <property name="text">
-             <string>False</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>True</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QSpinBox" name="contour_x_bin">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="maximum">
-            <number>1000</number>
-           </property>
-           <property name="value">
-            <number>50</number>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QLabel" name="contour_y_start">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>Y-axis minimum</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="2">
-          <widget class="QLabel" name="contour_y_bin_num">
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>Number of bin in Y-axis</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="3">
-          <widget class="QSpinBox" name="contour_y_max">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="value">
-            <number>80</number>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <widget class="QSpinBox" name="contour_y_min">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="minimum">
-            <number>-20</number>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="value">
-            <number>10</number>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QSpinBox" name="contour_x_min">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="minimum">
-            <number>-20</number>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="value">
-            <number>-20</number>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QSpinBox" name="contour_x_max">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="value">
-            <number>90</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Others</string>
-       </attribute>
-       <widget class="QGroupBox" name="Bathlaw">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>5</y>
-          <width>291</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="title">
-         <string>Bath Law</string>
-        </property>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>21</x>
-           <y>20</y>
-           <width>261</width>
-           <height>23</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
+            <item>
+             <property name="text">
+              <string>Log</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Linear</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
            <widget class="QLabel" name="color">
             <property name="font">
              <font>
@@ -3072,14 +3695,14 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
              <number>1</number>
             </property>
             <property name="text">
-             <string>Clolor</string>
+             <string>Color</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item>
+          <item row="1" column="1" colspan="2">
            <widget class="QComboBox" name="bathlaw_color">
             <property name="enabled">
              <bool>false</bool>
@@ -3140,7 +3763,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
             </item>
            </widget>
           </item>
-          <item>
+          <item row="2" column="0" colspan="2">
            <widget class="QLabel" name="bathlaw_interval">
             <property name="font">
              <font>
@@ -3165,7 +3788,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
             </property>
            </widget>
           </item>
-          <item>
+          <item row="2" column="2">
            <widget class="QSpinBox" name="bathlaw_interv_num">
             <property name="enabled">
              <bool>false</bool>
@@ -3187,317 +3810,34 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          </layout>
         </widget>
        </widget>
-       <widget class="QGroupBox" name="Omorilaw">
+      </widget>
+      <widget class="QWidget" name="parameter_2">
+       <attribute name="title">
+        <string>Others</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_4">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>115</y>
-          <width>291</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="title">
-         <string>Omori's Law</string>
-        </property>
-        <widget class="QWidget" name="layoutWidget_4">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>20</y>
-           <width>261</width>
-           <height>23</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QLabel" name="color_4">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Clolor</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="omorilaw_color">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>Default</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="omorilaw_interval">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Interval number</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="omorilaw_interv_num">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="value">
-             <number>5</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-       <widget class="QGroupBox" name="Waitingtime">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>60</y>
-          <width>291</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="title">
-         <string>Waiting Time</string>
-        </property>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>21</x>
-           <y>20</y>
-           <width>261</width>
-           <height>23</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="color_3">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Clolor</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="waitingtime_color">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Red</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Blue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Purple</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Green</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Yellow</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="waitingtime_interval">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Interval number</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="waitingtime_interv_num">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="value">
-             <number>5</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-       <widget class="QGroupBox" name="groupBox_3">
-        <property name="geometry">
-         <rect>
-          <x>315</x>
-          <y>5</y>
-          <width>201</width>
+          <y>0</y>
+          <width>301</width>
           <height>175</height>
          </rect>
         </property>
         <property name="font">
          <font>
           <family>Times New Roman</family>
-          <pointsize>10</pointsize>
+          <pointsize>11</pointsize>
           <weight>75</weight>
           <italic>true</italic>
           <bold>true</bold>
          </font>
         </property>
         <property name="title">
-         <string>Time Domain Curve</string>
+         <string>Contour</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
         <property name="flat">
          <bool>false</bool>
@@ -3511,373 +3851,955 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
         <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
-           <x>20</x>
-           <y>20</y>
-           <width>156</width>
-           <height>156</height>
+           <x>11</x>
+           <y>26</y>
+           <width>283</width>
+           <height>127</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_7">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetMinimumSize</enum>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <property name="verticalSpacing">
+             <number>6</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="method">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Method</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="contour_method">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Linear bin</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Log bin</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="clabel">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>CLabel</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="contour_clabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="contour_x_start">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>X-axis min</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="contour_x_min">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="minimum">
+               <number>-100</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>-20</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="contour_x_end">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>X-axis max</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QSpinBox" name="contour_x_max">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="minimum">
+               <number>-100</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>90</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="contour_x_bin_num">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>X-axis bins</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QSpinBox" name="contour_x_bin">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+              <property name="value">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_16">
+            <property name="verticalSpacing">
+             <number>6</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="padding">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Padding</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="contour_padding">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="colorbar">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Color bar</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="contour_colorbar">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="contour_y_start">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Y-axis min</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="contour_y_min">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="minimum">
+               <number>-100</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="contour_x_end_2">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Y-axis max</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QSpinBox" name="contour_y_max">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="minimum">
+               <number>-100</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>80</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="contour_y_bin_num">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Y-axis bins</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QSpinBox" name="contour_y_bin">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+              <property name="value">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="geometry">
+         <rect>
+          <x>325</x>
+          <y>0</y>
+          <width>191</width>
+          <height>175</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>true</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="title">
+         <string>Time Domain Curve</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <widget class="QWidget" name="layoutWidget_4">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>171</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <item row="2" column="2">
-           <widget class="QSpinBox" name="show_ending_time">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="maximum">
-             <number>100000</number>
-            </property>
-            <property name="value">
-             <number>29000</number>
-            </property>
-           </widget>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLabel" name="Bar_width">
+              <property name="font">
+               <font>
+                <family>Sitka Banner</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Bar width</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="bar_width">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>100000</number>
+              </property>
+              <property name="value">
+               <number>55</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QLabel" name="Feature_color">
-            <property name="font">
-             <font>
-              <family>Sitka Banner</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Feature color</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QLabel" name="Feature_color">
+              <property name="font">
+               <font>
+                <family>Sitka Banner</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Feature color</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="feature_color">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Purple</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Black</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Red</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Blue</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Pink</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Violet</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Green</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Yellow</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gray</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QLabel" name="ending_time">
-            <property name="font">
-             <font>
-              <family>Sitka Banner</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Ending time (s)</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QLabel" name="ending_time">
+              <property name="font">
+               <font>
+                <family>Sitka Banner</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Ending time (s)</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="show_ending_time">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>999999</number>
+              </property>
+              <property name="value">
+               <number>29000</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="3" column="2">
-           <widget class="QToolButton" name="show_stretcher_data">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QLabel" name="stretcher_data">
+              <property name="font">
+               <font>
+                <family>Sitka Banner</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Stretcher data</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="show_stretcher_data">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="1" column="2">
-           <widget class="QComboBox" name="feature_color">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
             <item>
-             <property name="text">
-              <string>Purple</string>
-             </property>
+             <widget class="QLabel" name="Smooth">
+              <property name="font">
+               <font>
+                <family>Sitka Banner</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Smooth</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
             </item>
             <item>
-             <property name="text">
-              <string>Black</string>
-             </property>
+             <widget class="QComboBox" name="smooth">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
             </item>
-            <item>
-             <property name="text">
-              <string>Red</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Blue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Green</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Yellow</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-           </widget>
+           </layout>
           </item>
-          <item row="4" column="0" rowspan="3" colspan="2">
-           <widget class="QLabel" name="Smooth">
-            <property name="font">
-             <font>
-              <family>Sitka Banner</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Smooth</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QLabel" name="stretcher_data">
-            <property name="font">
-             <font>
-              <family>Sitka Banner</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Stretcher data</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QLabel" name="color_5">
-            <property name="font">
-             <font>
-              <family>Sitka Banner</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Stress color</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QComboBox" name="stress_color">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
             <item>
-             <property name="text">
-              <string>Red</string>
-             </property>
+             <widget class="QLabel" name="color_5">
+              <property name="font">
+               <font>
+                <family>Sitka Banner</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>Stress color</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
             </item>
             <item>
-             <property name="text">
-              <string>Black</string>
-             </property>
+             <widget class="QComboBox" name="stress_color">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Red</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Black</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Blue</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Purple</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Pink</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Violet</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Green</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Yellow</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gray</string>
+               </property>
+              </item>
+             </widget>
             </item>
-            <item>
-             <property name="text">
-              <string>Blue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Purple</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Green</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Yellow</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="4" column="2" rowspan="3">
-           <widget class="QComboBox" name="smooth">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>False</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>True</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="Bar_width">
-            <property name="font">
-             <font>
-              <family>Sitka Banner</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>Bar width</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QSpinBox" name="bar_width">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="maximum">
-             <number>100000</number>
-            </property>
-            <property name="value">
-             <number>55</number>
-            </property>
-           </widget>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -4371,7 +5293,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup_feature"/>
-  <buttongroup name="buttonGroup_waveform"/>
   <buttongroup name="buttonGroup_device"/>
+  <buttongroup name="buttonGroup_waveform"/>
  </buttongroups>
 </ui>

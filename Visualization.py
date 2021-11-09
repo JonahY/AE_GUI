@@ -44,7 +44,7 @@ class AuthWindow(QtWidgets.QDialog, Ui_Dialog):
         self.init_UI()
         self.activate.clicked.connect(self.init_UI_2)
         self.enter.clicked.connect(self.OPEN)
-        self.information.setText('This software is owned by Jonah Yuan.\nPlease send an email to apply for a license.\n'
+        self.information.setText('This software is owned by Yuan.\nPlease send an email to apply for a license.\n'
                                  'E-mail addresses: binchengy@163.com\nInstitution: State Key Laboratory for '
                                  'Mechanical Behavior of Materials, Xi’an Jiaotong University, Xi’an 710049, China')
 

@@ -27,13 +27,14 @@ plt.rcParams['ytick.direction'] = 'in'
 
 
 class Features:
-    def __init__(self, color_1, color_2, time, status, output):
+    def __init__(self, color_1, color_2, time, status, output, device):
         self.color_1 = color_1
         self.color_2 = color_2
         self.Time = time
         self.convert = lambda x, a, b: pow(x, a) * pow(10, b)
         self.status = status
         self.output = output
+        self.device = device
 
     def __cal_linear_interval(self, tmp, interval):
         """
@@ -221,9 +222,9 @@ class Features:
                     value: [0, float('inf')], [100, 900], ...
                     index: [0, None], [11, -2], ...
         :param INTERVAL_NUM: Number of bins divided in each order of magnitude
-        :param bin_method: Method to divide the bin, Support linear partition and logarithmic partition
-        :param FIT: Whether to fit parameters, support True or False
         :param COLOR: Color when drawing with original data, population I and population II respectively
+        :param FIT: Whether to fit parameters, support True or False
+        :param bin_method: Method to divide the bin, Support linear partition and logarithmic partition
         :return:
         """
         if INTERVAL_NUM is None:
@@ -351,7 +352,8 @@ class Features:
 
         return plotWindow
 
-    def cal_contour(self, tmp_1, tmp_2, xlabel, ylabel, x_lim, y_lim, size_x=40, size_y=40, method='linear_bin', padding=False, colorbar=False):
+    def cal_contour(self, tmp_1, tmp_2, xlabel, ylabel, x_lim, y_lim, size_x=40, size_y=40, method='linear_bin',
+                    padding=False, colorbar=False, clabel=False):
         tmp_1, tmp_2 = 20 * np.log10(tmp_1), 20 * np.log10(tmp_2)
         if method == 'Log bin':
             sum_x, sum_y = x_lim[1] - x_lim[0], y_lim[1] - y_lim[0]
@@ -398,6 +400,8 @@ class Features:
             ct = ax.contour(X, Y, height, levels, colors=colors, linewidths=1, linestyles=linestyles)
             if colorbar:
                 cbar = fig.colorbar(ct)
+        if clabel:
+            ax.clabel(ct, inline=True, colors='k', fmt='%.1f')
         plot_norm(ax, xlabel, ylabel, legend=False)
 
         return plotWindow
@@ -409,10 +413,13 @@ class Features:
         fig.text(0.96, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
                  horizontalalignment="right")
         ax = fig.add_subplot()
-        ax.loglog(tmp_1, tmp_2, '.', Marker='.', markersize=8, color=COLOR)
+        if self.device == 'PAC-self':
+            ax.scatter(tmp_1, tmp_2, marker='o', s=15, color=COLOR, edgecolors=COLOR)
+        else:
+            ax.loglog(tmp_1, tmp_2, '.', Marker='.', markersize=8, color=COLOR)
         plot_norm(ax, xlabel, ylabel, legend=False)
 
-        with open('/'.join([self.output, self.status]) + '_%s-%s.txt' % (ylabel[0], xlabel[0]), 'w') as f:
+        with open('/'.join([self.output, self.status]) + '_%s-%s.txt' % (ylabel, xlabel), 'w') as f:
             f.write('{}, {}\n'.format(xlabel, ylabel))
             for i, j in zip(tmp_1, tmp_2):
                 f.write('{}, {}\n'.format(i, j))
@@ -450,8 +457,9 @@ class Features:
                 stress = smooth_curve(time, stress)
             strain_max = strain[-1] * x_max / self.Time[-1]
 
-            ax.bar(self.Time, tmp, color=color_tmp, width=width, log=True)
-            plot_norm(ax, 'Time (s)', ylabel, x_lim=[0, x_max], y_lim=[0, 15000], legend=False)
+            ax.bar(self.Time, tmp, color=color_tmp, width=width, log=False if self.device == 'PAC-self' else True)
+            plot_norm(ax, 'Time (s)', ylabel, x_lim=[0, x_max], y_lim=[0, 80 if self.device == 'PAC-self' else 15000],
+                      legend=False)
 
             ax2 = ax.twinx()
             # ax2.plot(time, stress, color_stretcher, lw=3)
@@ -463,8 +471,9 @@ class Features:
             ax3.plot(strain, stress, color_stretcher, lw=3)
             plot_norm(ax3, 'Strain (%)', x_lim=[0, strain_max], y_lim=[0, 700], legend=False, font_color=color_stretcher)
         else:
-            ax.bar(self.Time, tmp, color=color_tmp, width=width, log=True)
-            plot_norm(ax, 'Time (s)', ylabel, x_lim=[0, x_max], y_lim=[0, 15000], legend=False)
+            ax.bar(self.Time, tmp, color=color_tmp, width=width, log=False if self.device == 'PAC-self' else True)
+            plot_norm(ax, 'Time (s)', ylabel, x_lim=[0, x_max], y_lim=[0, 80 if self.device == 'PAC-self' else 15000],
+                      legend=False)
 
         return plotWindow
 

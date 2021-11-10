@@ -6,7 +6,7 @@
 @time: 2021/11/10 12:56
 """
 
-from main import Ui_MainWindow
+from main_auto import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 import os
 import time
@@ -435,7 +435,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         # Set TRAI to enter only integer
         self.show_trai.setValidator(QtGui.QIntValidator())
         self.setWindowFlags(Qt.Qt.WindowMinimizeButtonHint | Qt.Qt.WindowCloseButtonHint)
-        self.setFixedSize(self.width(), self.height())
+        # self.setFixedSize(self.width(), self.height())
 
         self.__init_open_save()
         self.__init_help()

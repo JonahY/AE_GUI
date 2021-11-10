@@ -1,3 +1,10 @@
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
+
 import sqlite3
 from tqdm import tqdm
 import numpy as np

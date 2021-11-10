@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
 # Form implementation generated from reading ui file 'authorization.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.2
@@ -8,6 +13,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import resource
 
 
 class Ui_Dialog(object):
@@ -15,7 +21,7 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(483, 310)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/dsp.gif"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
         Dialog.setStyleSheet("#license_file {border-style:outset;border-width:2px;border-color: rgb(48, 0, 72);color: rgb(48, 0, 72);font: 10pt \"Verdana\";}\n"
 "#mac {background-color: transparent;border:none;border-style:outset;color: rgb(48, 0, 72);font: 75 10pt \"Verdana\";}\n"

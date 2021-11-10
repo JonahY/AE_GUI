@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-@version: 1.0
-@author: Jarrett
-@file: get_mac_addr
-@time: 2020/5/26 13:13
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
 """
 
 import uuid

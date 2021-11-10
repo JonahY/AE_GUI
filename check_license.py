@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-@version: 1.0
-@author: Jarrett
-@file: check_license
-@time: 2020/5/27 9:24
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
 """
 
 from get_mac_addr import get_mac_address, hash_msg

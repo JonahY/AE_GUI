@@ -1,3 +1,10 @@
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
+
 import sys
 import os
 from PyQt5 import QtWidgets, Qt
@@ -77,7 +84,7 @@ class AuthorizeWindow(QtWidgets.QDialog, Ui_Dialog):
             with open(license_file_path, 'r') as license_file:
                 self.input = license_file.readline()
             lic_msg = bytes(self.input, encoding="utf8")
-            pc = PrpCrypt('XJTU_MSE_MBM_714')  # 初始化密钥
+            pc = PrpCrypt('XJTU_MSE_MBM_714_753_yBc')  # 初始化密钥
             license_str = pc.decrypt(lic_msg)  # 解密
             if license_str:
                 license_dic = eval(license_str)
@@ -98,7 +105,7 @@ class AuthorizeWindow(QtWidgets.QDialog, Ui_Dialog):
                 lic_msg = f.read()
                 f.close()
             lic_msg = bytes(lic_msg, encoding="utf8")
-            pc = PrpCrypt('XJTU_MSE_MBM_714')  # 初始化密钥
+            pc = PrpCrypt('XJTU_MSE_MBM_714_753_yBc')  # 初始化密钥
             license_str = pc.decrypt(lic_msg)  # 解密
             if license_str:
                 license_dic = eval(license_str)

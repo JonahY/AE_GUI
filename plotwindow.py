@@ -1,3 +1,10 @@
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
+
 from PyQt5 import QtWidgets, Qt
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -8,7 +15,7 @@ from matplotlib.pylab import mpl
 
 
 warnings.filterwarnings("ignore")
-mpl.rcParams['axes.unicode_minus'] = False  #显示负号
+mpl.rcParams['axes.unicode_minus'] = False
 plt.rcParams['xtick.direction'] = 'in'
 plt.rcParams['ytick.direction'] = 'in'
 

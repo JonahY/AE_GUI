@@ -1,4 +1,11 @@
-﻿import os
+﻿"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
+
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm

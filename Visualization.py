@@ -1,3 +1,10 @@
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
+
 import sys, os
 if hasattr(sys, 'frozen'):
     os.environ['PATH'] = sys._MEIPASS + ";" + os.environ['PATH']
@@ -114,7 +121,7 @@ class AuthWindow(QtWidgets.QDialog, Ui_Dialog):
                 f.close()
             # str to bytes
             lic_msg = bytes(lic_msg, encoding="utf8")
-            pc = PrpCrypt('XJTU_MSE_MBM_714')  # 初始化密钥
+            pc = PrpCrypt('XJTU_MSE_MBM_714_753_yBc')  # 初始化密钥
             license_str = pc.decrypt(lic_msg)  # 解密
             if license_str:
                 license_dic = eval(license_str)

@@ -1,3 +1,10 @@
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
+
 import sys
 from PyQt5 import QtWidgets, Qt
 from about import Ui_Dialog

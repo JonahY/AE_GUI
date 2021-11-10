@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
+
 from main import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 import os
@@ -7,23 +14,15 @@ from features import *
 from kmeans import *
 from plot_format import *
 from utils import *
-from wave_freq import Waveform, Frequency
+from wave_freq import Waveform
 from pac import *
 from alone_auth import AuthorizeWindow
 from about_info import AboutWindow
 import numpy as np
-import matplotlib.pyplot as plt
 import warnings
 import traceback
-from matplotlib.pylab import mpl
 from multiprocessing import freeze_support
 from multiprocessing import cpu_count
-
-
-warnings.filterwarnings("ignore")
-mpl.rcParams['axes.unicode_minus'] = False  #显示负号
-plt.rcParams['xtick.direction'] = 'in'
-plt.rcParams['ytick.direction'] = 'in'
 
 
 def catchError(info):
@@ -649,8 +648,11 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.mode.addItems(['Load both', 'Load waveforms only', 'Load features only'])
 
     def check_mode(self):
-        self.import_data.setEnabled(True)
-        self.import_data_2.setEnabled(True)
+        if self.input and self.output:
+            self.import_data.setEnabled(True)
+            self.import_data_2.setEnabled(True)
+        else:
+            self.statusbar.showMessage('Please select a path to load or save!')
         self.min_cnts.setValue(self.counts.value())
 
     @catchError('Error In Filtering Data')
@@ -662,6 +664,9 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             if self.chan == name:
                 valid_pri = chan
                 PAC_valid_pri = pac_chan
+        if not valid_pri.shape[0]:
+            self.statusbar.showMessage('Warning: There is no valid wave! Please rectify your filter parameters.')
+            return
         if btn.text() == 'Filter':
             self.upper_time = self.max_time.value()
             self.upper_cnts = self.max_cnts.value()
@@ -688,7 +693,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                                                  (valid_pri[:, self.feature_idx[0]] < self.upper_amp) &
                                                  (valid_pri[:, self.feature_idx[1]] >= self.min_duration.value()) &
                                                  (valid_pri[:, self.feature_idx[1]] < self.upper_dur))[0]]
-            if self.PACData:
+            if self.PACData and self.device == 'PAC':
                 self.PAC_filter_pri = PAC_valid_pri[np.where(
                     (PAC_valid_pri[:, self.PAC_feature_idx[-2]] >= self.min_time.value()) &
                     (PAC_valid_pri[:, self.PAC_feature_idx[-2]] < self.upper_time) &
@@ -714,11 +719,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.max_duration.setValue(0)
             self.filter_pri = valid_pri
             self.statusbar.showMessage('Filtering Reset! Valid waves: %d' % self.filter_pri.shape[0])
-        del chan, valid_pri
-        if self.filter_pri.shape[0]:
-            self.btn_plot(True)
-        else:
-            self.statusbar.showMessage('Warning: There is no valid wave! Please rectify your filter parameters.')
+        del chan, pac_chan, valid_pri, PAC_valid_pri
+        self.btn_plot(True)
 
     def btn_base(self, status):
         self.actionload.setEnabled(status)
@@ -744,6 +746,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.chan2.setEnabled(status)
         self.chan3.setEnabled(status)
         self.chan4.setEnabled(status)
+        self.cwt.setEnabled(status)
         self.plot_waveform.setEnabled(status)
         self.show_trai.setEnabled(status)
 
@@ -909,6 +912,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.data_tra = []
         self.data_pri = []
+        self.filter_pri = []
+        self.PAC_filter_pri = []
         self.chan_1 = []
         self.chan_2 = []
         self.chan_3 = []
@@ -1231,7 +1236,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             return
         if self.device == 'VALLEN':
             waveform = Waveform(self.color_1, self.color_2, self.data_tra, self.input, self.output, self.status, 'vallen')
-            plotWindow = waveform.plot_wave_TRAI(int(btn.text()), self.data_pri, len(self.data_pri) != 0, valid=False)
+            plotWindow = waveform.plot_wave_TRAI(int(btn.text()), self.data_pri, len(self.data_pri) != 0, False,
+                                                 self.cwt.isChecked())
             try:
                 self.window.append(plotWindow)
                 plotWindow.show()
@@ -1245,7 +1251,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                     data_tra = tra
             waveform = Waveform(self.color_1, self.color_2, data_tra, self.input, self.output, self.status, 'pac',
                                 self.threshold.value(), self.magnification.value())
-            plotWindow = waveform.plot_wave_TRAI(int(btn.text()), self.data_pri, len(self.data_pri) != 0, valid=False)
+            plotWindow = waveform.plot_wave_TRAI(int(btn.text()), self.data_pri, len(self.data_pri) != 0, False,
+                                                 self.cwt.isChecked())
             try:
                 self.window.append(plotWindow)
                 plotWindow.show()
@@ -1460,80 +1467,81 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             plotWindow.show()
 
         # ================================ PAC ================================
-        features = Features(self.color_1, self.color_2, self.PAC_filter_pri[:, self.PAC_feature_idx[-2]], self.status,
-                            self.output, 'PAC-self')
-        # Plot features' correlation
-        if self.PAC_E_A.isChecked():
-            plotWindow = features.plot_correlation(self.PAC_filter_pri[:, self.PAC_feature_idx[0]],
-                                                   self.PAC_filter_pri[:, self.PAC_feature_idx[2]], '20log(Amp)',
-                                                   '20log(Eny)', self.correlation_select_color.currentText())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PAC_E_D.isChecked():
-            plotWindow = features.plot_correlation(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
-                                                   self.PAC_filter_pri[:, self.PAC_feature_idx[2]], '20log(Dur)',
-                                                   '20log(Eny)', self.correlation_select_color.currentText())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PAC_A_D.isChecked():
-            plotWindow = features.plot_correlation(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
-                                                   self.PAC_filter_pri[:, self.PAC_feature_idx[0]], '20log(Dur)',
-                                                   '20log(Amp)', self.correlation_select_color.currentText())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PAC_AbsE_A.isChecked():
-            plotWindow = features.plot_correlation(self.PAC_filter_pri[:, self.PAC_feature_idx[0]],
-                                                   20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
-                                                   '20log(Amp)', '20log(AbsEny)',
-                                                   self.correlation_select_color.currentText())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PAC_AbsE_D.isChecked():
-            plotWindow = features.plot_correlation(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
-                                                   20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
-                                                   '20log(Dur)', '20log(AbsEny)',
-                                                   self.correlation_select_color.currentText())
-            self.window.append(plotWindow)
-            plotWindow.show()
-        # Plot time domain curves
-        if self.PAC_E_T.isChecked():
-            plotWindow = features.plot_feature_time(self.PAC_filter_pri[:, self.PAC_feature_idx[2]], '20log(Eny)',
-                                                    self.show_ending_time.value(), self.feature_color.currentText(),
-                                                    self.stress_color.currentText(), self.bar_width.value(),
-                                                    self.stretcher, self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PAC_AbsE_T.isChecked():
-            plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
-                                                    '20log(AbsEny)', self.show_ending_time.value(),
-                                                    self.feature_color.currentText(), self.stress_color.currentText(),
-                                                    self.bar_width.value(), self.stretcher,
-                                                    self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PAC_A_T.isChecked():
-            plotWindow = features.plot_feature_time(self.PAC_filter_pri[:, self.PAC_feature_idx[0]], '20log(Amp)',
-                                                    self.show_ending_time.value(), self.feature_color.currentText(),
-                                                    self.stress_color.currentText(), self.bar_width.value(),
-                                                    self.stretcher, self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PAC_D_T.isChecked():
-            plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
-                                                    '20log(Dur)', self.show_ending_time.value(),
-                                                    self.feature_color.currentText(), self.stress_color.currentText(),
-                                                    self.bar_width.value(), self.stretcher,
-                                                    self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
-        if self.PAC_C_T.isChecked():
-            plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[-1]]),
-                                                    '20log(Counts)', self.show_ending_time.value(),
-                                                    self.feature_color.currentText(), self.stress_color.currentText(),
-                                                    self.bar_width.value(), self.stretcher,
-                                                    self.smooth.currentText() == str(True))
-            self.window.append(plotWindow)
-            plotWindow.show()
+        if self.device == 'PAC':
+            features = Features(self.color_1, self.color_2, self.PAC_filter_pri[:, self.PAC_feature_idx[-2]], self.status,
+                                self.output, 'PAC-self')
+            # Plot features' correlation
+            if self.PAC_E_A.isChecked():
+                plotWindow = features.plot_correlation(self.PAC_filter_pri[:, self.PAC_feature_idx[0]],
+                                                       self.PAC_filter_pri[:, self.PAC_feature_idx[2]], '20log(Amp)',
+                                                       '20log(Eny)', self.correlation_select_color.currentText())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PAC_E_D.isChecked():
+                plotWindow = features.plot_correlation(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
+                                                       self.PAC_filter_pri[:, self.PAC_feature_idx[2]], '20log(Dur)',
+                                                       '20log(Eny)', self.correlation_select_color.currentText())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PAC_A_D.isChecked():
+                plotWindow = features.plot_correlation(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
+                                                       self.PAC_filter_pri[:, self.PAC_feature_idx[0]], '20log(Dur)',
+                                                       '20log(Amp)', self.correlation_select_color.currentText())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PAC_AbsE_A.isChecked():
+                plotWindow = features.plot_correlation(self.PAC_filter_pri[:, self.PAC_feature_idx[0]],
+                                                       20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
+                                                       '20log(Amp)', '20log(AbsEny)',
+                                                       self.correlation_select_color.currentText())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PAC_AbsE_D.isChecked():
+                plotWindow = features.plot_correlation(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
+                                                       20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
+                                                       '20log(Dur)', '20log(AbsEny)',
+                                                       self.correlation_select_color.currentText())
+                self.window.append(plotWindow)
+                plotWindow.show()
+            # Plot time domain curves
+            if self.PAC_E_T.isChecked():
+                plotWindow = features.plot_feature_time(self.PAC_filter_pri[:, self.PAC_feature_idx[2]], '20log(Eny)',
+                                                        self.show_ending_time.value(), self.feature_color.currentText(),
+                                                        self.stress_color.currentText(), self.bar_width.value(),
+                                                        self.stretcher, self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PAC_AbsE_T.isChecked():
+                plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
+                                                        '20log(AbsEny)', self.show_ending_time.value(),
+                                                        self.feature_color.currentText(), self.stress_color.currentText(),
+                                                        self.bar_width.value(), self.stretcher,
+                                                        self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PAC_A_T.isChecked():
+                plotWindow = features.plot_feature_time(self.PAC_filter_pri[:, self.PAC_feature_idx[0]], '20log(Amp)',
+                                                        self.show_ending_time.value(), self.feature_color.currentText(),
+                                                        self.stress_color.currentText(), self.bar_width.value(),
+                                                        self.stretcher, self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PAC_D_T.isChecked():
+                plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
+                                                        '20log(Dur)', self.show_ending_time.value(),
+                                                        self.feature_color.currentText(), self.stress_color.currentText(),
+                                                        self.bar_width.value(), self.stretcher,
+                                                        self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
+            if self.PAC_C_T.isChecked():
+                plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[-1]]),
+                                                        '20log(Counts)', self.show_ending_time.value(),
+                                                        self.feature_color.currentText(), self.stress_color.currentText(),
+                                                        self.bar_width.value(), self.stretcher,
+                                                        self.smooth.currentText() == str(True))
+                self.window.append(plotWindow)
+                plotWindow.show()
 
     def show_auth(self):
         self.auth_win.setWindowModality(Qt.Qt.ApplicationModal)

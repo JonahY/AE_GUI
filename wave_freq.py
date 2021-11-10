@@ -1,4 +1,12 @@
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
+
 from plot_format import plot_norm
+from ssqueezepy import ssq_cwt
 from scipy.fftpack import fft
 import array
 import numpy as np
@@ -81,7 +89,7 @@ class Waveform:
         ax2.axhline(-abs(i[2]), 0, valid_data.shape[0], linewidth=1, color="black")
         plot_norm(ax2, xlabel='Time (μs)', ylabel='Amplitude (μV)', legend=False, grid=True)
 
-    def plot_wave_TRAI(self, k, data_pri, show_features=False, valid=False):
+    def plot_wave_TRAI(self, k, data_pri, show_features=False, valid=False, cwt=False):
         # Waveform with specific TRAI
         try:
             if self.device == 'VALLEN':
@@ -94,13 +102,26 @@ class Waveform:
             return str('Error: TRAI %d in data_tra is inconsistent with %d by input!' % (i[-1], k))
         time, sig = self.cal_wave(i, valid=valid)
 
-        plotWindow = PlotWindow('Waveform--TRAI: %s' % i[-1], 6, 3.6)
-        fig = plotWindow.static_canvas.figure
-        fig.subplots_adjust(left=0.115, bottom=0.17, right=0.975, top=0.95)
-        fig.text(0.96, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
-                 horizontalalignment="right")
-        ax = fig.add_subplot()
-        ax.plot(time, sig, lw=1)
+        if cwt:
+            plotWindow = PlotWindow('Waveform--TRAI: %s' % i[-1], 9.2, 3)
+            fig = plotWindow.static_canvas.figure
+            fig.subplots_adjust(left=0.076, bottom=0.205, right=0.984, top=0.927, hspace=0.2, wspace=0.26)
+            fig.text(0.47, 0.25, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
+                     horizontalalignment="right")
+            ax = fig.add_subplot(1, 2, 2)
+            Twxo, Wxo, ssq_freqs, *_ = ssq_cwt(sig, wavelet='morlet', scales='log-piecewise', fs=i[3], t=time)
+            ax.contourf(time, ssq_freqs * 1000, abs(Twxo), cmap='jet')
+            plot_norm(ax, 'Time (μs)', 'Frequency (kHz)', y_lim=[min(ssq_freqs * 1000), 1000], legend=False)
+            ax = fig.add_subplot(1, 2, 1)
+            ax.plot(time, sig, lw=1)
+        else:
+            plotWindow = PlotWindow('Waveform--TRAI: %s' % i[-1], 6, 3.6)
+            fig = plotWindow.static_canvas.figure
+            fig.subplots_adjust(left=0.115, bottom=0.17, right=0.975, top=0.95)
+            fig.text(0.96, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
+                     horizontalalignment="right")
+            ax = fig.add_subplot()
+            ax.plot(time, sig, lw=1)
 
         if self.device == 'vallen':
             if show_features:

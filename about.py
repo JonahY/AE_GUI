@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@time: 2021/11/10 12:56
+"""
 # Form implementation generated from reading ui file 'about.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.2

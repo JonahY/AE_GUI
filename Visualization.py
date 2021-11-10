@@ -38,7 +38,7 @@ class AuthWindow(QtWidgets.QDialog, Ui_Dialog):
         super(AuthWindow, self).__init__()
         self.setupUi(self)
         self.setWindowFlags(Qt.Qt.WindowMinimizeButtonHint | Qt.Qt.WindowCloseButtonHint)
-        self.setFixedSize(self.width(), self.height())
+        # self.setFixedSize(self.width(), self.height())
 
         self.win_main = win_main
         self.active_time = ''

@@ -31,7 +31,7 @@ class AuthorizeWindow(QtWidgets.QDialog, Ui_Dialog):
         super(AuthorizeWindow, self).__init__()
         self.setupUi(self)
         self.setWindowFlags(Qt.Qt.WindowMinimizeButtonHint | Qt.Qt.WindowCloseButtonHint)
-        self.setFixedSize(self.width(), self.height())
+        # self.setFixedSize(self.width(), self.height())
 
         self.active_time = ''
         self.psw = ''

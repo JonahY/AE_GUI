@@ -11,3 +11,6 @@
 # Step 2: pyinstaller -D -w -i logo.ico Visualization.py
 #         pyinstaller -F -w -i logo.ico Visualization.py
 # Step 3: Copy ./lic to .../software/lic
+
+# Step for use
+# Install the latest Visual C++ Redistributable

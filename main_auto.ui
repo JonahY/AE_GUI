@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>575</width>
+    <width>612</width>
     <height>734</height>
    </rect>
   </property>
@@ -46,6 +46,9 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
        <layout class="QGridLayout" name="gridLayout_19">
         <item row="0" column="0">
          <widget class="QRadioButton" name="VALLEN">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -73,11 +76,17 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
             <height>30</height>
            </size>
           </property>
+          <property name="shortcut">
+           <string/>
+          </property>
           <property name="checked">
            <bool>true</bool>
           </property>
           <property name="autoRepeat">
            <bool>false</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup_device</string>
@@ -983,8 +992,6 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </layout>
           </item>
          </layout>
-         <zorder>textBrowser</zorder>
-         <zorder>layoutWidget_2</zorder>
         </widget>
         <widget class="QWidget" name="FEATURE">
          <attribute name="title">
@@ -5723,7 +5730,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
               <item row="0" column="0">
                <spacer name="horizontalSpacer">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -5742,7 +5749,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
               <item row="0" column="1">
                <spacer name="horizontalSpacer_3">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -5761,7 +5768,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
               <item row="0" column="2">
                <spacer name="horizontalSpacer_2">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -5780,7 +5787,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
               <item row="0" column="3">
                <spacer name="horizontalSpacer_4">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -6131,14 +6138,6 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
            </layout>
           </item>
          </layout>
-         <zorder>tabWidget_2</zorder>
-         <zorder>gridLayout_feature_2</zorder>
-         <zorder>layoutWidget</zorder>
-         <zorder>plot_feature</zorder>
-         <zorder>horizontalSpacer</zorder>
-         <zorder>horizontalSpacer_2</zorder>
-         <zorder>horizontalSpacer_3</zorder>
-         <zorder>horizontalSpacer_4</zorder>
         </widget>
        </widget>
       </item>
@@ -6151,7 +6150,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>575</width>
+     <width>612</width>
      <height>23</height>
     </rect>
    </property>
@@ -6275,7 +6274,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup_feature"/>
-  <buttongroup name="buttonGroup_waveform"/>
   <buttongroup name="buttonGroup_device"/>
+  <buttongroup name="buttonGroup_waveform"/>
  </buttongroups>
 </ui>

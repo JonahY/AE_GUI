@@ -5323,8 +5323,8 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_waveform"/>
   <buttongroup name="buttonGroup_feature"/>
   <buttongroup name="buttonGroup_device"/>
+  <buttongroup name="buttonGroup_waveform"/>
  </buttongroups>
 </ui>

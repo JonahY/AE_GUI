@@ -3,7 +3,7 @@
 @version: 2.0
 @author: Jonah
 @file: __init__.py
-@time: 2021/11/10 12:56
+@time: 2021/11/18 12:06
 """
 
 from main_auto import Ui_MainWindow
@@ -101,7 +101,7 @@ class ConvertPacData(Qt.QThread):
             pass
         self.file_list = os.listdir(self.data_path)
         each_core = int(math.ceil(len(self.file_list) / float(self.processor)))
-        result, data_tra, tmp_all = [], [], []
+        result, data_tra = [], []
         data_pri, chan_1, chan_2, chan_3, chan_4 = [], [], [], [], []
         PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], []
         print("=" * 27 + " Loading... " + "=" * 28)
@@ -171,14 +171,15 @@ class ConvertPacData(Qt.QThread):
             data_pri = []
         self._signal.emit([data_pri, chan_1, chan_2, chan_3, chan_4, sorted(obj.get_1(), key=lambda x: x[-1]),
                            sorted(obj.get_2(), key=lambda x: x[-1]), sorted(obj.get_3(), key=lambda x: x[-1]),
-                           sorted(obj.get_4(), key=lambda x: x[-1]), self.load_wave, self.load_features,
-                           PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4])
+                           sorted(obj.get_4(), key=lambda x: x[-1]), PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4,
+                           self.load_wave, self.load_features])
 
 
 class ReadPacData(Qt.QThread):
     _signal = QtCore.pyqtSignal(list)
 
-    def __init__(self, featuresData, PACData, file_list, data_path, threshold, magnification, processor, counts):
+    def __init__(self, featuresData, PACData, file_list, data_path, threshold, magnification, processor, counts,
+                 overwrite):
         super(ReadPacData, self).__init__()
         self.featuresData = featuresData
         self.PACData = PACData
@@ -188,17 +189,51 @@ class ReadPacData(Qt.QThread):
         self.magnification = magnification
         self.data_path = data_path
         self.counts = counts
+        self.overwrite = overwrite
 
     @catchError('Error In Loading PAC Data')
     def run(self):
         if self.featuresData in self.file_list:
             exist_idx = np.where(np.array(self.file_list) == self.featuresData)[0][0]
             self.file_list = self.file_list[0:exist_idx] + self.file_list[exist_idx + 1:]
+
         each_core = int(math.ceil(len(self.file_list) / float(self.processor)))
+        data_tra, data_pri = [], []
         result, tra_1, tra_2, tra_3, tra_4 = [], [], [], [], []
         PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], []
-        data_tra = []
+
         print("=" * 27 + " Loading... " + "=" * 28)
+        manager = BaseManager()
+        # 一定要在start前注册，不然就注册无效
+        manager.register('GlobalV', GlobalV)
+        manager.start()
+        obj = manager.GlobalV()
+
+        if self.overwrite:
+            start = time.time()
+            # Multiprocessing acceleration
+            pool = multiprocessing.Pool(processes=self.processor)
+            for idx, i in enumerate(range(0, len(self.file_list), each_core)):
+                process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
+                result.append(
+                    pool.apply_async(process.main, (self.file_list[i:i + each_core], obj, False, self.counts,)))
+
+            pri = process.save_features(result)
+            data_pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in pri])
+            del pri
+
+            pool.close()
+            pool.join()
+
+            end = time.time()
+            result = []
+
+            print('Complete the converting of waveform!')
+            print("=" * 22 + " Convertion information " + "=" * 22)
+            print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
+                                                                               (end - start) / 60))
+            print("Calculation Info--Quantity of valid data: %s" % data_pri.shape[0])
+
         start = time.time()
         # Multiprocessing acceleration
         pool = multiprocessing.Pool(processes=self.processor)
@@ -260,15 +295,57 @@ class ReadPacData(Qt.QThread):
 class ReadPacFeatures(Qt.QThread):
     _signal = QtCore.pyqtSignal(list)
 
-    def __init__(self, featuresData, PACData, counts):
+    def __init__(self, featuresData, PACData, file_list, data_path, threshold, magnification, processor, counts,
+                 overwrite):
         super(ReadPacFeatures, self).__init__()
         self.featuresData = featuresData
         self.PACData = PACData
+        self.processor = processor
+        self.file_list = file_list
+        self.threshold = threshold
+        self.magnification = magnification
+        self.data_path = data_path
         self.counts = counts
+        self.overwrite = overwrite
 
     @catchError('Error In Loading PAC Features')
     def run(self):
-        PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], []
+        exist_idx = np.where(np.array(self.file_list) == self.featuresData)[0][0]
+        self.file_list = self.file_list[0:exist_idx] + self.file_list[exist_idx + 1:]
+        each_core = int(math.ceil(len(self.file_list) / float(self.processor)))
+        data_pri, result, PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], [], [], []
+
+        print("=" * 27 + " Loading... " + "=" * 28)
+
+        if self.overwrite:
+            manager = BaseManager()
+            # 一定要在start前注册，不然就注册无效
+            manager.register('GlobalV', GlobalV)
+            manager.start()
+            obj = manager.GlobalV()
+
+            start = time.time()
+            # Multiprocessing acceleration
+            pool = multiprocessing.Pool(processes=self.processor)
+            for idx, i in enumerate(range(0, len(self.file_list), each_core)):
+                process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
+                result.append(
+                    pool.apply_async(process.main, (self.file_list[i:i + each_core], obj, False, self.counts,)))
+
+            pri = process.save_features(result)
+            data_pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in pri])
+            del pri, result
+
+            pool.close()
+            pool.join()
+
+            end = time.time()
+
+            print('Complete the converting of waveform!')
+            print("=" * 22 + " Convertion information " + "=" * 22)
+            print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
+                                                                               (end - start) / 60))
+            print("Calculation Info--Quantity of valid data: %s" % data_pri.shape[0])
 
         with open(self.featuresData, 'r') as f:
             res = [i.strip("\n").strip(',') for i in f.readlines()[1:]]
@@ -317,7 +394,8 @@ class ReadPacFeatures(Qt.QThread):
 class ReadPacDataFeatures(Qt.QThread):
     _signal = QtCore.pyqtSignal(list)
 
-    def __init__(self, featuresData, PACData, file_list, data_path, threshold, magnification, processor, counts):
+    def __init__(self, featuresData, PACData, file_list, data_path, threshold, magnification, processor, counts,
+                 overwrite):
         super(ReadPacDataFeatures, self).__init__()
         self.featuresData = featuresData
         self.PACData = PACData
@@ -327,6 +405,7 @@ class ReadPacDataFeatures(Qt.QThread):
         self.magnification = magnification
         self.data_path = data_path
         self.counts = counts
+        self.overwrite = overwrite
 
     @catchError('Error In Loading PAC Data and Features')
     def run(self):
@@ -337,7 +416,40 @@ class ReadPacDataFeatures(Qt.QThread):
         result, tra_1, tra_2, tra_3, tra_4 = [], [], [], [], []
         PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], []
         data_tra = []
+
         print("=" * 27 + " Loading... " + "=" * 28)
+
+        if self.overwrite:
+            manager = BaseManager()
+            # 一定要在start前注册，不然就注册无效
+            manager.register('GlobalV', GlobalV)
+            manager.start()
+            obj = manager.GlobalV()
+
+            start = time.time()
+            # Multiprocessing acceleration
+            pool = multiprocessing.Pool(processes=self.processor)
+            for idx, i in enumerate(range(0, len(self.file_list), each_core)):
+                process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
+                result.append(
+                    pool.apply_async(process.main, (self.file_list[i:i + each_core], obj, False, self.counts,)))
+
+            pri = process.save_features(result)
+            data_pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in pri])
+            del pri
+
+            pool.close()
+            pool.join()
+
+            end = time.time()
+            result = []
+
+            print('Complete the converting of waveform!')
+            print("=" * 22 + " Convertion information " + "=" * 22)
+            print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
+                                                                               (end - start) / 60))
+            print("Calculation Info--Quantity of valid data: %s" % data_pri.shape[0])
+
         start = time.time()
         # Multiprocessing acceleration
         pool = multiprocessing.Pool(processes=self.processor)
@@ -518,9 +630,10 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.textBrowser.setTextCursor(cursor)
         self.textBrowser.ensureCursorVisible()
 
+    @catchError('Error In Checking Device')
     def check_device(self, btn):
         if btn.isChecked():
-            self.device = btn.text()
+            self.device = btn.objectName()
             if self.device == 'VALLEN':
                 self.feature_idx = [4, 6, 7, 1, -2]  # Amp, Dur, Eny, Time, Counts
                 self.mode.clear()
@@ -1086,17 +1199,19 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             elif self.mode.currentText() == 'Load both':
                 self.thread = ReadPacDataFeatures(self.featuresData, self.PACData, self.file_list, self.input,
                                                   self.threshold.value(), self.magnification.value(), self.processor,
-                                                  self.counts.value())
+                                                  self.counts.value(), False)
                 self.thread._signal.connect(self.read_pac_data_features)
                 self.thread.start()
             elif self.mode.currentText() == 'Load waveforms only':
                 self.thread = ReadPacData(self.featuresData, self.PACData, self.file_list, self.input,
                                           self.threshold.value(), self.magnification.value(), self.processor,
-                                          self.counts.value())
+                                          self.counts.value(), False)
                 self.thread._signal.connect(self.return_read_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Load features only':
-                self.thread = ReadPacFeatures(self.featuresData, self.PACData, self.counts.value())
+                self.thread = ReadPacFeatures(self.featuresData, self.PACData, self.file_list, self.input,
+                                              self.threshold.value(), self.magnification.value(), self.processor,
+                                              self.counts.value(), False)
                 self.thread._signal.connect(self.return_read_pac_features)
                 self.thread.start()
             # else:
@@ -1177,10 +1292,10 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.data_tra_2 = result[6]
         self.data_tra_3 = result[7]
         self.data_tra_4 = result[8]
-        self.PAC_chan_1 = result[-4]
-        self.PAC_chan_2 = result[-3]
-        self.PAC_chan_3 = result[-2]
-        self.PAC_chan_4 = result[-1]
+        self.PAC_chan_1 = result[-6]
+        self.PAC_chan_2 = result[-5]
+        self.PAC_chan_3 = result[-4]
+        self.PAC_chan_4 = result[-3]
         if result[-2] and not result[-1]:
             self.btn_wave(True)
             self.show_trai.setReadOnly(False)

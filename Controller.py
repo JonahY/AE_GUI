@@ -3,7 +3,8 @@
 @version: 2.0
 @author: Jonah
 @file: __init__.py
-@time: 2021/11/18 12:06
+@Created time: 2020/12/15 00:00
+@Last Modified: 2021/12/09 15:56
 """
 
 from main_auto import Ui_MainWindow

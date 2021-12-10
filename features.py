@@ -3,7 +3,8 @@
 @version: 2.0
 @author: Jonah
 @file: __init__.py
-@time: 2021/11/10 12:56
+@Created time: 2020/12/15 00:00
+@Last Modified: 2021/12/09 15:56
 """
 
 from plot_format import plot_norm
@@ -481,6 +482,11 @@ class Features:
             ax.bar(self.Time, tmp, color=color_tmp, width=width, log=False if self.device == 'PAC-self' else True)
             plot_norm(ax, 'Time (s)', ylabel, x_lim=[0, x_max], y_lim=[0, 80 if self.device == 'PAC-self' else 15000],
                       legend=False)
+
+        with open('/'.join([self.output, self.status]) + '_%s-Time.txt' % ylabel.split()[0], 'w') as f:
+            f.write('Time (s), {}\n'.format(ylabel))
+            for i, j in zip(self.Time, tmp):
+                f.write('{}, {}\n'.format(i, j))
 
         return plotWindow
 

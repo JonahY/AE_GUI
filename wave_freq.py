@@ -1,8 +1,9 @@
 """
 @version: 2.0
 @author: Jonah
-@file: __init__.py
-@time: 2021/11/18 12:06
+@file: wave_freq.py
+@Created time: 2020/12/15 00:00
+@Last Modified: 2021/12/18 19:07
 """
 
 from plot_format import plot_norm
@@ -115,7 +116,7 @@ class Waveform:
                      horizontalalignment="right")
             ax = fig.add_subplot(1, 2, 2)
             Twxo, Wxo, ssq_freqs, *_ = ssq_cwt(sig, wavelet='morlet', scales='log-piecewise', fs=i[3], t=time)
-            ax.contourf(time, ssq_freqs * 1000, abs(Twxo), cmap='jet')
+            ax.contourf(time, ssq_freqs * 1000, pow(abs(Twxo), 0.5), cmap='cubehelix_r')
             plot_norm(ax, 'Time (μs)', 'Frequency (kHz)', y_lim=[min(ssq_freqs * 1000), 1000], legend=False)
             ax = fig.add_subplot(1, 2, 1)
             ax.plot(time, sig, lw=1)
@@ -130,7 +131,10 @@ class Waveform:
 
         if self.device == 'vallen':
             if show_features:
-                string = data_pri[np.where(data_pri[:, -1] == i[-1])][0]
+                try:
+                    string = data_pri[np.where(data_pri[:, -1] == i[-1])][0]
+                except IndexError:
+                    return str('Error: TRAI %d can not be found in data!' % k)
                 print("=" * 23 + " Waveform information " + "=" * 23)
                 for info, value, r in zip(
                         ['SetID', 'Time', 'Chan', 'Thr', 'Amp', 'RiseT', 'Dur', 'Eny', 'RMS', 'Counts', 'TRAI'],

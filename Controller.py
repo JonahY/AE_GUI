@@ -4,7 +4,7 @@
 @author: Jonah
 @file: __init__.py
 @Created time: 2020/12/15 00:00
-@Last Modified: 2021/12/09 15:56
+@Last Modified: 2021/12/18 19:07
 """
 
 from main_auto import Ui_MainWindow
@@ -608,7 +608,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.plot_feature.clicked.connect(self.show_feature)
 
     def __init_track(self):
-        self.show_stretcher_data.clicked.connect(self.open_stretcher)
+        self.show_stretcher_data.clicked.connect(self.load_stretcher)
         self.pdf_fit.currentTextChanged.connect(lambda: self.check_fit(self.pdf_fit, self.pdf_start_fit, self.pdf_end_fit))
         self.ccdf_fit.currentTextChanged.connect(lambda: self.check_fit(self.ccdf_fit, self.ccdf_start_fit, self.ccdf_end_fit))
         self.waitingtime_fit.currentTextChanged.connect(lambda: self.check_fit(self.waitingtime_fit, self.waitingtime_start_fit, self.waitingtime_end_fit))
@@ -717,7 +717,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 self.statusbar.showMessage('Please select correct file!')
 
-    def open_stretcher(self):
+    def load_stretcher(self):
         file = QtWidgets.QFileDialog.getOpenFileName(self, "Open", "F:/VALLEN/Ni-tension test-electrolysis-1-0.01-AE-20201031/Ni-tension test-electrolysis-1-0.01-20201031.is_tens_RawData", "csv Files (*.csv)")[0]
         self.stretcher = file
         if file:

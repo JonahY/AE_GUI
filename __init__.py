@@ -3,7 +3,8 @@
 @version: 2.0
 @author: Jonah
 @file: __init__.py
-@time: 2021/11/10 12:56
+@Created time: 2020/12/15 00:00
+@Last Modified: 2021/12/18 19:43
 """
 
 # Step for Pyinstall
@@ -14,3 +15,7 @@
 
 # Step for use
 # Install the latest Visual C++ Redistributable
+
+# According to the generated .spec file can be packaged directly (Helper, Visualization-D-c, Visualization-D-w,
+#                                                                 Visualization-F-c, Visualization-F-w)
+# pyinstaller XXX

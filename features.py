@@ -4,7 +4,7 @@
 @author: Jonah
 @file: features.py
 @Created time: 2020/12/15 00:00
-@Last Modified: 2021/12/09 15:56
+@Last Modified: 2021/12/24 21:59
 """
 
 from plot_format import plot_norm
@@ -35,10 +35,11 @@ plt.rcParams['ytick.direction'] = 'in'
 
 
 class Features:
-    def __init__(self, color_1, color_2, time, status, output, device):
+    def __init__(self, color_1, color_2, time, trai, status, output, device):
         self.color_1 = color_1
         self.color_2 = color_2
         self.Time = time
+        self.TRAI = trai
         self.convert = lambda x, a, b: pow(x, a) * pow(10, b)
         self.status = status
         self.output = output
@@ -484,9 +485,9 @@ class Features:
                       legend=False)
 
         with open('/'.join([self.output, self.status]) + '_%s-Time.txt' % ylabel.split()[0], 'w') as f:
-            f.write('Time (s), {}\n'.format(ylabel))
-            for i, j in zip(self.Time, tmp):
-                f.write('{}, {}\n'.format(i, j))
+            f.write('TRAI, Time (s), {}\n'.format(ylabel))
+            for i, j, k in zip(self.TRAI, self.Time, tmp):
+                f.write('{:.0f}, {}, {}\n'.format(i, j, k))
 
         return plotWindow
 

@@ -4,7 +4,7 @@
 @author: Jonah
 @file: __init__.py
 @Created time: 2020/12/15 00:00
-@Last Modified: 2021/12/18 19:07
+@Last Modified: 2021/12/24 21:59
 """
 
 from main_auto import Ui_MainWindow
@@ -581,6 +581,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init_device(self):
         # Select device
         self.feature_idx = [4, 6, 7, 1, -2]
+        self.trai_idx = -1
         self.PACData = False
         self.VALLEN.toggled.connect(lambda: self.check_device(self.VALLEN))
         self.PAC.toggled.connect(lambda: self.check_device(self.PAC))
@@ -637,6 +638,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.device = btn.objectName()
             if self.device == 'VALLEN':
                 self.feature_idx = [4, 6, 7, 1, -2]  # Amp, Dur, Eny, Time, Counts
+                self.trai_idx = -1
                 self.mode.clear()
                 self.mode.addItems(['Load both', 'Load waveforms only', 'Load features only'])
                 self.Overwrite.setChecked(False)
@@ -648,6 +650,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 self.feature_idx = [5, 8, 9, 1, -1]  # Amp, Dur, Eny, Time, Counts
                 self.PAC_feature_idx = [6, 5, 4, -1, 0, 3]  # Amp, Dur, Eny, AbsEny, Time, Counts
+                self.trai_idx = 0
                 self.mode.clear()
                 self.mode.addItems(['Convert only', 'Convert with waveforms loading', 'Convert with features loading',
                                     'Convert with both loading'])
@@ -1380,8 +1383,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
     @catchError('Error In Ploting Features')
     def show_feature(self, useless=False):
         self.status = self.show_figurenote.text()
-        features = Features(self.color_1, self.color_2, self.filter_pri[:, self.feature_idx[-2]], self.status,
-                            self.output, self.device)
+        features = Features(self.color_1, self.color_2, self.filter_pri[:, self.feature_idx[-2]],
+                            self.filter_pri[:, self.trai_idx], self.status, self.output, self.device)
         # =========================== Feature Curve ===========================
         # Plot features' correlation
         if self.E_A.isChecked():

@@ -4,7 +4,7 @@
 @author: Jonah
 @file: __init__.py
 @Created time: 2020/12/15 00:00
-@Last Modified: 2021/12/18 19:43
+@Last Modified: 2021/12/24 22:02
 """
 
 # Step for Pyinstall
@@ -18,4 +18,6 @@
 
 # According to the generated .spec file can be packaged directly (Helper, Visualization-D-c, Visualization-D-w,
 #                                                                 Visualization-F-c, Visualization-F-w)
-# pyinstaller XXX
+# Step 1: change XXX to XXX.spec
+# Step 2: pyinstaller XXX.spec
+# Step 3: change XXX.spec to XXX

@@ -8,519 +8,30 @@
 """
 
 from main_auto import Ui_MainWindow
-from PyQt5 import QtCore, QtGui, QtWidgets, Qt
-import os
-import time
-from features import *
-from kmeans import *
-from plot_format import *
-from utils import *
-from wave_freq import Waveform
-from pac import *
 from alone_auth import AuthorizeWindow
 from about_info import AboutWindow
-import numpy as np
-import warnings
-import traceback
+from wave_freq import Waveform
+from features import *
+from utils import *
+from utils_PAC import *
+from utils_vallen import *
+from config import config_dict, STDOUT_WRITE_STREAM_CONFIG, TQDM_WRITE_STREAM_CONFIG, STREAM_CONFIG_KEY_QUEUE, \
+    STREAM_CONFIG_KEY_QT_QUEUE_RECEIVER
+import output_redirection_tools
+
+from PyQt5 import QtGui, QtWidgets, QtCore, Qt
+from PyQt5.QtGui import QTextCursor
+from PyQt5.QtCore import QObject, pyqtSignal, QEventLoop, QTimer, QThread, QTime, pyqtSlot
 from multiprocessing import freeze_support
 from multiprocessing import cpu_count
 
-
-def catchError(info):
-    def outwrapper(func):
-        def wrapper(*args, **kwargs):
-            try:
-                func(*args, **kwargs)
-            except (Exception, BaseException) as e:
-                exstr = traceback.format_exc()
-                print('=' * ((67 - len(info)) // 2) + ' %s ' % info + '=' * ((67 - len(info)) // 2))
-                print(exstr)
-        return wrapper
-    return outwrapper
-
-
+'''
 class EmittingStr(QtCore.QObject):
     textWritten = QtCore.pyqtSignal(str)
 
     def write(self, text):
-      self.textWritten.emit(str(text))
-
-
-class GlobalV():
-    def __init__(self):
-        self.tra_1 = []
-        self.tra_2 = []
-        self.tra_3 = []
-        self.tra_4 = []
-
-    def append_1(self, arg):
-        self.tra_1.append(arg)
-
-    def append_2(self, arg):
-        self.tra_2.append(arg)
-
-    def append_3(self, arg):
-        self.tra_3.append(arg)
-
-    def append_4(self, arg):
-        self.tra_4.append(arg)
-
-    def get_1(self):
-        return self.tra_1
-
-    def get_2(self):
-        return self.tra_2
-
-    def get_3(self):
-        return self.tra_3
-
-    def get_4(self):
-        return self.tra_4
-
-
-class ConvertPacData(Qt.QThread):
-    _signal = QtCore.pyqtSignal(list)
-
-    def __init__(self, featuresData, PACData, data_path, threshold, magnification, processor, load_wave,
-                 load_features, counts):
-        super(ConvertPacData, self).__init__()
-        self.featuresData = featuresData
-        self.PACData = PACData
-        self.processor = processor
-        self.threshold = threshold
-        self.magnification = magnification
-        self.data_path = data_path
-        self.load_wave = load_wave
-        self.load_features = load_features
-        self.counts = counts
-
-    @catchError('Error In Converting PAC Data')
-    def run(self):
-        try:
-            os.remove(self.featuresData)
-        except FileNotFoundError:
-            pass
-        self.file_list = os.listdir(self.data_path)
-        each_core = int(math.ceil(len(self.file_list) / float(self.processor)))
-        result, data_tra = [], []
-        data_pri, chan_1, chan_2, chan_3, chan_4 = [], [], [], [], []
-        PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], []
-        print("=" * 27 + " Loading... " + "=" * 28)
-        start = time.time()
-
-        manager = BaseManager()
-        # 一定要在start前注册，不然就注册无效
-        manager.register('GlobalV', GlobalV)
-        manager.start()
-        obj = manager.GlobalV()
-
-        # Multiprocessing acceleration
-        pool = multiprocessing.Pool(processes=self.processor)
-        for idx, i in enumerate(range(0, len(self.file_list), each_core)):
-            process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
-            result.append(pool.apply_async(process.main, (self.file_list[i:i + each_core], obj, self.load_wave, self.counts,)))
-
-        pri = process.save_features(result)
-
-        pool.close()
-        pool.join()
-
-        data_pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in pri])
-        if self.load_features:
-            chan_1 = data_pri[np.where(data_pri[:, 2] == 1)[0]]
-            chan_2 = data_pri[np.where(data_pri[:, 2] == 2)[0]]
-            chan_3 = data_pri[np.where(data_pri[:, 2] == 3)[0]]
-            chan_4 = data_pri[np.where(data_pri[:, 2] == 4)[0]]
-        del pri
-
-        if self.PACData:
-            with open(os.path.join('/'.join(self.data_path.split('/')[:-1]),
-                                   '%s.TXT' % self.data_path.split('/')[-1]), 'r') as f:
-                data_pac_origin = np.array([np.array(i.strip().split()) for i in f.readlines()[8:]])
-            valid_pac_origin = np.where(data_pac_origin[:, 6].astype(int) > self.counts)[0]
-            # time, chan, ristT, cnts, eny, dur, amp, rms, absEny
-            PAC_data_pri = np.hstack((np.array([sum(np.array(list(map(lambda j: float(j), i.split(':')))) * [3600, 60, 1]) for i in data_pac_origin[valid_pac_origin][:, 2]]).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 4].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 5].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 6].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 7].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 8].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 9].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 11].astype(float).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, -2].astype(float).reshape(-1, 1)))
-            del data_pac_origin, valid_pac_origin
-            PAC_chan_1 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 1)[0]]
-            PAC_chan_2 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 2)[0]]
-            PAC_chan_3 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 3)[0]]
-            PAC_chan_4 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 4)[0]]
-            del PAC_data_pri
-
-        end = time.time()
-
-        print('Complete the converting of waveform!')
-        print("=" * 22 + " Convertion information " + "=" * 22)
-        print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
-                                                                           (end - start) / 60))
-        print("Calculation Info--Quantity of valid data: %s" % data_pri.shape[0])
-        if self.load_wave:
-            print("Waveform Info--Channel 1: %d | Channel 2: %d | Channel 3: %d | Channel 4: %d" %
-                  (len(obj.get_1()), len(obj.get_2()), len(obj.get_3()), len(obj.get_4())))
-        if self.load_features:
-            print("Features Info--All channel: %d | Channel 1: %d | Channel 2: %d | Channel 3: %d | Channel 4: %d" %
-              (data_pri.shape[0], chan_1.shape[0], chan_2.shape[0], chan_3.shape[0], chan_4.shape[0]))
-        else:
-            data_pri = []
-        self._signal.emit([data_pri, chan_1, chan_2, chan_3, chan_4, sorted(obj.get_1(), key=lambda x: x[-1]),
-                           sorted(obj.get_2(), key=lambda x: x[-1]), sorted(obj.get_3(), key=lambda x: x[-1]),
-                           sorted(obj.get_4(), key=lambda x: x[-1]), PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4,
-                           self.load_wave, self.load_features])
-
-
-class ReadPacData(Qt.QThread):
-    _signal = QtCore.pyqtSignal(list)
-
-    def __init__(self, featuresData, PACData, file_list, data_path, threshold, magnification, processor, counts,
-                 overwrite):
-        super(ReadPacData, self).__init__()
-        self.featuresData = featuresData
-        self.PACData = PACData
-        self.processor = processor
-        self.file_list = file_list
-        self.threshold = threshold
-        self.magnification = magnification
-        self.data_path = data_path
-        self.counts = counts
-        self.overwrite = overwrite
-
-    @catchError('Error In Loading PAC Data')
-    def run(self):
-        if self.featuresData in self.file_list:
-            exist_idx = np.where(np.array(self.file_list) == self.featuresData)[0][0]
-            self.file_list = self.file_list[0:exist_idx] + self.file_list[exist_idx + 1:]
-
-        each_core = int(math.ceil(len(self.file_list) / float(self.processor)))
-        data_tra, data_pri = [], []
-        result, tra_1, tra_2, tra_3, tra_4 = [], [], [], [], []
-        PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], []
-
-        print("=" * 27 + " Loading... " + "=" * 28)
-        manager = BaseManager()
-        # 一定要在start前注册，不然就注册无效
-        manager.register('GlobalV', GlobalV)
-        manager.start()
-        obj = manager.GlobalV()
-
-        if self.overwrite:
-            start = time.time()
-            # Multiprocessing acceleration
-            pool = multiprocessing.Pool(processes=self.processor)
-            for idx, i in enumerate(range(0, len(self.file_list), each_core)):
-                process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
-                result.append(
-                    pool.apply_async(process.main, (self.file_list[i:i + each_core], obj, False, self.counts,)))
-
-            pri = process.save_features(result)
-            data_pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in pri])
-            del pri
-
-            pool.close()
-            pool.join()
-
-            end = time.time()
-            result = []
-
-            print('Complete the converting of waveform!')
-            print("=" * 22 + " Convertion information " + "=" * 22)
-            print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
-                                                                               (end - start) / 60))
-            print("Calculation Info--Quantity of valid data: %s" % data_pri.shape[0])
-
-        start = time.time()
-        # Multiprocessing acceleration
-        pool = multiprocessing.Pool(processes=self.processor)
-        for idx, i in enumerate(range(0, len(self.file_list), each_core)):
-            process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
-            result.append(pool.apply_async(process.read_pac_data, (self.file_list[i:i + each_core],)))
-
-        for idx, i in enumerate(result):
-            tmp_1, tmp_2, tmp_3, tmp_4 = i.get()
-            tra_1.append(tmp_1)
-            tra_2.append(tmp_2)
-            tra_3.append(tmp_3)
-            tra_4.append(tmp_4)
-
-        pool.close()
-        pool.join()
-
-        for idx, tra in enumerate([tra_1, tra_2, tra_3, tra_4]):
-            tra = [j for i in tra for j in i]
-            try:
-                data_tra.append(sorted(tra, key=lambda x: x[-1]))
-            except IndexError:
-                data_tra.append([])
-                print('Warning: There is no data in channel %d!' % idx)
-
-        if self.PACData:
-            with open(os.path.join('/'.join(self.data_path.split('/')[:-1]),
-                                   '%s.TXT' % self.data_path.split('/')[-1]), 'r') as f:
-                data_pac_origin = np.array([np.array(i.strip().split()) for i in f.readlines()[8:]])
-            valid_pac_origin = np.where(data_pac_origin[:, 6].astype(int) > self.counts)[0]
-            # time, chan, ristT, cnts, eny, dur, amp, rms, absEny
-            PAC_data_pri = np.hstack((np.array([sum(np.array(list(map(lambda j: float(j), i.split(':')))) * [3600, 60, 1]) for i in data_pac_origin[valid_pac_origin][:, 2]]).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 4].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 5].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 6].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 7].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 8].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 9].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 11].astype(float).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, -2].astype(float).reshape(-1, 1)))
-            del data_pac_origin, valid_pac_origin
-            PAC_chan_1 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 1)[0]]
-            PAC_chan_2 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 2)[0]]
-            PAC_chan_3 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 3)[0]]
-            PAC_chan_4 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 4)[0]]
-            del PAC_data_pri
-
-        end = time.time()
-        print('Complete the import of waveform!')
-        print("=" * 23 + " Loading information " + "=" * 24)
-        print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
-                                                                           (end - start) / 60))
-        print("Channel 1: %d | Channel 2: %d | Channel 3: %d | Channel 4: %d" %
-              (len(data_tra[0]), len(data_tra[1]), len(data_tra[2]), len(data_tra[3])))
-        del result, tra_1, tra_2, tra_3, tra_4, tra
-        self._signal.emit([data_tra, PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4])
-
-
-class ReadPacFeatures(Qt.QThread):
-    _signal = QtCore.pyqtSignal(list)
-
-    def __init__(self, featuresData, PACData, file_list, data_path, threshold, magnification, processor, counts,
-                 overwrite):
-        super(ReadPacFeatures, self).__init__()
-        self.featuresData = featuresData
-        self.PACData = PACData
-        self.processor = processor
-        self.file_list = file_list
-        self.threshold = threshold
-        self.magnification = magnification
-        self.data_path = data_path
-        self.counts = counts
-        self.overwrite = overwrite
-
-    @catchError('Error In Loading PAC Features')
-    def run(self):
-        exist_idx = np.where(np.array(self.file_list) == self.featuresData)[0][0]
-        self.file_list = self.file_list[0:exist_idx] + self.file_list[exist_idx + 1:]
-        each_core = int(math.ceil(len(self.file_list) / float(self.processor)))
-        data_pri, result, PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], [], [], []
-
-        print("=" * 27 + " Loading... " + "=" * 28)
-
-        if self.overwrite:
-            manager = BaseManager()
-            # 一定要在start前注册，不然就注册无效
-            manager.register('GlobalV', GlobalV)
-            manager.start()
-            obj = manager.GlobalV()
-
-            start = time.time()
-            # Multiprocessing acceleration
-            pool = multiprocessing.Pool(processes=self.processor)
-            for idx, i in enumerate(range(0, len(self.file_list), each_core)):
-                process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
-                result.append(
-                    pool.apply_async(process.main, (self.file_list[i:i + each_core], obj, False, self.counts,)))
-
-            pri = process.save_features(result)
-            data_pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in pri])
-            del pri, result
-
-            pool.close()
-            pool.join()
-
-            end = time.time()
-
-            print('Complete the converting of waveform!')
-            print("=" * 22 + " Convertion information " + "=" * 22)
-            print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
-                                                                               (end - start) / 60))
-            print("Calculation Info--Quantity of valid data: %s" % data_pri.shape[0])
-
-        with open(self.featuresData, 'r') as f:
-            res = [i.strip("\n").strip(',') for i in f.readlines()[1:]]
-        print("=" * 27 + " Loading... " + "=" * 28)
-        start = time.time()
-
-        pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in res])
-        chan_1 = pri[np.where(pri[:, 2] == 1)[0]]
-        chan_2 = pri[np.where(pri[:, 2] == 2)[0]]
-        chan_3 = pri[np.where(pri[:, 2] == 3)[0]]
-        chan_4 = pri[np.where(pri[:, 2] == 4)[0]]
-        del res
-
-        if self.PACData:
-            with open(os.path.join('/'.join(self.data_path.split('/')[:-1]),
-                                   '%s.TXT' % self.data_path.split('/')[-1]), 'r') as f:
-                data_pac_origin = np.array([np.array(i.strip().split()) for i in f.readlines()[8:]])
-            valid_pac_origin = np.where(data_pac_origin[:, 6].astype(int) > self.counts)[0]
-            # time, chan, ristT, cnts, eny, dur, amp, rms, absEny
-            PAC_data_pri = np.hstack((np.array([sum(np.array(list(map(lambda j: float(j), i.split(':')))) * [3600, 60, 1]) for i in data_pac_origin[valid_pac_origin][:, 2]]).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 4].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 5].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 6].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 7].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 8].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 9].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 11].astype(float).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, -2].astype(float).reshape(-1, 1)))
-            del data_pac_origin, valid_pac_origin
-            PAC_chan_1 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 1)[0]]
-            PAC_chan_2 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 2)[0]]
-            PAC_chan_3 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 3)[0]]
-            PAC_chan_4 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 4)[0]]
-            del PAC_data_pri
-
-        end = time.time()
-        print('Complete the import of features!')
-        print("=" * 23 + " Loading information " + "=" * 24)
-        print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
-                                                                           (end - start) / 60))
-        print("All channel: %d | Channel 1: %d | Channel 2: %d | Channel 3: %d | Channel 4: %d" %
-              (pri.shape[0], chan_1.shape[0], chan_2.shape[0], chan_3.shape[0], chan_4.shape[0]))
-        self._signal.emit([pri, chan_1, chan_2, chan_3, chan_4, PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4])
-
-
-class ReadPacDataFeatures(Qt.QThread):
-    _signal = QtCore.pyqtSignal(list)
-
-    def __init__(self, featuresData, PACData, file_list, data_path, threshold, magnification, processor, counts,
-                 overwrite):
-        super(ReadPacDataFeatures, self).__init__()
-        self.featuresData = featuresData
-        self.PACData = PACData
-        self.processor = processor
-        self.file_list = file_list
-        self.threshold = threshold
-        self.magnification = magnification
-        self.data_path = data_path
-        self.counts = counts
-        self.overwrite = overwrite
-
-    @catchError('Error In Loading PAC Data and Features')
-    def run(self):
-        if self.featuresData in self.file_list:
-            exist_idx = np.where(np.array(self.file_list) == self.featuresData)[0][0]
-            self.file_list = self.file_list[0:exist_idx] + self.file_list[exist_idx + 1:]
-        each_core = int(math.ceil(len(self.file_list) / float(self.processor)))
-        result, tra_1, tra_2, tra_3, tra_4 = [], [], [], [], []
-        PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4 = [], [], [], []
-        data_tra = []
-
-        print("=" * 27 + " Loading... " + "=" * 28)
-
-        if self.overwrite:
-            manager = BaseManager()
-            # 一定要在start前注册，不然就注册无效
-            manager.register('GlobalV', GlobalV)
-            manager.start()
-            obj = manager.GlobalV()
-
-            start = time.time()
-            # Multiprocessing acceleration
-            pool = multiprocessing.Pool(processes=self.processor)
-            for idx, i in enumerate(range(0, len(self.file_list), each_core)):
-                process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
-                result.append(
-                    pool.apply_async(process.main, (self.file_list[i:i + each_core], obj, False, self.counts,)))
-
-            pri = process.save_features(result)
-            data_pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in pri])
-            del pri
-
-            pool.close()
-            pool.join()
-
-            end = time.time()
-            result = []
-
-            print('Complete the converting of waveform!')
-            print("=" * 22 + " Convertion information " + "=" * 22)
-            print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
-                                                                               (end - start) / 60))
-            print("Calculation Info--Quantity of valid data: %s" % data_pri.shape[0])
-
-        start = time.time()
-        # Multiprocessing acceleration
-        pool = multiprocessing.Pool(processes=self.processor)
-        for idx, i in enumerate(range(0, len(self.file_list), each_core)):
-            process = Preprocessing(idx, self.threshold, self.magnification, self.data_path, self.processor)
-            result.append(pool.apply_async(process.read_pac_data, (self.file_list[i:i + each_core],)))
-
-        for idx, i in enumerate(result):
-            tmp_1, tmp_2, tmp_3, tmp_4 = i.get()
-            tra_1.append(tmp_1)
-            tra_2.append(tmp_2)
-            tra_3.append(tmp_3)
-            tra_4.append(tmp_4)
-
-        pool.close()
-        pool.join()
-
-        for idx, tra in enumerate([tra_1, tra_2, tra_3, tra_4]):
-            tra = [j for i in tra for j in i]
-            try:
-                data_tra.append(sorted(tra, key=lambda x: x[-1]))
-            except IndexError:
-                data_tra.append([])
-                print('Warning: There is no data in channel %d!' % idx)
-
-        print('Complete the import of waveform!')
-        del result, tra_1, tra_2, tra_3, tra_4, tra
-
-        with open(self.featuresData, 'r') as f:
-            res = [i.strip("\n").strip(',') for i in f.readlines()[1:]]
-        pri = np.array([np.array(i.strip('\n').split(', ')).astype(np.float32) for i in res])
-        chan_1 = pri[np.where(pri[:, 2] == 1)[0]]
-        chan_2 = pri[np.where(pri[:, 2] == 2)[0]]
-        chan_3 = pri[np.where(pri[:, 2] == 3)[0]]
-        chan_4 = pri[np.where(pri[:, 2] == 4)[0]]
-        del res
-
-        if self.PACData:
-            with open(os.path.join('/'.join(self.data_path.split('/')[:-1]),
-                                   '%s.TXT' % self.data_path.split('/')[-1]), 'r') as f:
-                data_pac_origin = np.array([np.array(i.strip().split()) for i in f.readlines()[8:]])
-            valid_pac_origin = np.where(data_pac_origin[:, 6].astype(int) > self.counts)[0]
-            # time, chan, ristT, cnts, eny, dur, amp, rms, absEny
-            PAC_data_pri = np.hstack((np.array([sum(np.array(list(map(lambda j: float(j), i.split(':')))) * [3600, 60, 1]) for i in data_pac_origin[valid_pac_origin][:, 2]]).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 4].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 5].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 6].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 7].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 8].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 9].astype(int).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, 11].astype(float).reshape(-1, 1),
-                                      data_pac_origin[valid_pac_origin][:, -2].astype(float).reshape(-1, 1)))
-            del data_pac_origin, valid_pac_origin
-            PAC_chan_1 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 1)[0]]
-            PAC_chan_2 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 2)[0]]
-            PAC_chan_3 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 3)[0]]
-            PAC_chan_4 = PAC_data_pri[np.where(PAC_data_pri[:, 1] == 4)[0]]
-            del PAC_data_pri
-
-        end = time.time()
-        print('Complete the import of features!')
-        print("=" * 23 + " Loading information " + "=" * 24)
-        print("Finishing time: {}  |  Time consumption: {:.3f} min".format(time.asctime(time.localtime(time.time())),
-                                                                           (end - start) / 60))
-        print("Waveform Info--Channel 1: %d | Channel 2: %d | Channel 3: %d | Channel 4: %d" %
-              (len(data_tra[0]), len(data_tra[1]), len(data_tra[2]), len(data_tra[3])))
-        print("Features Info--All channel: %d | Channel 1: %d | Channel 2: %d | Channel 3: %d | Channel 4: %d" %
-              (pri.shape[0], chan_1.shape[0], chan_2.shape[0], chan_3.shape[0], chan_4.shape[0]))
-        self._signal.emit([data_tra, pri, chan_1, chan_2, chan_3, chan_4,
-                           PAC_chan_1, PAC_chan_2, PAC_chan_3, PAC_chan_4])
+        self.textWritten.emit(str(text))
+'''
 
 
 class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -530,8 +41,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         super(MainForm, self).__init__()
         self.setupUi(self)
         self.xlabelz = ['Amplitude (μV)', 'Duration (μs)', 'Energy (aJ)', 'Counts']
-        self.color_1 = [255/255, 0/255, 102/255]
-        self.color_2 = [0/255, 136/255, 204/255]
+        self.color_1 = [255 / 255, 0 / 255, 102 / 255]
+        self.color_2 = [0 / 255, 136 / 255, 204 / 255]
         self.chan = 'Chan 2'
         self.device = 'VALLEN'
         self.input = None
@@ -560,8 +71,30 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.__init_pac()
         self.__init_filter()
 
-        sys.stdout = EmittingStr(textWritten=self.outputWritten)
-        sys.stderr = EmittingStr(textWritten=self.outputWritten)
+        # sys.stdout = EmittingStr(textWritten=self.outputWritten)
+        # sys.stderr = EmittingStr(textWritten=self.outputWritten)
+
+        # std out stream management
+        # create console text read thread + receiver object
+        self.thread_std_out_queue_listener = QThread()
+        self.std_out_text_receiver = config_dict[STDOUT_WRITE_STREAM_CONFIG][STREAM_CONFIG_KEY_QT_QUEUE_RECEIVER]
+        # connect receiver object to widget for text update
+        self.std_out_text_receiver.queue_std_out_element_received_signal.connect(self.append_text)
+        # attach console text receiver to console text thread
+        self.std_out_text_receiver.moveToThread(self.thread_std_out_queue_listener)
+        # attach to start / stop methods
+        self.thread_std_out_queue_listener.started.connect(self.std_out_text_receiver.run)
+        self.thread_std_out_queue_listener.start()
+
+        self.thread_tqdm_queue_listener = QThread()
+        self.tqdm_text_receiver = config_dict[TQDM_WRITE_STREAM_CONFIG][STREAM_CONFIG_KEY_QT_QUEUE_RECEIVER]
+        # connect receiver object to widget for text update
+        self.tqdm_text_receiver.queue_tqdm_element_received_signal.connect(self.set_tqdm_text)
+        # attach console text receiver to console text thread
+        self.tqdm_text_receiver.moveToThread(self.thread_tqdm_queue_listener)
+        # attach to start / stop methods
+        self.thread_tqdm_queue_listener.started.connect(self.tqdm_text_receiver.run)
+        self.thread_tqdm_queue_listener.start()
 
     def __init_open_save(self):
         # Open & Save
@@ -610,9 +143,12 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def __init_track(self):
         self.show_stretcher_data.clicked.connect(self.load_stretcher)
-        self.pdf_fit.currentTextChanged.connect(lambda: self.check_fit(self.pdf_fit, self.pdf_start_fit, self.pdf_end_fit))
-        self.ccdf_fit.currentTextChanged.connect(lambda: self.check_fit(self.ccdf_fit, self.ccdf_start_fit, self.ccdf_end_fit))
-        self.waitingtime_fit.currentTextChanged.connect(lambda: self.check_fit(self.waitingtime_fit, self.waitingtime_start_fit, self.waitingtime_end_fit))
+        self.pdf_fit.currentTextChanged.connect(
+            lambda: self.check_fit(self.pdf_fit, self.pdf_start_fit, self.pdf_end_fit))
+        self.ccdf_fit.currentTextChanged.connect(
+            lambda: self.check_fit(self.ccdf_fit, self.ccdf_start_fit, self.ccdf_end_fit))
+        self.waitingtime_fit.currentTextChanged.connect(
+            lambda: self.check_fit(self.waitingtime_fit, self.waitingtime_start_fit, self.waitingtime_end_fit))
 
     def __init_pac(self):
         self.threshold.valueChanged.connect(self.check_mode)
@@ -624,6 +160,20 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init_filter(self):
         self.filter.clicked.connect(lambda: self.check_parameter(self.filter))
         self.set_default.clicked.connect(lambda: self.check_parameter(self.set_default))
+
+    def append_text(self, text: str):
+        self.textBrowser.moveCursor(QTextCursor.End)
+        self.textBrowser.insertPlainText(text)
+
+    def set_tqdm_text(self, text: str):
+        new_text = text
+        if new_text.find('\r') >= 0:
+            new_text = new_text.replace('\r', '').rstrip()
+            if new_text:
+                self.lineEdit.setText(new_text)
+        else:
+            # we suppose that all TQDM prints have \r, so drop the rest
+            pass
 
     def outputWritten(self, text):
         cursor = self.textBrowser.textCursor()
@@ -668,12 +218,14 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                                                            "F:/VALLEN/Ni-tension test-electrolysis-1-0.01-AE-20201031",
                                                            "VALLEN Files (*.pridb & *.tradb)")[0]
             self.input = files
-            if len(self.input) == 2 and all(['pridb' in self.input[0] or 'pridb' in self.input[1], 'tradb' in self.input[0] or 'tradb' in self.input[1]]):
+            if len(self.input) == 2 and all(['pridb' in self.input[0] or 'pridb' in self.input[1],
+                                             'tradb' in self.input[0] or 'tradb' in self.input[1]]):
                 self.show_input.setText(self.input[0].split('/')[-1][:-6])
                 self.show_input_2.setText(self.input[0].split('/')[-1][:-6])
                 self.import_data.setEnabled(True)
                 self.import_data_2.setEnabled(True)
                 self.textBrowser.setEnabled(True)
+                self.lineEdit.setEnabled(True)
                 self.statusbar.showMessage('Select loading path successfully!')
                 print("=" * 22 + " VALLEN Import Message " + "=" * 22)
                 print(self.input[0])
@@ -700,19 +252,23 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.import_data.setEnabled(True)
                 self.import_data_2.setEnabled(True)
                 self.textBrowser.setEnabled(True)
+                self.lineEdit.setEnabled(True)
                 self.Overwrite.setChecked(False)
                 if self.featuresData in os.listdir(self.input):
                     self.Overwrite.setEnabled(True)
                     self.mode.clear()
                     self.mode.addItems(['Load both', 'Load waveforms only', 'Load features only'])
-                    self.statusbar.showMessage('Please be careful to press the Overwrite button, the original data may be lost.')
+                    self.statusbar.showMessage(
+                        'Please be careful to press the Overwrite button, the original data may be lost.')
                     print("=" * 28 + " Warning " + "=" * 28)
-                    print("Converted data file has been detected. Press button [Overwrite] to choose overwrite it or not.")
+                    print(
+                        "Converted data file has been detected. Press button [Overwrite] to choose overwrite it or not.")
                 else:
                     self.Overwrite.setEnabled(False)
                     self.mode.clear()
                     self.mode.addItems(['Convert only', 'Convert with waveforms loading',
-                                        'Convert with features loading', 'Convert with both loading', 'Load waveforms only'])
+                                        'Convert with features loading', 'Convert with both loading',
+                                        'Load waveforms only'])
                     self.statusbar.showMessage('Press [IMPORT] to continue.')
                     print("=" * 23 + " Convert information " + "=" * 23)
                 print(self.input)
@@ -721,7 +277,9 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.statusbar.showMessage('Please select correct file!')
 
     def load_stretcher(self):
-        file = QtWidgets.QFileDialog.getOpenFileName(self, "Open", "F:/VALLEN/Ni-tension test-electrolysis-1-0.01-AE-20201031/Ni-tension test-electrolysis-1-0.01-20201031.is_tens_RawData", "csv Files (*.csv)")[0]
+        file = QtWidgets.QFileDialog.getOpenFileName(self, "Open",
+                                                     "F:/VALLEN/Ni-tension test-electrolysis-1-0.01-AE-20201031/Ni-tension test-electrolysis-1-0.01-20201031.is_tens_RawData",
+                                                     "csv Files (*.csv)")[0]
         self.stretcher = file
         if file:
             self.smooth.setEnabled(True)
@@ -1027,31 +585,13 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.statusbar.showMessage('Error: The save path is empty, please select a correct path!')
             return
 
-        self.data_tra = []
-        self.data_pri = []
-        self.filter_pri = []
-        self.PAC_filter_pri = []
-        self.chan_1 = []
-        self.chan_2 = []
-        self.chan_3 = []
-        self.chan_4 = []
-        self.data_tra_1 = []
-        self.data_tra_2 = []
-        self.data_tra_3 = []
-        self.data_tra_4 = []
-        self.PAC_chan_1 = []
-        self.PAC_chan_2 = []
-        self.PAC_chan_3 = []
-        self.PAC_chan_4 = []
         self.stretcher = None
         if self.device == 'VALLEN':
             if len(self.input) == 1:
                 self.statusbar.showMessage('Please select correct files!')
                 return
-            self.start = time.time()
             self.statusbar.clearMessage()
             self.statusbar.showMessage('Loading data...')
-            print("=" * 27 + " Loading... " + "=" * 28)
             if 'pridb' in self.input[0]:
                 self.path_pri = self.input[0]
                 self.path_tra = self.input[1]
@@ -1059,8 +599,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.path_pri = self.input[1]
                 self.path_tra = self.input[0]
 
-            self.num = 0
-            self.value = 0
+            # self.num = 0
+            # self.value = 0
             self.btn_base(False)
             self.btn_wave(False)
             self.btn_feature(False)
@@ -1077,7 +617,12 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.smooth.setEnabled(False)
             self.stress_color.setEnabled(False)
 
-            reload = Reload(self.path_pri, self.path_tra, self.input[0].split('/')[-1][:-6])
+            self.thread = ConvertVallenData(self.path_pri, self.path_tra, self.input[0].split('/')[-1][:-6],
+                                            self.mode.currentText(), self.counts.value())
+            self.thread._signal.connect(self.return_vallen_date)
+            self.thread.start()
+
+            '''
             conn_tra = sqlite3.connect(self.path_tra)
             conn_pri = sqlite3.connect(self.path_pri)
             self.result_tra = conn_tra.execute(
@@ -1157,6 +702,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             # self.timer = QTimer(self, timeout=self.onTimeout)
             # self.start = time.time()
             # self.timer.start()
+            '''
         else:
             if len(self.input) == 2:
                 self.statusbar.showMessage('Please select correct files!')
@@ -1182,22 +728,26 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             # if self.Overwrite.isChecked():
             if self.mode.currentText() == 'Convert only':
                 self.thread = ConvertPacData(self.featuresData, self.PACData, self.input, self.threshold.value(),
-                                             self.magnification.value(), self.processor, False, False, self.counts.value())
+                                             self.magnification.value(), self.processor, False, False,
+                                             self.counts.value())
                 self.thread._signal.connect(self.convert_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Convert with waveforms loading':
                 self.thread = ConvertPacData(self.featuresData, self.PACData, self.input, self.threshold.value(),
-                                             self.magnification.value(), self.processor, True, False, self.counts.value())
+                                             self.magnification.value(), self.processor, True, False,
+                                             self.counts.value())
                 self.thread._signal.connect(self.convert_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Convert with features loading':
                 self.thread = ConvertPacData(self.featuresData, self.PACData, self.input, self.threshold.value(),
-                                             self.magnification.value(), self.processor, False, True, self.counts.value())
+                                             self.magnification.value(), self.processor, False, True,
+                                             self.counts.value())
                 self.thread._signal.connect(self.convert_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Convert with both loading':
                 self.thread = ConvertPacData(self.featuresData, self.PACData, self.input, self.threshold.value(),
-                                             self.magnification.value(), self.processor, True, True, self.counts.value())
+                                             self.magnification.value(), self.processor, True, True,
+                                             self.counts.value())
                 self.thread._signal.connect(self.convert_pac_data)
                 self.thread.start()
             elif self.mode.currentText() == 'Load both':
@@ -1235,7 +785,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             #         self.thread.start()
 
     def random_select(self, btn):
-        for channel, chan in zip(['Chan 1', 'Chan 2', 'Chan 3', 'Chan 4'], [self.chan_1, self.chan_2, self.chan_3, self.chan_4]):
+        for channel, chan in zip(['Chan 1', 'Chan 2', 'Chan 3', 'Chan 4'],
+                                 [self.chan_1, self.chan_2, self.chan_3, self.chan_4]):
             if btn == channel:
                 cur_chan = chan
         try:
@@ -1252,6 +803,36 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         except IndexError:
             trai = None
             self.show_trai.setText('This channel has no data.')
+
+    def return_vallen_date(self, result):
+        self.data_tra = result[0]
+        self.data_pri = result[1]
+        self.chan_1 = result[2]
+        self.chan_2 = result[3]
+        self.chan_3 = result[4]
+        self.chan_4 = result[5]
+        del result
+
+        if self.mode.currentText() == 'Load both':
+            self.btn_wave(True)
+            self.btn_feature(True)
+            self.random_trai.setEnabled(True)
+            self.show_trai.setReadOnly(False)
+            self.statusbar.showMessage('Finish loading both!')
+        elif self.mode.currentText() == 'Load waveforms only':
+            self.btn_wave(True)
+            self.show_trai.setReadOnly(False)
+            self.statusbar.showMessage('Finish loading waveforms!')
+        elif self.mode.currentText() == 'Load features only':
+            self.btn_feature(True)
+            self.statusbar.showMessage('Finish loading features!')
+        self.btn_base(True)
+        self.show_figurenote.setReadOnly(False)
+        self.Threshold.setEnabled(False)
+        self.Magnification.setEnabled(False)
+        self.threshold.setEnabled(False)
+        self.magnification.setEnabled(False)
+        self.Overwrite.setEnabled(False)
 
     def return_read_pac_data(self, result):
         self.data_tra_1 = result[0]
@@ -1354,7 +935,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.statusbar.showMessage('Please enter a TRAI to continue.')
             return
         if self.device == 'VALLEN':
-            waveform = Waveform(self.color_1, self.color_2, self.data_tra, self.input, self.output, self.status, 'vallen')
+            waveform = Waveform(self.color_1, self.color_2, self.data_tra, self.input, self.output, self.status,
+                                'vallen')
             plotWindow = waveform.plot_wave_TRAI(int(btn.text()), self.data_pri, len(self.data_pri) != 0, False,
                                                  self.cwt.isChecked())
             try:
@@ -1365,7 +947,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.statusbar.showMessage(plotWindow)
         else:
             for channel, tra in zip(['Chan 1', 'Chan 2', 'Chan 3', 'Chan 4'],
-                                         [self.data_tra_1, self.data_tra_2, self.data_tra_3, self.data_tra_4]):
+                                    [self.data_tra_1, self.data_tra_2, self.data_tra_3, self.data_tra_4]):
                 if self.chan == channel:
                     data_tra = tra
             waveform = Waveform(self.color_1, self.color_2, data_tra, self.input, self.output, self.status, 'pac',
@@ -1492,7 +1074,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             plotWindow.show()
         # Plot contour of features
         if self.contour_D_E.isChecked():
-            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[2]], self.filter_pri[:, self.feature_idx[1]],
+            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[2]],
+                                              self.filter_pri[:, self.feature_idx[1]],
                                               '$20 \log_{10} E(aJ)$', '$20 \log_{10} D(\mu s)$',
                                               [self.contour_x_min.value(), self.contour_x_max.value()],
                                               [self.contour_y_min.value(), self.contour_y_max.value()],
@@ -1504,7 +1087,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.window.append(plotWindow)
             plotWindow.show()
         if self.contour_E_A.isChecked():
-            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[0]], self.filter_pri[:, self.feature_idx[2]],
+            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[0]],
+                                              self.filter_pri[:, self.feature_idx[2]],
                                               '$20 \log_{10} A(\mu V)$', '$20 \log_{10} E(aJ)$',
                                               [self.contour_x_min.value(), self.contour_x_max.value()],
                                               [self.contour_y_min.value(), self.contour_y_max.value()],
@@ -1516,7 +1100,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.window.append(plotWindow)
             plotWindow.show()
         if self.contour_D_A.isChecked():
-            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[0]], self.filter_pri[:, self.feature_idx[1]],
+            plotWindow = features.cal_contour(self.filter_pri[:, self.feature_idx[0]],
+                                              self.filter_pri[:, self.feature_idx[1]],
                                               '$20 \log_{10} A(\mu V)$', '$20 \log_{10} D(\mu s)$',
                                               [self.contour_x_min.value(), self.contour_x_max.value()],
                                               [self.contour_y_min.value(), self.contour_y_max.value()],
@@ -1633,7 +1218,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             if self.PAC_AbsE_T.isChecked():
                 plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
                                                         '20log(AbsEny)', self.show_ending_time.value(),
-                                                        self.feature_color.currentText(), self.stress_color.currentText(),
+                                                        self.feature_color.currentText(),
+                                                        self.stress_color.currentText(),
                                                         self.bar_width.value(), self.stretcher,
                                                         self.smooth.currentText() == str(True))
                 self.window.append(plotWindow)
@@ -1648,7 +1234,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             if self.PAC_D_T.isChecked():
                 plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
                                                         '20log(Dur)', self.show_ending_time.value(),
-                                                        self.feature_color.currentText(), self.stress_color.currentText(),
+                                                        self.feature_color.currentText(),
+                                                        self.stress_color.currentText(),
                                                         self.bar_width.value(), self.stretcher,
                                                         self.smooth.currentText() == str(True))
                 self.window.append(plotWindow)
@@ -1656,7 +1243,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             if self.PAC_C_T.isChecked():
                 plotWindow = features.plot_feature_time(20 * np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[-1]]),
                                                         '20log(Counts)', self.show_ending_time.value(),
-                                                        self.feature_color.currentText(), self.stress_color.currentText(),
+                                                        self.feature_color.currentText(),
+                                                        self.stress_color.currentText(),
                                                         self.bar_width.value(), self.stretcher,
                                                         self.smooth.currentText() == str(True))
                 self.window.append(plotWindow)
@@ -1672,6 +1260,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
+    import sys
+
     freeze_support()
     app = QtWidgets.QApplication(sys.argv)
     win_auth = AuthorizeWindow()

@@ -5,7 +5,8 @@
 @time: 2021/11/10 12:56
 """
 
-import sys, os
+import sys
+import os
 if hasattr(sys, 'frozen'):
     os.environ['PATH'] = sys._MEIPASS + ";" + os.environ['PATH']
 
@@ -26,8 +27,8 @@ def app_path():
     """Returns the base application path."""
     if hasattr(sys, 'frozen'):
         # Handles PyInstaller
-        return os.path.dirname(sys.executable) # 使用pyinstaller打包后的exe目录
-    return os.path.dirname(__file__) # 没打包前的py目录
+        return os.path.dirname(sys.executable)  # 打包后的exe目录
+    return os.path.dirname(__file__)    # 没打包前的py目录
 
 
 PROJECT_PATH = app_path()

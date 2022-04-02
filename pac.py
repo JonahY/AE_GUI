@@ -8,7 +8,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from tqdm import tqdm
+from tqdm.auto import tqdm
 import math
 import multiprocessing
 import argparse
@@ -142,7 +142,9 @@ class Preprocessing:
         return valid
 
     def main(self, file_name, obj, load_wave=False, min_cnts=2, data=[]):
-        for idx, name in enumerate(file_name):
+        tqdm_tra = tqdm(range(file_name), unit_scale=True, dynamic_ncols=True)
+        tqdm_tra.set_description("PAC extraction progress")
+        for idx, name in enumerate(tqdm_tra):
             with open(name, "r") as f:
                 self.skip_n_column(f)
                 self.sample_interval = float(f.readline()[29:])

@@ -488,7 +488,38 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
          </attribute>
          <layout class="QGridLayout" name="gridLayout_38">
           <item row="0" column="0">
-           <layout class="QGridLayout" name="gridLayout_20" rowstretch="1,4">
+           <layout class="QGridLayout" name="gridLayout_20" rowstretch="1,4,0">
+            <item row="1" column="0">
+             <widget class="QTextBrowser" name="textBrowser">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sitka Banner</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>true</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
              <layout class="QGridLayout" name="gridLayout_waveform_1" columnstretch="0,0,0,0,0">
               <property name="verticalSpacing">
@@ -964,28 +995,34 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
               </item>
              </layout>
             </item>
-            <item row="1" column="0">
-             <widget class="QTextBrowser" name="textBrowser">
+            <item row="2" column="0">
+             <widget class="QLineEdit" name="lineEdit">
               <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>25</height>
+               </size>
               </property>
-              <property name="font">
-               <font>
-                <family>Sitka Banner</family>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <italic>true</italic>
-                <bold>true</bold>
-               </font>
+              <property name="baseSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true"/>
+              <property name="inputMask">
+               <string/>
+              </property>
+              <property name="frame">
+               <bool>true</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -6274,7 +6311,7 @@ QLineEdit:Disabled {border-style: outset;border-width: 1px;border-color:rgb(193,
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup_feature"/>
-  <buttongroup name="buttonGroup_device"/>
   <buttongroup name="buttonGroup_waveform"/>
+  <buttongroup name="buttonGroup_device"/>
  </buttongroups>
 </ui>

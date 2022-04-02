@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/run" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/License_generator" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tqdm_test" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../PyQt5-master">
       <sourceFolder url="file://$MODULE_DIR$/../PyQt5-master" isTestSource="false" />

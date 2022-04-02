@@ -1587,8 +1587,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # ================================ PAC ================================
         if self.device == 'PAC':
-            features = Features(self.color_1, self.color_2, self.PAC_filter_pri[:, self.PAC_feature_idx[-2]], self.status,
-                                self.output, 'PAC-self')
+            features = Features(self.color_1, self.color_2, self.PAC_filter_pri[:, self.PAC_feature_idx[-2]],
+                                self.PAC_filter_pri[:, self.trai_idx], self.status, self.output, 'PAC-self')
             # Plot features' correlation
             if self.PAC_E_A.isChecked():
                 plotWindow = features.plot_correlation(self.PAC_filter_pri[:, self.PAC_feature_idx[0]],

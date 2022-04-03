@@ -3,8 +3,8 @@ import output_redirection_tools  # KEEP ME !!!
 
 import logging
 import sys
-
-from PyQt5.QtCore import pyqtSlot, QObject, QThread, Qt
+from PyQt5 import QtCore, Qt
+from PyQt5.QtCore import pyqtSlot, QObject, QThread
 from PyQt5.QtGui import QTextCursor, QFont
 from PyQt5.QtWidgets import QTextEdit, QWidget, QToolButton, QVBoxLayout, QApplication, QLineEdit
 
@@ -12,6 +12,8 @@ from config import config_dict, STDOUT_WRITE_STREAM_CONFIG, TQDM_WRITE_STREAM_CO
     STREAM_CONFIG_KEY_QT_QUEUE_RECEIVER
 # from my_logging import setup_logging
 import third_party_module_not_to_change
+from tqdm.auto import tqdm
+import time
 
 
 class MainApp(QWidget):
@@ -78,6 +80,13 @@ class MainApp(QWidget):
         self.btn_perform_actions.setEnabled(False)
         self.thread_initialize.start()
 
+        # self.thread = ThreadTest()
+        # self.thread._signal.connect(self.return_date)
+        # self.thread.start()
+
+    def return_date(self, result):
+        print(result)
+
 
 class StdOutTextEdit(QTextEdit):
     def __init__(self, parent):
@@ -101,7 +110,7 @@ class StdTQDMTextEdit(QLineEdit):
         self.setReadOnly(True)
         self.setEnabled(True)
         self.setMinimumWidth(500)
-        self.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        self.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.setClearButtonEnabled(True)
         self.setFont(QFont('Consolas', 11))
 
@@ -125,6 +134,21 @@ class LongProcedureWrapper(QObject):
     @pyqtSlot()
     def run(self):
         third_party_module_not_to_change.long_procedure()
+
+
+class ThreadTest(Qt.QThread):
+    _signal = QtCore.pyqtSignal(list)
+
+    def __init__(self):
+        super(ThreadTest, self).__init__()
+
+    def run(self):
+        tqdm_obect = tqdm(range(10), unit_scale=True, dynamic_ncols=True)
+        tqdm_obect.set_description("My progress bar description")
+        for i in tqdm_obect:
+            time.sleep(0.1)
+            print(i)
+        self._signal.emit('return')
 
 
 if __name__ == '__main__':

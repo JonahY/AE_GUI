@@ -3,7 +3,7 @@
 @author: Jonah
 @file: wave_freq.py
 @Created time: 2020/12/15 00:00
-@Last Modified: 2021/12/18 19:07
+@Last Modified: 2022/04/04 00:28
 """
 
 from plot_format import plot_norm
@@ -55,42 +55,7 @@ class Waveform:
                 time = np.linspace(0, duration, sig.shape[0])
         return time, sig
 
-    def find_wave(self, Dur, Eny, cls_KKM, chan, dur_lim, eny_lim):
-        for i in np.where((np.log10(Dur)[cls_KKM] > dur_lim[0]) & (np.log10(Dur)[cls_KKM] < dur_lim[1]) &
-                          (np.log10(Eny)[cls_KKM] > eny_lim[0]) & (np.log10(Eny)[cls_KKM] < eny_lim[1]))[0]:
-            # Idx, Dur, Eny, TRAI
-            print(i, np.log10(Dur)[cls_KKM][i], np.log10(Eny)[cls_KKM][i], '{:.0f}'.format(chan[cls_KKM][i][-1]))
-
-    def plot_2cls_wave(self, TRAI_select_1, TRAI_select_2, same, value, valid=False):
-        fig = plt.figure(figsize=(9.2, 3), num='Waveforms with same %s--%d μV' % (same, value))
-        fig.text(0.48, 0.24, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
-                 horizontalalignment="right")
-        fig.text(0.975, 0.24, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
-                 horizontalalignment="right")
-        i = self.data_tra[TRAI_select_1 - 1]
-        if i[-1] != TRAI_select_1:
-            print('Error: TRAI %d in data_tra is inconsistent with %d by input!' % (i[-1], TRAI_select_1))
-            return
-        valid_time, valid_data = self.cal_wave(i, valid=valid)
-
-        ax = fig.add_subplot(1, 2, 1)
-        ax.plot(valid_time, valid_data, lw=0.5, color=self.color_1)
-        ax.axhline(abs(i[2]), 0, valid_data.shape[0], linewidth=1, color="black")
-        ax.axhline(-abs(i[2]), 0, valid_data.shape[0], linewidth=1, color="black")
-        plot_norm(ax, xlabel='Time (μs)', ylabel='Amplitude (μV)', legend=False, grid=True)
-
-        ax2 = fig.add_subplot(1, 2, 2)
-        i = self.data_tra[TRAI_select_2 - 1]
-        if i[-1] != TRAI_select_2:
-            print('Error: TRAI %d in data_tra is inconsistent with %d by input!' % (i[-1], TRAI_select_2))
-            return
-        valid_time, valid_data = self.cal_wave(i, valid=valid)
-        ax2.plot(valid_time, valid_data, lw=0.5, color=self.color_2)
-        ax2.axhline(abs(i[2]), 0, valid_data.shape[0], linewidth=1, color="black")
-        ax2.axhline(-abs(i[2]), 0, valid_data.shape[0], linewidth=1, color="black")
-        plot_norm(ax2, xlabel='Time (μs)', ylabel='Amplitude (μV)', legend=False, grid=True)
-
-    def plot_wave_TRAI(self, k, data_pri, show_features=False, valid=False, cwt=False):
+    def plot_wave_TRAI(self, fig, k, data_pri, show_features=False, valid=False, cwt=False):
         # Waveform with specific TRAI
         try:
             if self.device == 'VALLEN':
@@ -109,24 +74,23 @@ class Waveform:
         time, sig = time[:tail], sig[:tail]
 
         if cwt:
-            plotWindow = PlotWindow('Waveform--TRAI: %s' % i[-1], 9.2, 3)
-            fig = plotWindow.static_canvas.figure
             fig.subplots_adjust(left=0.076, bottom=0.205, right=0.984, top=0.927, hspace=0.2, wspace=0.26)
             fig.text(0.47, 0.25, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
                      horizontalalignment="right")
             ax = fig.add_subplot(1, 2, 2)
+            ax.cla()
             Twxo, Wxo, ssq_freqs, *_ = ssq_cwt(sig, wavelet='morlet', scales='log-piecewise', fs=i[3], t=time)
             ax.contourf(time, ssq_freqs * 1000, pow(abs(Twxo), 0.5), cmap='cubehelix_r')
             plot_norm(ax, 'Time (μs)', 'Frequency (kHz)', y_lim=[min(ssq_freqs * 1000), 1000], legend=False)
             ax = fig.add_subplot(1, 2, 1)
+            ax.cla()
             ax.plot(time, sig, lw=1)
         else:
-            plotWindow = PlotWindow('Waveform--TRAI: %s' % i[-1], 6, 3.6)
-            fig = plotWindow.static_canvas.figure
             fig.subplots_adjust(left=0.115, bottom=0.17, right=0.975, top=0.95)
             fig.text(0.96, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
                      horizontalalignment="right")
             ax = fig.add_subplot()
+            ax.cla()
             ax.plot(time, sig, lw=1)
 
         if self.device == 'vallen':
@@ -162,35 +126,14 @@ class Waveform:
             ax.axhline(-abs(self.thr_μV), 0, sig.shape[0], linewidth=1, color="black")
         plot_norm(ax, 'Time (μs)', 'Amplitude (μV)', legend=False, grid=True)
 
+        # ================================================= 画图重绘与刷新 ================================================
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
         with open('/'.join([self.output, self.status]) + '-%d' % i[-1] + '.txt', 'w') as f:
             f.write('Time, Signal\n')
             for k in range(sig.shape[0]):
                 f.write("{}, {}\n".format(time[k], sig[k]))
-
-        return plotWindow
-
-    def plot_wave_realtime(self, k, file_list, file_idx, chan, valid=False):
-        try:
-            sig, time = self.process.read_wave_realtime(file_list, file_idx, chan, k, valid)
-        except TypeError:
-            return
-
-        fig = plt.figure(figsize=(6, 4.1), num='Waveform--Hit number:%d (%s)' % (k, valid))
-        ax = fig.add_subplot(1, 1, 1)
-        ax.plot(time, sig, lw=1)
-        plt.axhline(abs(self.thr_μV), 0, sig.shape[0], linewidth=1, color="black")
-        plt.axhline(-abs(self.thr_μV), 0, sig.shape[0], linewidth=1, color="black")
-        plot_norm(ax, 'Time (μs)', 'Amplitude (μV)', title='Hit number:%d' % k, legend=False, grid=True)
-
-    def save_wave(self, TRAI, pop):
-        # Save waveform
-        for idx, j in enumerate(tqdm(TRAI)):
-            i = self.data_tra[j - 1]
-            valid_time, valid_data = self.cal_wave(i)
-            with open('/'.join([self.output, self.status]) + '_pop%s-%d' % (pop, idx + 1) + '.txt', 'w') as f:
-                f.write('Time, Signal\n')
-                for k in range(valid_data.shape[0]):
-                    f.write("{}, {}\n".format(valid_time[k], valid_data[k]))
 
 
 class Frequency:

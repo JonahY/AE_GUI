@@ -1,68 +1,20 @@
 """
 @version: 2.0
 @author: Jonah
-@file: utils.py
-@time: 2021/11/10 12:56
+@file: __init__.py
+@Created time: 2020/12/15 00:00
+@Last Modified: 2022/04/04 00:28
 """
 
 import sqlite3
 from tqdm.auto import tqdm
 import numpy as np
 import array
-import os
 import pandas as pd
 from scipy.signal import savgol_filter
 import traceback
-import multiprocessing
-from multiprocessing.managers import BaseManager
-import threading
-share_lock = threading.Lock()
-
-
-class GlobalV():
-    def __init__(self):
-        self.data_tra = []
-        self.data_pri = []
-        self.chan_1 = []
-        self.chan_2 = []
-        self.chan_3 = []
-        self.chan_4 = []
-
-    def append_tra(self, arg):
-        self.data_tra.append(arg)
-
-    def append_pri(self, arg):
-        self.data_pri.append(arg)
-
-    def append_1(self, arg):
-        self.chan_1.append(arg)
-
-    def append_2(self, arg):
-        self.chan_2.append(arg)
-
-    def append_3(self, arg):
-        self.chan_3.append(arg)
-
-    def append_4(self, arg):
-        self.chan_4.append(arg)
-
-    def get_tra(self):
-        return self.data_tra
-
-    def get_pri(self):
-        return self.data_pri
-
-    def get_1(self):
-        return self.chan_1
-
-    def get_2(self):
-        return self.chan_2
-
-    def get_3(self):
-        return self.chan_3
-
-    def get_4(self):
-        return self.chan_4
+from PyQt5 import QtCore, Qt
+from wave_freq import Waveform
 
 
 class Reload:
@@ -92,31 +44,7 @@ class Reload:
             res = cur.fetchall()[-3][1]
         return int(res)
 
-    def read_with_time(self, time):
-        conn_pri = sqlite3.connect(self.path_pri)
-        result_pri = conn_pri.execute(
-            "Select SetID, Time, Chan, Thr, Amp, RiseT, Dur, Eny, RMS, Counts, TRAI FROM view_ae_data")
-        chan_1, chan_2, chan_3, chan_4 = [], [], [], []
-        t = [[] for _ in range(len(time) - 1)]
-        N_pri = self.sqlite_read(self.path_pri)
-        for _ in tqdm(range(N_pri)):
-            i = result_pri.fetchone()
-            if i[-2] is not None and i[-2] >= 6 and i[-1] > 0:
-                for idx, chan in zip(np.arange(1, 5), [chan_1, chan_2, chan_3, chan_4]):
-                    if i[2] == idx:
-                        chan.append(i)
-                        for j in range(len(t)):
-                            if time[j] <= i[1] < time[j + 1]:
-                                t[j].append(i)
-                                break
-                        break
-        chan_1 = np.array(chan_1)
-        chan_2 = np.array(chan_2)
-        chan_3 = np.array(chan_3)
-        chan_4 = np.array(chan_4)
-        return t, chan_1, chan_2, chan_3, chan_4
-
-    def read_vallen_data(self, lower=2):
+    def read_vallen(self, mode, counts):
         conn_tra = sqlite3.connect(self.path_tra)
         conn_pri = sqlite3.connect(self.path_pri)
         result_tra = conn_tra.execute(
@@ -126,74 +54,12 @@ class Reload:
         data_tra, data_pri, chan_1, chan_2, chan_3, chan_4 = [], [], [], [], [], []
         N_pri = self.sqlite_read(self.path_pri)
         N_tra = self.sqlite_read(self.path_tra)
-        for _ in tqdm(range(N_tra), ncols=80):
-            i = result_tra.fetchone()
-            data_tra.append(i)
-        for _ in tqdm(range(N_pri), ncols=80):
-            i = result_pri.fetchone()
-            if i[-2] is not None and i[-2] > lower and i[-1] > 0:
-                data_pri.append(i)
-                if i[2] == 1:
-                    chan_1.append(i)
-                if i[2] == 2:
-                    chan_2.append(i)
-                elif i[2] == 3:
-                    chan_3.append(i)
-                elif i[2] == 4:
-                    chan_4.append(i)
-        data_tra = sorted(data_tra, key=lambda x: x[-1])
-        data_pri = np.array(data_pri)
-        chan_1 = np.array(chan_1)
-        chan_2 = np.array(chan_2)
-        chan_3 = np.array(chan_3)
-        chan_4 = np.array(chan_4)
-        return data_tra, data_pri, chan_1, chan_2, chan_3, chan_4
-
-    def read_pac_data(self, path, lower=2):
-        os.chdir(path)
-        dir_features = os.listdir(path)[0]
-        data_tra, data_pri, chan_1, chan_2, chan_3, chan_4 = [], [], [], [], [], []
-        with open(dir_features, 'r') as f:
-            data_pri = np.array([j.strip(', ') for i in f.readlines()[1:] for j in i.strip("\n")])
-        for _ in tqdm(range(N_tra), ncols=80):
-            i = result_tra.fetchone()
-            data_tra.append(i)
-        for _ in tqdm(range(N_pri), ncols=80):
-            i = result_pri.fetchone()
-            if i[-2] is not None and i[-2] > lower and i[-1] > 0:
-                data_pri.append(i)
-                if i[2] == 1:
-                    chan_1.append(i)
-                if i[2] == 2:
-                    chan_2.append(i)
-                elif i[2] == 3:
-                    chan_3.append(i)
-                elif i[2] == 4:
-                    chan_4.append(i)
-        data_tra = sorted(data_tra, key=lambda x: x[-1])
-        data_pri = np.array(data_pri)
-        chan_1 = np.array(chan_1)
-        chan_2 = np.array(chan_2)
-        chan_3 = np.array(chan_3)
-        chan_4 = np.array(chan_4)
-        return data_tra, data_pri, chan_1, chan_2, chan_3, chan_4
-
-    def read_vallen(self, mode, counts, obj):
-        conn_tra = sqlite3.connect(self.path_tra)
-        conn_pri = sqlite3.connect(self.path_pri)
-        result_tra = conn_tra.execute(
-            "Select Time, Chan, Thr, SampleRate, Samples, TR_mV, Data, TRAI FROM view_tr_data")
-        result_pri = conn_pri.execute(
-            "Select SetID, Time, Chan, Thr, Amp, RiseT, Dur, Eny, RMS, Counts, TRAI FROM view_ae_data")
-        N_pri = self.sqlite_read(self.path_pri)
-        N_tra = self.sqlite_read(self.path_tra)
-        global share_lock
         if mode == 'Load both' or mode == 'Load waveforms only':
             tqdm_tra = tqdm(range(N_tra), unit_scale=True, dynamic_ncols=True)
             tqdm_tra.set_description("Waveform extraction progress")
             for _ in tqdm_tra:
                 i = result_tra.fetchone()
-                obj.append_tra(i)
+                data_tra.append(i)
             print('Complete the import of waveform!')
         if mode == 'Load both' or mode == 'Load features only':
             tqdm_pri = tqdm(range(N_pri), unit_scale=True, dynamic_ncols=True)
@@ -201,17 +67,18 @@ class Reload:
             for _ in tqdm_pri:
                 i = result_pri.fetchone()
                 if i[-2] is not None and i[-2] > counts and i[-1] > 0:
-                    obj.append_pri(i)
+                    data_pri.append(i)
                     if i[2] == 1:
-                        obj.append_1(i)
+                        chan_1.append(i)
                     elif i[2] == 2:
-                        obj.append_2(i)
+                        chan_2.append(i)
                     elif i[2] == 3:
-                        obj.append_3(i)
+                        chan_3.append(i)
                     elif i[2] == 4:
-                        obj.append_4(i)
+                        chan_4.append(i)
             print('Complete the import of feature!\nSorting ...')
-        share_lock.release()
+        return sorted(data_tra, key=lambda x: x[-1]), np.array(data_pri), np.array(chan_1), np.array(chan_2), \
+               np.array(chan_3), np.array(chan_4)
 
 
 def load_stress(path_curve):
@@ -254,3 +121,202 @@ def catchError(info):
         return wrapper
 
     return outwrapper
+
+
+class ShowWaveform(Qt.QThread):
+    _signal = QtCore.pyqtSignal(int)
+
+    def __init__(self, fig, trai, data_pri, valid, cwt, color_1, color_2, data_tra, input, output, status,
+                 device, thr_dB=25, magnification_dB=60):
+        super(ShowWaveform, self).__init__()
+        self.fig = fig
+        self.trai = trai
+        self.data_pri = data_pri
+        self.valid = valid
+        self.cwt = cwt
+        self.color_1 = color_1
+        self.color_2 = color_2
+        self.data_tra = data_tra
+        self.input = input
+        self.output = output
+        self.status = status
+        self.device = device
+        self.thr_dB = thr_dB
+        self.magnification_dB = magnification_dB
+
+    @catchError('Error In Showing Waveform')
+    def run(self):
+        waveform = Waveform(self.color_1, self.color_2, self.data_tra, self.input, self.output, self.status,
+                            self.device, self.thr_dB, self.magnification_dB)
+        waveform.plot_wave_TRAI(self.fig, self.trai, self.data_pri, len(self.data_pri) != 0, self.valid, self.cwt)
+        self._signal.emit(self.trai)
+
+
+class ShowFeaturesCorrelation(Qt.QThread):
+    def __init__(self, fig, features, tmp_1, tmp_2, xlabel, ylabel, color):
+        super(ShowFeaturesCorrelation, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.tmp_1 = tmp_1
+        self.tmp_2 = tmp_2
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.color = color
+
+    @catchError('Error In Showing Features correlation')
+    def run(self):
+        self.features.plot_correlation(self.fig, self.tmp_1, self.tmp_2, self.xlabel, self.ylabel, self.color)
+
+
+class ShowPDF(Qt.QThread):
+    def __init__(self, fig, features, tmp, xlabel, ylabel, lim, interval_num, color, fit, bin_method):
+        super(ShowPDF, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.tmp = tmp
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.lim = lim
+        self.interval_num = interval_num
+        self.color = color
+        self.fit = fit
+        self.bin_method = bin_method
+
+    @catchError('Error In Showing PDF')
+    def run(self):
+        self.features.cal_PDF(self.fig, self.tmp, self.xlabel, self.ylabel, self.lim, self.interval_num, self.color,
+                              self.fit, self.bin_method)
+
+
+class ShowCCDF(Qt.QThread):
+    def __init__(self, fig, features, tmp, xlabel, ylabel, lim, color, fit):
+        super(ShowCCDF, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.tmp = tmp
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.lim = lim
+        self.color = color
+        self.fit = fit
+
+    @catchError('Error In Showing CCDF')
+    def run(self):
+        self.features.cal_CCDF(self.fig, self.tmp, self.xlabel, self.ylabel, self.lim, self.color, self.fit)
+
+
+class ShowML(Qt.QThread):
+    def __init__(self, fig, features, tmp, xlabel, ylabel, color, ecolor):
+        super(ShowML, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.tmp = tmp
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.color = color
+        self.ecolor = ecolor
+
+    @catchError('Error In Showing ML')
+    def run(self):
+        self.features.cal_ML(self.fig, self.tmp, self.xlabel, self.ylabel, self.color, self.ecolor)
+
+
+class ShowContour(Qt.QThread):
+    def __init__(self, fig, features, tmp_1, tmp_2, xlabel, ylabel, x_lim, y_lim, size_x, size_y, method, padding,
+                 colorbar, clabel):
+        super(ShowContour, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.tmp_1 = tmp_1
+        self.tmp_2 = tmp_2
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.x_lim = x_lim
+        self.y_lim = y_lim
+        self.size_x = size_x
+        self.size_y = size_y
+        self.method = method
+        self.padding = padding
+        self.colorbar = colorbar
+        self.clabel = clabel
+
+    @catchError('Error In Showing Contour of Features')
+    def run(self):
+        self.features.cal_contour(self.fig, self.tmp_1, self.tmp_2, self.xlabel, self.ylabel, self.x_lim, self.y_lim,
+                                  self.size_x, self.size_y, self.method, self.padding, self.colorbar, self.clabel)
+
+
+class ShowBathLaw(Qt.QThread):
+    def __init__(self, fig, features, tmp, xlabel, ylabel, interval_num, color, bin_method):
+        super(ShowBathLaw, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.tmp = tmp
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.interval_num = interval_num
+        self.color = color
+        self.bin_method = bin_method
+
+    @catchError('Error In Showing Bath Law')
+    def run(self):
+        self.features.cal_BathLaw(self.fig, self.tmp, self.xlabel, self.ylabel, self.interval_num, self.color,
+                                  self.bin_method)
+
+
+class ShowWaitingTime(Qt.QThread):
+    def __init__(self, fig, features, time, xlabel, ylabel, interval_num, color, fit, lim, bin_method):
+        super(ShowWaitingTime, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.time = time
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.interval_num = interval_num
+        self.color = color
+        self.fit = fit
+        self.lim = lim
+        self.bin_method = bin_method
+
+    @catchError('Error In Showing Waiting Time')
+    def run(self):
+        self.features.cal_WaitingTime(self.fig, self.time, self.xlabel, self.ylabel, self.interval_num, self.color,
+                                      self.fit, self.lim, self.bin_method)
+
+
+class ShowOmoriLaw(Qt.QThread):
+    def __init__(self, fig, features, tmp, xlabel, ylabel, interval_num, fit, bin_method):
+        super(ShowOmoriLaw, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.tmp = tmp
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.interval_num = interval_num
+        self.fit = fit
+        self.bin_method = bin_method
+
+    @catchError("Error In Showing Omori's Law")
+    def run(self):
+        self.features.cal_OmoriLaw(self.fig, self.tmp, self.xlabel, self.ylabel, self.interval_num, self.fit,
+                                   self.bin_method)
+
+
+class ShowTimeCorrelation(Qt.QThread):
+    def __init__(self, fig, features, tmp, ylabel, x_max, color_tmp, color_stretcher, width, stretcher_data, smooth):
+        super(ShowTimeCorrelation, self).__init__()
+        self.fig = fig
+        self.features = features
+        self.tmp = tmp
+        self.ylabel = ylabel
+        self.x_max = x_max
+        self.color_tmp = color_tmp
+        self.color_stretcher = color_stretcher
+        self.width = width
+        self.stretcher_data = stretcher_data
+        self.smooth = smooth
+
+    @catchError('Error In Showing Time correlation')
+    def run(self):
+        self.features.plot_feature_time(self.fig, self.tmp, self.ylabel, self.x_max, self.color_tmp,
+                                        self.color_stretcher, self.width, self.stretcher_data, self.smooth)

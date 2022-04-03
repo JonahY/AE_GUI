@@ -4,7 +4,7 @@
 @author: Jonah
 @file: features.py
 @Created time: 2020/12/15 00:00
-@Last Modified: 2021/12/24 21:59
+@Last Modified: 2022/04/04 00:28
 """
 
 from plot_format import plot_norm
@@ -221,7 +221,7 @@ class Features:
                         res[idx].append(k)
         return res
 
-    def cal_PDF(self, tmp, xlabel, ylabel, LIM=None, INTERVAL_NUM=None, COLOR='black', FIT=False, bin_method='log'):
+    def cal_PDF(self, fig, tmp, xlabel, ylabel, LIM=None, INTERVAL_NUM=None, COLOR='black', FIT=False, bin_method='log'):
         """
         Calculate Probability Density Distribution Function
         :param tmp: Energy/Amplitude/Duration in order of magnitude of original data
@@ -241,8 +241,6 @@ class Features:
         if LIM is None:
             LIM = [0, None]
 
-        plotWindow = PlotWindow('PDF--%s' % xlabel, 6, 3.9)
-        fig = plotWindow.static_canvas.figure
         fig.subplots_adjust(left=0.133, bottom=0.179, right=0.975, top=0.962)
         fig.text(0.15, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12})
         ax = fig.add_subplot()
@@ -265,14 +263,15 @@ class Features:
             ax.loglog(xx, yy, '.', marker='.', markersize=8, color=COLOR)
             plot_norm(ax, xlabel, ylabel, legend=False)
 
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
         with open('/'.join([self.output, self.status]) + '_%s.txt' % ylabel, 'w') as f:
             f.write('{}, {}\n'.format(xlabel, ylabel))
             for i, j in zip(xx, yy):
                 f.write('{}, {}\n'.format(i, j))
 
-        return plotWindow
-
-    def cal_CCDF(self, tmp, xlabel, ylabel, LIM=None, COLOR='black', FIT=False):
+    def cal_CCDF(self, fig, tmp, xlabel, ylabel, LIM=None, COLOR='black', FIT=False):
         """
         Calculate Complementary Cumulative Distribution Function
         :param tmp: Energy/Amplitude/Duration in order of magnitude of original data
@@ -289,8 +288,6 @@ class Features:
             LIM = [0, float('inf')]
         N = len(tmp)
 
-        plotWindow = PlotWindow('CCDF--%s' % xlabel, 6, 3.9)
-        fig = plotWindow.static_canvas.figure
         fig.subplots_adjust(left=0.133, bottom=0.179, right=0.975, top=0.962)
         fig.text(0.15, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12})
         ax = fig.add_subplot()
@@ -313,14 +310,15 @@ class Features:
             ax.loglog(xx, yy, color=COLOR)
             plot_norm(ax, xlabel, ylabel, legend=False)
 
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
         with open('/'.join([self.output, self.status]) + '_CCDF(%s).txt' % xlabel[0], 'w') as f:
             f.write('{}, {}\n'.format(xlabel, ylabel))
             for i, j in zip(xx, yy):
                 f.write('{}, {}\n'.format(i, j))
 
-        return plotWindow
-
-    def cal_ML(self, tmp, xlabel, ylabel, COLOR='black', ECOLOR=None):
+    def cal_ML(self, fig, tmp, xlabel, ylabel, COLOR='black', ECOLOR=None):
         """
         Calculate the maximum likelihood function distribution
         :param tmp: Energy/Amplitude/Duration in order of magnitude of original data
@@ -334,8 +332,6 @@ class Features:
             ECOLOR = [0.7, 0.7, 0.7]
 
         N = len(tmp)
-        plotWindow = PlotWindow('ML--%s' % xlabel, 6, 3.9)
-        fig = plotWindow.static_canvas.figure
         fig.subplots_adjust(left=0.131, bottom=0.179, right=0.975, top=0.944)
         fig.text(0.96, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
                  horizontalalignment="right")
@@ -354,14 +350,15 @@ class Features:
         ax.errorbar(sorted(tmp), ML_y, yerr=Error_bar, fmt='o', ecolor=ECOLOR, color=COLOR, elinewidth=1, capsize=2, ms=3)
         plot_norm(ax, xlabel, ylabel, y_lim=[1.25, 3], legend=False)
 
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
         with open('/'.join([self.output, self.status]) + '_ML(%s).txt' % xlabel[0], 'w') as f:
             f.write('{}, {}, Error bar\n'.format(xlabel, ylabel))
             for i, j, k in zip(tmp, ML_y, Error_bar):
                 f.write('{}, {}, {}\n'.format(i, j, k))
 
-        return plotWindow
-
-    def cal_contour(self, tmp_1, tmp_2, xlabel, ylabel, x_lim, y_lim, size_x=40, size_y=40, method='linear_bin',
+    def cal_contour(self, fig, tmp_1, tmp_2, xlabel, ylabel, x_lim, y_lim, size_x=40, size_y=40, method='linear_bin',
                     padding=False, colorbar=False, clabel=False):
         tmp_1, tmp_2 = 20 * np.log10(tmp_1), 20 * np.log10(tmp_2)
         if method == 'Log bin':
@@ -391,8 +388,6 @@ class Features:
                 valid_y = np.where((tmp_2 < Y[j + 1, 0]) & (tmp_2 >= Y[j, 0]))[0]
                 height[j, i] = np.intersect1d(valid_x, valid_y).shape[0]
 
-        plotWindow = PlotWindow('Contour--%s & %s' % (ylabel, xlabel), 6, 3.9)
-        fig = plotWindow.static_canvas.figure
         fig.subplots_adjust(left=0.115, bottom=0.17, right=0.975, top=0.95)
         if colorbar:
             fig.text(0.78, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
@@ -412,12 +407,10 @@ class Features:
         if clabel:
             ax.clabel(ct, inline=True, colors='k', fmt='%.1f')
         plot_norm(ax, xlabel, ylabel, legend=False)
+        fig.canvas.draw()
+        fig.canvas.flush_events()
 
-        return plotWindow
-
-    def plot_correlation(self, tmp_1, tmp_2, xlabel, ylabel, COLOR='black'):
-        plotWindow = PlotWindow('Correlation--%s & %s' % (ylabel, xlabel), 6, 3.9)
-        fig = plotWindow.static_canvas.figure
+    def plot_correlation(self, fig, tmp_1, tmp_2, xlabel, ylabel, COLOR='black'):
         fig.subplots_adjust(left=0.115, bottom=0.17, right=0.975, top=0.95)
         fig.text(0.96, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
                  horizontalalignment="right")
@@ -428,29 +421,16 @@ class Features:
             ax.loglog(tmp_1, tmp_2, '.', Marker='.', markersize=8, color=COLOR)
         plot_norm(ax, xlabel, ylabel, legend=False)
 
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
         with open('/'.join([self.output, self.status]) + '_%s-%s.txt' % (ylabel, xlabel), 'w') as f:
             f.write('{}, {}\n'.format(xlabel, ylabel))
             for i, j in zip(tmp_1, tmp_2):
                 f.write('{}, {}\n'.format(i, j))
 
-        return plotWindow
-
-    def plot_3D_correlation(self, tmp_1, tmp_2, tmp_3, xlabel, ylabel, zlabel, COLOR='black'):
-        plotWindow = PlotWindow('3D Correlation--%s & %s' % (ylabel, xlabel), 6, 3.9)
-        fig = plotWindow.static_canvas.figure
-        ax = plt.subplot(projection='3d')
-        ax.scatter3D(np.log10(tmp_1), np.log10(tmp_2), np.log10(tmp_3), s=15, color=COLOR)
-        ax.xaxis.set_major_formatter(plt.FuncFormatter('$10^{:.0f}$'.format))
-        ax.yaxis.set_major_formatter(plt.FuncFormatter('$10^{:.0f}$'.format))
-        ax.zaxis.set_major_formatter(plt.FuncFormatter('$10^{:.0f}$'.format))
-        plot_norm(ax, xlabel, ylabel, zlabel, legend=False)
-
-        return plotWindow
-
-    def plot_feature_time(self, tmp, ylabel, x_max=29000, color_tmp='black', color_stretcher='r', width=55,
+    def plot_feature_time(self, fig, tmp, ylabel, x_max=29000, color_tmp='black', color_stretcher='r', width=55,
                           stretcher_data=None, smooth=False):
-        plotWindow = PlotWindow('Time Domain Curve', 6, 3.9)
-        fig = plotWindow.static_canvas.figure
         if stretcher_data:
             fig.subplots_adjust(left=0.12, bottom=0.157, right=0.877, top=0.853)
             fig.text(0.86, 0.18, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12},
@@ -484,19 +464,18 @@ class Features:
             plot_norm(ax, 'Time (s)', ylabel, x_lim=[0, x_max], y_lim=[0, 80 if self.device == 'PAC-self' else 15000],
                       legend=False)
 
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
         with open('/'.join([self.output, self.status]) + '_%s-Time.txt' % ylabel.split()[0], 'w') as f:
             f.write('TRAI, Time (s), {}\n'.format(ylabel))
             for i, j, k in zip(self.TRAI, self.Time, tmp):
                 f.write('{:.0f}, {}, {}\n'.format(i, j, k))
 
-        return plotWindow
-
-    def cal_BathLaw(self, tmp, xlabel, ylabel, INTERVAL_NUM=None, COLOR='black', bin_method='log'):
+    def cal_BathLaw(self, fig, tmp, xlabel, ylabel, INTERVAL_NUM=None, COLOR='black', bin_method='log'):
         if INTERVAL_NUM is None:
             INTERVAL_NUM = 8
 
-        plotWindow = PlotWindow('Bath law', 6, 3.9)
-        fig = plotWindow.static_canvas.figure
         fig.subplots_adjust(left=0.145, bottom=0.19, right=0.975, top=0.962)
         fig.text(0.12, 0.2, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12})
         ax = fig.add_subplot()
@@ -537,21 +516,21 @@ class Features:
         ax.axhline(1.2, ls='-.', linewidth=1, color="black")
         plot_norm(ax, xlabel, ylabel, y_lim=[-1, 4], legend=False)
 
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
         with open('/'.join([self.output, self.status]) + '_BathLaw(%s).txt' % xlabel[0], 'w') as f:
             f.write('{}, {}\n'.format(xlabel, ylabel))
             for i, j in zip(x_eny, y):
                 f.write('{}, {}\n'.format(i, j))
 
-        return plotWindow
-
-    def cal_WaitingTime(self, time, xlabel, ylabel, INTERVAL_NUM=None, COLOR='black', FIT=False, LIM=None, bin_method='log'):
+    def cal_WaitingTime(self, fig, time, xlabel, ylabel, INTERVAL_NUM=None, COLOR='black', FIT=False, LIM=None,
+                        bin_method='log'):
         if INTERVAL_NUM is None:
             INTERVAL_NUM = 8
         if LIM is None:
             LIM = [0, None]
 
-        plotWindow = PlotWindow('Distribution of waiting time', 6, 3.9)
-        fig = plotWindow.static_canvas.figure
         fig.subplots_adjust(left=0.139, bottom=0.189, right=0.975, top=0.962)
         fig.text(0.16, 0.22, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12})
         ax = fig.add_subplot()
@@ -576,21 +555,20 @@ class Features:
             ax.loglog(xx, yy, '.', markersize=8, marker='o', mec=COLOR, mfc='none', color=COLOR)
             plot_norm(ax, xlabel, ylabel, legend=False)
 
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
         with open('/'.join([self.output, self.status]) + '_WaitingTime.txt', 'w') as f:
             f.write('{}, {}\n'.format(xlabel, ylabel))
             for i, j in zip(xx, yy):
                 f.write('{}, {}\n'.format(i, j))
 
-        return plotWindow
-
-    def cal_OmoriLaw(self, tmp, xlabel, ylabel, INTERVAL_NUM=None, FIT=False, bin_method='log'):
+    def cal_OmoriLaw(self, fig, tmp, xlabel, ylabel, INTERVAL_NUM=None, FIT=False, bin_method='log'):
         if INTERVAL_NUM is None:
             INTERVAL_NUM = 8
         eny_lim = [[0.01, 0.1], [0.1, 1], [1, 10], [10, 1000], [1000, 10000]]
         tmp = self.__cal_OmiroLaw_helper(tmp, eny_lim)
 
-        plotWindow = PlotWindow("Omori's law", 6, 3.9)
-        fig = plotWindow.static_canvas.figure
         fig.subplots_adjust(left=0.115, bottom=0.17, right=0.975, top=0.95)
         fig.text(0.16, 0.21, self.status, fontdict={'family': 'Arial', 'fontweight': 'bold', 'fontsize': 12})
         ax = fig.add_subplot()
@@ -623,12 +601,13 @@ class Features:
                     ax.loglog(xx, yy, markersize=8, marker=marker, mec=color, mfc='none', color=color, label=label)
                 plot_norm(ax, xlabel, ylabel, legend_loc='upper right')
 
+                fig.canvas.draw()
+                fig.canvas.flush_events()
+
                 with open('/'.join([self.output, self.status]) + '_OmoriLaw_(%s).txt' % label[1:-1].replace('<', ' ').replace('>', ' '), 'w') as f:
                     f.write('t-t_{MS} (s), r_{AS}(t-t_{MS})(s^{-1})\n')
                     for i, j in zip(xx, yy):
                         f.write('{}, {}\n'.format(i, j))
-
-        return plotWindow
 
 
 # if __name__ == "__main__":

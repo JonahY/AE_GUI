@@ -1,3 +1,11 @@
+"""
+@version: 2.0
+@author: Jonah
+@file: __init__.py
+@Created time: 2022/04/02 00:00
+@Last Modified: 2022/04/04 00:28
+"""
+
 import math
 import os
 import time

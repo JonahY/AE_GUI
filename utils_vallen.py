@@ -3,7 +3,7 @@
 @author: Jonah
 @file: __init__.py
 @Created time: 2022/04/02 00:00
-@Last Modified: 2022/04/04 00:28
+@Last Modified: 2022/04/04 16:31
 """
 
 import time
@@ -47,10 +47,18 @@ class ConvertVallenData(QtCore.QObject):
             for idx in range(N_tra):
                 i = result_tra.fetchone()
                 data_tra.append(i)
+                if i[1] == 1:
+                    chan_1.append(i[-1])
+                elif i[1] == 2:
+                    chan_2.append(i[-1])
+                elif i[1] == 3:
+                    chan_3.append(i[-1])
+                elif i[1] == 4:
+                    chan_4.append(i[-1])
                 self.signal.emit(['tradb', idx, N_tra])
-                # self.signal.emit([idx, N_tra, N_pri, i])
             print('Complete the import of waveform!')
         if self.mode == 'Load both' or self.mode == 'Load features only':
+            chan_1, chan_2, chan_3, chan_4 = [], [], [], []
             for idx in range(N_pri):
                 i = result_pri.fetchone()
                 if i[-2] is not None and i[-2] > self.counts and i[-1] > 0:
@@ -64,7 +72,6 @@ class ConvertVallenData(QtCore.QObject):
                     elif i[2] == 4:
                         chan_4.append(i)
                     self.signal.emit(['pridb', idx, N_pri])
-                    # self.signal.emit([idx, N_tra, N_pri, i])
             print('Complete the import of feature!\nSorting ...')
         end = time.time()
         print("Finishing time: {}  |  Time consumption: {:.3f} min".

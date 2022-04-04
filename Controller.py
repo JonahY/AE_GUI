@@ -4,7 +4,7 @@
 @author: Jonah
 @file: __init__.py
 @Created time: 2020/12/15 00:00
-@Last Modified: 2022/04/04 00:28
+@Last Modified: 2022/04/04 16:31
 """
 
 from main_auto_progress import Ui_MainWindow
@@ -661,16 +661,24 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
     @catchError('Error in Random Selection')
     def random_select(self, btn):
-        for channel, chan in zip(['Chan 1', 'Chan 2', 'Chan 3', 'Chan 4'],
-                                 [self.chan_1, self.chan_2, self.chan_3, self.chan_4]):
+        Channel = ['Chan 1', 'Chan 2', 'Chan 3', 'Chan 4']
+        Chan = [self.data_tra_1, self.data_tra_2, self.data_tra_3, self.data_tra_4] \
+            if self.device == 'PAC' and self.mode.currentText() == 'Load waveforms only' else \
+            [self.chan_1, self.chan_2, self.chan_3, self.chan_4]
+
+        for channel, chan in zip(Channel, Chan):
             if btn == channel:
                 cur_chan = chan
             QtWidgets.QApplication.processEvents()
+
         try:
-            if self.device == 'VALLEN':
-                all_trai = cur_chan[:, -1].astype(int)
+            if self.mode.currentText() == 'Load waveforms only':
+                if self.device == 'VALLEN':
+                    all_trai = cur_chan.astype(int)
+                else:
+                    all_trai = np.array(cur_chan)[:, -1].astype(int)
             else:
-                all_trai = cur_chan[:, 0].astype(int)
+                all_trai = cur_chan[:, -1 if self.device == 'VALLEN' else 0].astype(int)
             try:
                 trai = np.random.choice(all_trai, 1)
                 self.show_trai.setText(str(trai[0]))
@@ -714,10 +722,11 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
     @catchError('Error In Reading PAC Data')
     def return_read_pac_data(self, result):
-        self.data_tra_1 = result[0]
-        self.data_tra_2 = result[1]
-        self.data_tra_3 = result[2]
-        self.data_tra_4 = result[3]
+        self.data_pri = []
+        self.data_tra_1 = result[0][0]
+        self.data_tra_2 = result[0][1]
+        self.data_tra_3 = result[0][2]
+        self.data_tra_4 = result[0][3]
         self.PAC_chan_1 = result[-4]
         self.PAC_chan_2 = result[-3]
         self.PAC_chan_3 = result[-2]
@@ -974,8 +983,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.window.append(self.plotWindow)
             self.plotWindow.show()
             self.show_ML_E = ShowML(self.fig, features, sorted(self.filter_pri[:, self.feature_idx[2]]),
-                                      self.xlabelz[2], 'ML (E)', self.ml_select_color.currentText().lower(),
-                                      self.ml_select_ecolor.currentText().lower())
+                                    self.xlabelz[2], 'ML (E)', self.ml_select_color.currentText().lower(),
+                                    self.ml_select_ecolor.currentText().lower())
             self.show_ML_E.start()
         if self.ML_A.isChecked():
             self.plotWindow = PlotWindow(f'ML--{self.xlabelz[0]}', [6, 3.9])
@@ -983,8 +992,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.window.append(self.plotWindow)
             self.plotWindow.show()
             self.show_ML_E = ShowML(self.fig, features, sorted(self.filter_pri[:, self.feature_idx[0]]),
-                                      self.xlabelz[0], 'ML (A)', self.ml_select_color.currentText().lower(),
-                                      self.ml_select_ecolor.currentText().lower())
+                                    self.xlabelz[0], 'ML (A)', self.ml_select_color.currentText().lower(),
+                                    self.ml_select_ecolor.currentText().lower())
             self.show_ML_E.start()
         if self.ML_D.isChecked():
             self.plotWindow = PlotWindow(f'ML--{self.xlabelz[1]}', [6, 3.9])
@@ -992,8 +1001,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             self.window.append(self.plotWindow)
             self.plotWindow.show()
             self.show_ML_E = ShowML(self.fig, features, sorted(self.filter_pri[:, self.feature_idx[1]]),
-                                      self.xlabelz[1], 'ML (D)', self.ml_select_color.currentText().lower(),
-                                      self.ml_select_ecolor.currentText().lower())
+                                    self.xlabelz[1], 'ML (D)', self.ml_select_color.currentText().lower(),
+                                    self.ml_select_ecolor.currentText().lower())
             self.show_ML_E.start()
 
         # ------------------------------------------ Plot contour of features ------------------------------------------
@@ -1159,7 +1168,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.window.append(self.plotWindow)
                 self.plotWindow.show()
                 self.show_PAC_E_D = ShowFeaturesCorrelation(self.fig, features,
-                                                            20*np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
+                                                            20 * np.log10(
+                                                                self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
                                                             self.PAC_filter_pri[:, self.PAC_feature_idx[2]],
                                                             '20log(Dur)', '20log(Eny)',
                                                             self.correlation_select_color.currentText())
@@ -1170,7 +1180,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.window.append(self.plotWindow)
                 self.plotWindow.show()
                 self.show_PAC_A_D = ShowFeaturesCorrelation(self.fig, features,
-                                                            20*np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
+                                                            20 * np.log10(
+                                                                self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
                                                             self.PAC_filter_pri[:, self.PAC_feature_idx[0]],
                                                             '20log(Dur)', '20log(Amp)',
                                                             self.correlation_select_color.currentText())
@@ -1182,7 +1193,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.plotWindow.show()
                 self.show_PAC_AbsE_A = ShowFeaturesCorrelation(self.fig, features,
                                                                self.PAC_filter_pri[:, self.PAC_feature_idx[0]],
-                                                               20*np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
+                                                               20 * np.log10(
+                                                                   self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
                                                                '20log(Amp)', '20log(AbsEny)',
                                                                self.correlation_select_color.currentText())
                 self.show_PAC_AbsE_A.start()
@@ -1192,8 +1204,10 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.window.append(self.plotWindow)
                 self.plotWindow.show()
                 self.show_PAC_AbsE_D = ShowFeaturesCorrelation(self.fig, features,
-                                                               20*np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
-                                                               20*np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
+                                                               20 * np.log10(
+                                                                   self.PAC_filter_pri[:, self.PAC_feature_idx[1]]),
+                                                               20 * np.log10(
+                                                                   self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
                                                                '20log(Dur)', '20log(AbsEny)',
                                                                self.correlation_select_color.currentText())
                 self.show_PAC_AbsE_D.start()
@@ -1216,7 +1230,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.window.append(self.plotWindow)
                 self.plotWindow.show()
                 self.show_PAC_AbsE_T = ShowTimeCorrelation(self.fig, features,
-                                                           20*np.log10(self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
+                                                           20 * np.log10(
+                                                               self.PAC_filter_pri[:, self.PAC_feature_idx[3]]),
                                                            '20log(AbsEny)', self.show_ending_time.value(),
                                                            self.feature_color.currentText(),
                                                            self.stress_color.currentText(),

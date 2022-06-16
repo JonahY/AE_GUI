@@ -17,6 +17,309 @@ GUI for AE
 6. 要求能够可视化分析筛选后的特征。
 7. 要求能够对特征进行统计分析计算（最大似然统计、概率密度分布统计、互补累积分布统计、等待时间统计等）并导出文件。
 8. 要求能够载入应力应变数据并与特征一并可视化。
+### 开发环境
+本次开发所用的系统是WINDOW 10，基于Python语言与PyQt5框架，使用pyinstaller作为打包工具，初次运行需先安装Microsoft Visual C++运行库。根据实际功能划分为IO模块、波形分析模块以及特征分析模块，后两者既可单独运行，也可相互结合。模块化使得用户能够根据实际需求进行分析，不必拘束于导入全部数据，省时省力。在程序中有足够的注释语句，大大增强了程序的可读性。
+### 总体设计
+系统整体架构如图：  
+<div align=center>
+<img src="/MD_figs/系统架构图.png" width="500px">
+</div>  
+系统详细的模块信息所示：  
+<tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid">
+  <td width="581" colspan="2" valign="top" style="width:436.0pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;background:#D9D9D9;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><b><span style="mso-bidi-font-size:
+  10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;">主模块</span></b><b><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%"><o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#D9D9D9;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" align="center" style="text-align:center;line-height:120%"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%">IO</span><span style="mso-bidi-font-size:10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:
+  &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">模块</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%"><o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;background:#D9D9D9;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" align="center" style="text-align:center;line-height:120%"><span style="mso-bidi-font-size:10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:
+  &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">功能简述</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:2">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:italic">check_device<o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bidi-font-size:
+  10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:italic">根据用户选择切换不同的声发射设备</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:3;height:17.65pt">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt">
+  <p class="MsoNormal" style="line-height:120%"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:italic">check_mode<o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bidi-font-size:
+  10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:italic">根据用户选择切换不同的载入模式</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:4;height:17.65pt">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt">
+  <p class="MsoNormal" style="line-height:120%"><a name="_Hlk90729984"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic">check_parameter</span></a><span lang="EN-US" style="mso-bidi-font-size:
+  10.5pt;line-height:120%;mso-bidi-font-style:italic"><o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bidi-font-size:
+  10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:italic">检测用户图形界面中载入参数的更改</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:5;height:17.65pt">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt">
+  <p class="MsoNormal" style="line-height:120%"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:italic">check_overwrite<o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bidi-font-size:
+  10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:italic">若目标路径有计算结果，选择是否覆盖（仅针对</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic">PAC</span><span style="mso-bidi-font-size:10.5pt;line-height:120%;
+  font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+  &quot;Times New Roman&quot;;mso-bidi-font-style:italic">设备）</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:italic"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:6;height:17.65pt">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt">
+  <p class="MsoNormal" style="line-height:120%"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:italic">load_data<o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bidi-font-size:
+  10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:italic">根据设备、载入模式以及参数加载声发射数据</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:7">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#D9D9D9;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" align="center" style="text-align:center;line-height:120%"><a name="_Hlk90726729"><span style="mso-bidi-font-size:10.5pt;line-height:120%;
+  font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+  &quot;Times New Roman&quot;">波形分析模块</span></a><span style="mso-bookmark:_Hlk90726729"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%"><o:p></o:p></span></span></p>
+  </td>
+  
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;background:#D9D9D9;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" align="center" style="text-align:center;line-height:120%"><span style="mso-bookmark:_Hlk90726729"><span style="mso-bidi-font-size:10.5pt;
+  line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;">功能简述</span></span><span style="mso-bookmark:_Hlk90726729"><span lang="EN-US" style="mso-bidi-font-size:
+  10.5pt;line-height:120%"><o:p></o:p></span></span></p>
+  </td>
+  
+ </tr>
+ <tr style="mso-yfti-irow:8">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bookmark:_Hlk90726729"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic">check_chan<o:p></o:p></span></span></p>
+  </td>
+  
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bookmark:_Hlk90726729"><span style="mso-bidi-font-size:10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:
+  &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:
+  italic">根据用户选择切换不同的采集通道</span></span><span style="mso-bookmark:_Hlk90726729"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></span></p>
+  </td>
+  
+ </tr>
+ <tr style="mso-yfti-irow:9">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bookmark:_Hlk90726729"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic">random_select<o:p></o:p></span></span></p>
+  </td>
+  
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bookmark:_Hlk90726729"><span style="mso-bidi-font-size:10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:
+  &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:
+  italic">随机选择当前通道的一个声发射信号编号</span></span><span style="mso-bookmark:_Hlk90726729"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></span></p>
+  </td>
+  
+ </tr>
+ <tr style="mso-yfti-irow:10">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bookmark:_Hlk90726729"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic">show_waveform<i><o:p></o:p></i></span></span></p>
+  </td>
+  
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bookmark:_Hlk90726729"><span style="mso-bidi-font-size:10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:
+  &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:
+  italic">根据信号编号以及时频图模式进行可视化</span></span><span style="mso-bookmark:_Hlk90726729"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></span></p>
+  </td>
+  
+ </tr>
+ <tr style="mso-yfti-irow:11">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#D9D9D9;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" align="center" style="text-align:center;line-height:120%"><span style="mso-bidi-font-size:10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:
+  &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">特征分析模块</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%"><o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;background:#D9D9D9;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" align="center" style="text-align:center;line-height:120%"><span style="mso-bidi-font-size:10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:
+  &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">功能简述</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:12">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:italic">show_feature<o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bidi-font-size:
+  10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:italic">根据用户选择进行对应的统计分析</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:13;mso-yfti-lastrow:yes">
+  <td width="207" valign="top" style="width:155.15pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:italic">load_stretcher<o:p></o:p></span></p>
+  </td>
+  <td width="374" valign="top" style="width:280.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="line-height:120%"><span style="mso-bidi-font-size:
+  10.5pt;line-height:120%;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+  mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-style:italic">加载万能试验机的应力应变数据</span><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:120%;mso-bidi-font-style:
+  italic"><o:p></o:p></span></p>
+  </td>
+ </tr>
+</tbody>  
+系统详细的模块信息所示：  
+<table>
+  <tr>
+    <td>主模块</td>
+  </tr>
+  <tr>
+    <td>IO模块</td>
+    <td>功能简述</td>
+  </tr>
+  <tr>
+    <td>check_device</td>
+    <td>根据用户选择切换不同的声发射设备</td>
+  </tr>
+  <tr>
+    <td>check_mode</td>
+    <td>根据用户选择切换不同的载入模式</td>
+  </tr>
+  <tr>
+    <td>check_parameter</td>
+    <td>检测用户图形界面中载入参数的更改</td>
+  </tr>
+  <tr>
+    <td>check_overwrite</td>
+    <td>若目标路径有计算结果，选择是否覆盖（仅针对PAC设备）</td>
+  </tr>
+  <tr>
+    <td>load_data</td>
+    <td>根据设备、载入模式以及参数加载声发射数据</td>
+  </tr>
+  <tr>
+    <td>波形分析模块</td>
+    <td>功能简述</td>
+  </tr>
+  <tr>
+    <td>check_chan</td>
+    <td>根据用户选择切换不同的采集通道</td>
+  </tr>
+  <tr>
+    <td>random_select</td>
+    <td>随机选择当前通道的一个声发射信号编号</td>
+  </tr>
+  <tr>
+    <td>show_waveform</td>
+    <td>根据信号编号以及时频图模式进行可视化</td>
+  </tr>
+  <tr>
+    <td>特征分析模块</td>
+    <td>功能简述</td>
+  </tr>
+  <tr>
+    <td>show_feature</td>
+    <td>根据用户选择进行对应的统计分析</td>
+  </tr>
+  <tr>
+    <td>load_stretcher</td>
+    <td>加载万能试验机的应力应变数据</td>
+  </tr>
+</table>  
+模块内部关系结构如下图所示：  
+<div align=center>
+<img src="/MD_figs/系统模块内部关系图.png" width="500px">
+</div>  
+其中check_parameter功能同时适配IO模块与特征分析模块，分别用于对数据的初始载入与筛选。check_chan功能也同时适配波形分析模块与特征分析模块，能够对不同采集通道的数据分别进行分析。
 ## 软件功能描述
 ### 软件激活
 运行软件时会先读取最近一次修改的license文件，若根据用户主机mac地址计算得出的时间远于当前系统时间，软件激活成功，否则需要重新上传license以替换旧文件。  
